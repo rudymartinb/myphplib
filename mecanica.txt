@@ -1,0 +1,5 @@
+2018 04 16
+
+quiero resolver cuestiones de a una:
+
+la cuestion de seguridad, armar una clase de objeto que encapsule las funcionalidades necesarias para la cuestion de seguridad.
