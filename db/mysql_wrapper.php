@@ -2,12 +2,28 @@
 
 namespace mylib {
 	
+	/* lo optimo hubiera sido 
+	 * q estas interfaces formen parte de la clase mysql_wrapper
+	 * pero php no lo permite
+	*/ 
 	interface proveedor_datos_sql {
-		// public function abrirDefault( $cat );
-		public function abrir( $host, $user, $pwd, $catalogo, $port );
+		public function abrir( credenciales_host $cred  );
 		public function cerrar( );
 		public function ejecutar( $query );
 	}	
+	
+	/* esto es una mezcla de credenciales 
+	 * e info de host de server
+	 * la idea es externalizar la implementacion en particular
+	 * ejemplo: que dichos datos sean extraido de un archivo ini
+	*/
+	interface credenciales_host {
+		public function get_host();
+		public function get_user();
+		public function get_pwd();
+		public function get_catalogo();
+		public function get_port();
+	}
 
 
 	class mysql_wrapper implements proveedor_datos_sql {
@@ -19,33 +35,24 @@ namespace mylib {
 		private static $conexiones = 0;
 		
 		function __construct(  ){
-			// $this->abrir( $host, $user, $pwd, $catalogo, $port );
 		}
-		
+
 		function get_conexiones(){
 			return self::$conexiones;
 		}
 
-		function abrir( $host, $user, $pwd, $catalogo, $port ){
-			if( $this->db !== null ){
+		function abrir( credenciales_host $cred ){
+			if( $this->db !== null )
 				return;
-			}			
-			if( $catalogo == null )
-				$catalogo = "distdev";
-			$host = "127.0.0.1"; 
-			$user = "root";
-			$pwd = "sunpei42";
-			$port = 3306;
+			
+			$host = $cred->get_host();
+			$user = $cred->get_user();
+			$pwd  = $cred->get_pwd();
+			$catalogo = $cred->get_catalogo();
+			$port = $cred->get_port();
 
 			$this->db = new \mysqli( $host, $user, $pwd, $catalogo, $port );
 
-			/* lamentablemente uno de los pocos casos en que usar @ no es un error
-			 * si en lugar de usar arroba pongo un try/catch, deteminaos errores como inexistencia de la DB 
-			 * haran que el programa se interrumpa
-			*/
-			// $this->db->connect;
-			
-			// $this->abrir( $host, $user, $pwd, $catalogo, $port );		
 		}
 		
 		

@@ -15,90 +15,112 @@ error_reporting(E_ALL);
  * 4) hacer una coinsulta y recibir todos los datos como array
  * 5) hacer una subclase como testdouble  (IMPORTANTE ?!)
  * 
-*/
+ * 
+CREATE TABLE  `test`.`relacionada1` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `elotroid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_relacionada1_1` (`elotroid`),
+  CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='dependiente';
 
-class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
+CREATE TABLE  `test`.`relacionada2` (
+  `elotroid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `algo` varchar(10) NOT NULL,
+  PRIMARY KEY (`elotroid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='dependiente';
+
+
+drop table test.relacionada1;
+drop table test.relacionada2;
+
+
+ * 
+*/
+class CredencialesSQL implements mylib\credenciales_host {
+	private $host = "192.168.111.3";
+	private $user = "root";
+	private $pwd = "wolfrein";
+	private $port = 3306;
+	private $catalogo = "";	
 	
+	public function get_host(){ return $this->host;	}
+	public function get_user(){ return $this->user;	}
+	public function get_pwd(){ return $this->pwd;	}
+	public function get_catalogo(){ return $this->catalogo;	}
+	public function set_catalogo( $cat ){ $this->catalogo = $cat;	}
+	public function get_port(){ return $this->port;	}
+}
+class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
+	//~ private $host = "192.168.111.3";
+	//~ private $user = "root";
+	//~ private $pwd = "wolfrein";
+	//~ private $port = 3306;
+	//~ private $catalogo = "";	
      
 	/*
 	 * tiene sentido esto?
 	 * si voy a abrir una conexion a una base de datos, 
 	 * me importar'ia mas saber si funciono o no
 	*/
-	public function test_abrirLocal_mal_catalogo(){
+	public function test_mal_catalogo(){
 		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
 		
 		
 		$db = new mylib\mysql_wrapper( );			
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "no_existe";
+		$cred = new CredencialesSQL();
+		$cred->set_catalogo( "no_existe" );
+		$error_actual = "";
 		try {
-			$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+			$db->abrir( $cred );			
 		} catch ( Exception $e ){
 			$error_actual = $e->getMessage();
 		}
 		$this->assertEquals( $error_esperado, $error_actual, "deberia dar error por no existir el catalogo " );
-		// $db->cerrar();
 		
 	}
 
 	
 	public function test_select_uno(){
 		$db = new mylib\mysql_wrapper();
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+
+		// $db->abrir( $this->host, $this->user, $this->pwd, $this->catalogo, $this->port );			
+		$db->abrir( new CredencialesSQL() );			
         
-		$arr = $db->ejecutar( "SELECT 'sarasa estuvo aqui' as uno" );
+		$arr = $db->ejecutar( "SELECT 'algo estuvo aqui' as uno" );
 		
-		$this->assertEquals( $arr[0]['uno'] , "sarasa estuvo aqui" );
+		$this->assertEquals( $arr[0]['uno'] , "algo estuvo aqui" );
 		$db->cerrar();
-		// $db->cerrar();
+		
 	}
 	
 		
 
 	public function test_no_existe_tabla(){
 		
-		$error_esperado = "Table 'testing.sarasa' doesn't exist";
+		$error_esperado = "Table 'test.algo' doesn't exist";
 		
 		$db = new mylib\mysql_wrapper();
-		// $db->abrirLocal( "testing" );
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+		
+		$db->abrir( new CredencialesSQL() );			
+		
 		try {
-			$arr = $db->ejecutar( "SELECT * from sarasa" );
+			$arr = $db->ejecutar( "SELECT * from test.algo" );
 		} catch( Exception $x ) {
 			$error_actual = $x->getMessage();
 		}
-		$this->assertEquals( $error_esperado, $error_actual, "no deberia existir tabla sarasa " );
+		$this->assertEquals( $error_esperado, $error_actual, "no deberia existir tabla algo " );
 
-		
-        // $db->cerrar();
+        $db->cerrar();
 		
 	}
 	
 
 	public function test_SelectVacio(){
 		$db = new mylib\mysql_wrapper();
-		// $db->abrirLocal( "testing" );
-        $host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
-		$arr = $db->ejecutar( "SELECT * from testing.tabla1 where false" );
+
+		$db->abrir( new CredencialesSQL() );			
+		$arr = $db->ejecutar( "SELECT * from test.relacionada2 where false" );
 		$this->assertEquals( "array", gettype( $arr )  );
 		$this->assertEquals( 0, count( $arr )  );
 		
@@ -107,20 +129,15 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	
 	public function test_InsertOK(){
 		$db = new mylib\mysql_wrapper( );
-        $host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+		$db->abrir( new CredencialesSQL() );			
         
 		$db->ejecutar( "start transaction;" );
-		$db->ejecutar( "delete from testing.tabla1;" );
-		$db->ejecutar( "insert into testing.tabla1 set sarasa = 'queseyo'" );
+		$db->ejecutar( "delete from test.relacionada2;" );
+		$db->ejecutar( "insert into test.relacionada2 set algo = 'queseyo'" );
 		
-		$arr = $db->ejecutar( "SELECT sarasa from testing.tabla1" );
+		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
 		
-		$this->assertEquals( "queseyo", $arr[0]['sarasa'], "valor insertado en el registro" );
+		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor insertado en el registro" );
 
 		$arr = $db->ejecutar( "rollback;" );
 		$db->cerrar();
@@ -128,7 +145,7 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	}	
 	
 	/*
-CREATE TABLE  `testing`.`relacionada1` (
+CREATE TABLE  `test`.`relacionada1` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `elotroid` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
@@ -141,67 +158,56 @@ CREATE TABLE  `testing`.`relacionada1` (
 	 * la idea es generar un error de sql mediante una falla de integridad de SQL
 	*/
 	public function test_insert_error(){
-		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`testing`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
+		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
 		$db = new mylib\mysql_wrapper();
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+		$db->abrir( new CredencialesSQL() );			
         
-		$query = "insert into relacionada1 set elotroid = 0";
+        $db->ejecutar( "start transaction;" );
+        
+		$query = "insert into test.relacionada1 set elotroid = 0";
 		
 		try {
 			$arr = $db->ejecutar( $query );
 		} catch( Exception $e ) {
 			$error_actual = $e->getMessage();
 		}
-		$this->assertEquals( $error_esperado, $error_actual, "cuando se inserta un registro en una dependiente de dos tablas relacionadas, y no tiene el id correcto y debe fallar" );
-
+		$this->assertEquals( $error_esperado, $error_actual, 
+		"cuando se inserta un registro en una dependiente de dos tablas relacionadas, y no tiene el id correcto y debe fallar" );
+		$arr = $db->ejecutar( "rollback;" );
 		$db->cerrar();
 	}	
 
 	
 	public function test_insert_falla(){
-		$error_esperado = "Column 'sarasa' cannot be null";
+		$error_esperado = "Column 'algo' cannot be null";
 		
 		$db = new mylib\mysql_wrapper(  );
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
-		
+		$db->abrir( new CredencialesSQL() );			
+		$db->ejecutar( "start transaction;" );
 		try {
-			$arr = $db->ejecutar( "insert into tabla1 set sarasa = null" );
+			$arr = $db->ejecutar( "insert into test.relacionada2 set algo = null" );
 		} catch( Exception $e ) {
 			$error_actual = $e->getMessage();
 		}
 		$this->assertEquals( $error_esperado, $error_actual, "cuando se inserta un registro con null deberia fallar" );
-
+		$arr = $db->ejecutar( "rollback;" );
 		$db->cerrar();
 	}	
 	
 	public function test_update_ok(){
 		$db = new mylib\mysql_wrapper( );
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+
+		$db->abrir( new CredencialesSQL() );			
 		
 		$db->ejecutar( "start transaction;" );
-		$db->ejecutar( "delete from tabla1;" );
-		$db->ejecutar( "insert into tabla1 set sarasa = 'otra'" );
-		$db->ejecutar( "update tabla1 set sarasa = 'queseyo'" );
+		$db->ejecutar( "delete from test.relacionada2;" );
+		$db->ejecutar( "insert into test.relacionada2 set algo = 'otra'" );
+		$db->ejecutar( "update test.relacionada2 set algo = 'queseyo'" );
 		
-		$arr = $db->ejecutar( "SELECT sarasa from tabla1" );
+		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
 		
-		$this->assertEquals( "queseyo", $arr[0]['sarasa'], "valor actualizado en el unico registro" );
+		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor actualizado en el unico registro" );
 
 		$arr = $db->ejecutar( "rollback;" );
 		$db->cerrar();
@@ -209,27 +215,22 @@ CREATE TABLE  `testing`.`relacionada1` (
 	}
 	
 	public function test_update_error(){
-		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`testing`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
+		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
 		$db = new mylib\mysql_wrapper();
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
-		
-		$db->ejecutar( "insert into relacionada2 set algo = 'algo2'" );
+		$db->abrir( new CredencialesSQL() );			
+		$db->ejecutar( "start transaction;" );
+		$db->ejecutar( "insert into test.relacionada2 set algo = 'algo2'" );
 		$arr = $db->ejecutar( "select last_insert_id() as id" );
-		$db->ejecutar( "insert into relacionada1 set elotroid = ".$arr[0]['id'] );
+		$db->ejecutar( "insert into test.relacionada1 set elotroid = ".$arr[0]['id'] );
 
 		try {
-			$arr = $db->ejecutar( "update relacionada1 set elotroid = 0" );
+			$arr = $db->ejecutar( "update test.relacionada1 set elotroid = 0" );
 		} catch( Exception $e ) {
 			$error_actual = $e->getMessage();
 		}
 		$this->assertEquals( $error_esperado, $error_actual, "dos tablas relacionadas, se inserta un registro en una dependiente que no tiene el id correcto, debe fallar" );
-
+		$arr = $db->ejecutar( "rollback;" );
 		$db->cerrar();
 	}	
 
@@ -238,25 +239,21 @@ CREATE TABLE  `testing`.`relacionada1` (
 	function test_Mismo_Obj(){
 		$db = new mylib\mysql_wrapper( );
 
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db->abrir( $host, $user, $pwd, $catalogo, $port );			
+		$db->abrir( new CredencialesSQL() );			
 				
 		$db2 = new mylib\mysql_wrapper(  );
 
-		$host = "127.0.0.1"; 
-		$user = "root";
-		$pwd = "sunpei42";
-		$port = 3306;
-		$catalogo = "testing";
-		$db2->abrir( $host, $user, $pwd, $catalogo, $port );					
+		$db2->abrir( new CredencialesSQL() );			
 		
-		$this->assertTrue( $db->esIgual( $db2 ) );
+		// por ahora false
+		$this->assertFalse( $db->esIgual( $db2 ) );
 	}
-
+	
+	//~ function test_credenciales(){
+		//~ $db = new mylib\mysql_wrapper( );
+		//~ $cred = new CredencialesSQL();
+		//~ $db->set_credenciales( $cred );
+	//~ }
 	
 
 }
