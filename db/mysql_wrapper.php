@@ -16,6 +16,7 @@ namespace mylib {
 	 * e info de host de server
 	 * la idea es externalizar la implementacion en particular
 	 * ejemplo: que dichos datos sean extraido de un archivo ini
+	 * o que la info devuelta sea dinamica en funcion del usuario que se loguea
 	*/
 	interface credenciales_host {
 		public function get_host();
@@ -26,6 +27,7 @@ namespace mylib {
 	}
 
 
+
 	class mysql_wrapper implements proveedor_datos_sql {
 		/*
 		 * la idea de la variable estática es evitar multiples conexiones
@@ -34,6 +36,7 @@ namespace mylib {
 		private $db = null;
 		private static $conexiones = 0;
 		
+		private $error;
 		function __construct(  ){
 		}
 
@@ -72,19 +75,15 @@ namespace mylib {
 		}
 		
 		function ejecutar( $query ){
-			if( $this->db === null )
-				throw new \Exception( "Conexion cerrada!" );
+			//~ if( $this->db === null )
+				//~ throw new \Exception( "Conexion cerrada!" );
 
-			// var_dump( $this->db );				
-			try{
-				$res = $this->db->query( $query, MYSQLI_STORE_RESULT );
-			} catch( Exception $e ) {
-				throw new \Exception( $e->message.' --> '. $e->getTraceAsString() );
-			}
+			$res = $this->db->query( $query, MYSQLI_STORE_RESULT );
 
 			if( $this->db->errno != 0 ){
 				throw new \Exception( $this->db->error );
 			}
+			
 			if( gettype( $res ) == "boolean" )
 				return $res ;		
 

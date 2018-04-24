@@ -2,6 +2,7 @@
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
 require_once( "db/mysql_wrapper.php" );
+require_once( "credencialessql.php" );
 error_reporting(E_ALL);
 
 /*
@@ -37,20 +38,7 @@ drop table test.relacionada2;
 
  * 
 */
-class CredencialesSQL implements mylib\credenciales_host {
-	private $host = "192.168.111.3";
-	private $user = "root";
-	private $pwd = "wolfrein";
-	private $port = 3306;
-	private $catalogo = "";	
-	
-	public function get_host(){ return $this->host;	}
-	public function get_user(){ return $this->user;	}
-	public function get_pwd(){ return $this->pwd;	}
-	public function get_catalogo(){ return $this->catalogo;	}
-	public function set_catalogo( $cat ){ $this->catalogo = $cat;	}
-	public function get_port(){ return $this->port;	}
-}
+
 class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	//~ private $host = "192.168.111.3";
 	//~ private $user = "root";
@@ -68,7 +56,7 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 		
 		
 		$db = new mylib\mysql_wrapper( );			
-		$cred = new CredencialesSQL();
+		$cred = new DemoCredencialesSQL();
 		$cred->set_catalogo( "no_existe" );
 		$error_actual = "";
 		try {
@@ -85,7 +73,7 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 		$db = new mylib\mysql_wrapper();
 
 		// $db->abrir( $this->host, $this->user, $this->pwd, $this->catalogo, $this->port );			
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
         
 		$arr = $db->ejecutar( "SELECT 'algo estuvo aqui' as uno" );
 		
@@ -96,16 +84,17 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	
 		
 
-	public function test_no_existe_tabla(){
+	public function test_error_no_existe_tabla(){
 		
 		$error_esperado = "Table 'test.algo' doesn't exist";
 		
 		$db = new mylib\mysql_wrapper();
 		
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
+		
 		
 		try {
-			$arr = $db->ejecutar( "SELECT * from test.algo" );
+			$arr = $db->ejecutar( "SELECT * from test.algo" );	
 		} catch( Exception $x ) {
 			$error_actual = $x->getMessage();
 		}
@@ -119,8 +108,8 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	public function test_SelectVacio(){
 		$db = new mylib\mysql_wrapper();
 
-		$db->abrir( new CredencialesSQL() );			
-		$arr = $db->ejecutar( "SELECT * from test.relacionada2 where false" );
+		$db->abrir( new DemoCredencialesSQL() );			
+		$arr = $db->ejecutar( "SELECT * from (select 1 as uno) as queseyo where false" );
 		$this->assertEquals( "array", gettype( $arr )  );
 		$this->assertEquals( 0, count( $arr )  );
 		
@@ -129,7 +118,7 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 	
 	public function test_InsertOK(){
 		$db = new mylib\mysql_wrapper( );
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
         
 		$db->ejecutar( "start transaction;" );
 		$db->ejecutar( "delete from test.relacionada2;" );
@@ -144,15 +133,7 @@ class mysql_wrapper_Test extends PHPUnit_Framework_TestCase {
 
 	}	
 	
-	/*
-CREATE TABLE  `test`.`relacionada1` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `elotroid` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_relacionada1_1` (`elotroid`),
-  CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='dependiente';
-	*/
+
 	
 	/* 
 	 * la idea es generar un error de sql mediante una falla de integridad de SQL
@@ -161,7 +142,7 @@ CREATE TABLE  `test`.`relacionada1` (
 		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
 		$db = new mylib\mysql_wrapper();
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
         
         $db->ejecutar( "start transaction;" );
         
@@ -183,7 +164,7 @@ CREATE TABLE  `test`.`relacionada1` (
 		$error_esperado = "Column 'algo' cannot be null";
 		
 		$db = new mylib\mysql_wrapper(  );
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
 		$db->ejecutar( "start transaction;" );
 		try {
 			$arr = $db->ejecutar( "insert into test.relacionada2 set algo = null" );
@@ -198,7 +179,7 @@ CREATE TABLE  `test`.`relacionada1` (
 	public function test_update_ok(){
 		$db = new mylib\mysql_wrapper( );
 
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
 		
 		$db->ejecutar( "start transaction;" );
 		$db->ejecutar( "delete from test.relacionada2;" );
@@ -218,7 +199,7 @@ CREATE TABLE  `test`.`relacionada1` (
 		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
 		$db = new mylib\mysql_wrapper();
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
 		$db->ejecutar( "start transaction;" );
 		$db->ejecutar( "insert into test.relacionada2 set algo = 'algo2'" );
 		$arr = $db->ejecutar( "select last_insert_id() as id" );
@@ -239,11 +220,11 @@ CREATE TABLE  `test`.`relacionada1` (
 	function test_Mismo_Obj(){
 		$db = new mylib\mysql_wrapper( );
 
-		$db->abrir( new CredencialesSQL() );			
+		$db->abrir( new DemoCredencialesSQL() );			
 				
 		$db2 = new mylib\mysql_wrapper(  );
 
-		$db2->abrir( new CredencialesSQL() );			
+		$db2->abrir( new DemoCredencialesSQL() );			
 		
 		// por ahora false
 		$this->assertFalse( $db->esIgual( $db2 ) );
@@ -251,7 +232,7 @@ CREATE TABLE  `test`.`relacionada1` (
 	
 	//~ function test_credenciales(){
 		//~ $db = new mylib\mysql_wrapper( );
-		//~ $cred = new CredencialesSQL();
+		//~ $cred = new DemoCredencialesSQL();
 		//~ $db->set_credenciales( $cred );
 	//~ }
 	
