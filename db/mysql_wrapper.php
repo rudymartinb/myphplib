@@ -87,7 +87,14 @@ namespace mylib {
 			if( gettype( $res ) == "boolean" )
 				return $res ;		
 
-			return $res->fetch_all( MYSQLI_ASSOC );
+			$lista = [];
+			while( true ){
+				$arr = $res->fetch_array( MYSQLI_ASSOC );
+				if( $arr === null )
+					return $lista;
+				$lista[] = $arr;
+			}
+			return $lista;
 		}
 		function esIgual( $db2 ){
 			return $this->db === $db2->db ;
