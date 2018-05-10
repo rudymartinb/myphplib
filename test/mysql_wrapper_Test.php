@@ -40,11 +40,11 @@ drop table test.relacionada2;
 */
 
 class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
-	//~ private $host = "192.168.111.3";
-	//~ private $user = "root";
-	//~ private $pwd = "wolfrein";
-	//~ private $port = 3306;
-	//~ private $catalogo = "";	
+	private $host = "192.168.111.3";
+	private $user = "root";
+	private $pwd = "wolfrein";
+	private $port = 3306;
+	private $catalogo = "";	
      
 	/*
 	 * tiene sentido esto?
@@ -52,7 +52,11 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 	 * me importar'ia mas saber si funciono o no
 	*/
 	public function test_mal_catalogo(){
+		// version php 5.6 
 		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
+		
+		// version 7
+		$error_esperado = "mysqli::__construct(): (42000/1049): Unknown database 'no_existe'";
 		
 		
 		$db = new mylib\mysql_wrapper( );			
@@ -69,11 +73,14 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 	}
 
 	
+
 	public function test_select_uno(){
+		
 		$db = new mylib\mysql_wrapper();
 
-		// $db->abrir( $this->host, $this->user, $this->pwd, $this->catalogo, $this->port );			
-		$db->abrir( new DemoCredencialesSQL() );			
+		$cred = new DemoCredencialesSQL();
+
+		$db->abrir( $cred );			
         
 		$arr = $db->ejecutar( "SELECT 'algo estuvo aqui' as uno" );
 		
@@ -229,6 +236,8 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		// por ahora false
 		$this->assertFalse( $db->esIgual( $db2 ) );
 	}
+	
+	
 	
 	//~ function test_credenciales(){
 		//~ $db = new mylib\mysql_wrapper( );

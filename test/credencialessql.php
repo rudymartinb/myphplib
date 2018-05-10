@@ -4,9 +4,9 @@ error_reporting(E_ALL);
 /* ejemplo implementacion credenciales
 */ 
 class DemoCredencialesSQL implements mylib\credenciales_host {
-	private $host = "192.168.111.3";
+	private $host = "127.0.0.1";
 	private $user = "root";
-	private $pwd = "wolfrein";
+	private $pwd = "sunpei42";
 	private $port = 3306;
 	private $catalogo = "";	
 	

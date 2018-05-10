@@ -98,7 +98,7 @@ namespace mylib {
 		}
 		function esIgual( $db2 ){
 			return $this->db === $db2->db ;
-	}
+		}
 	}
 	
 	
