@@ -81,10 +81,12 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$cred = new DemoCredencialesSQL();
 
 		$db->abrir( $cred );			
-        
-		$arr = $db->ejecutar( "SELECT 'algo estuvo aqui' as uno" );
 		
-		$this->assertEquals( $arr[0]['uno'] , "algo estuvo aqui" );
+		$cadena = "sarasa estuvo aqui";
+        
+		$arr = $db->ejecutar( "SELECT '".$cadena."' as uno" );
+		
+		$this->assertEquals( $arr[0]['uno'] , $cadena, "ejecutar un select que devuelve una string deberia devolver la string" );
 		$db->cerrar();
 		
 	}
@@ -117,7 +119,8 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 
 		$db->abrir( new DemoCredencialesSQL() );			
 		$arr = $db->ejecutar( "SELECT * from (select 1 as uno) as queseyo where false" );
-		$this->assertEquals( "array", gettype( $arr )  );
+		// var_dump( $arr );
+		$this->assertEquals( "array", gettype( $arr ), "ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"  );
 		$this->assertEquals( 0, count( $arr )  );
 		
 		// $db->cerrar();
@@ -136,7 +139,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor insertado en el registro" );
 
 		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+		
 
 	}	
 	
@@ -163,7 +166,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( $error_esperado, $error_actual, 
 		"cuando se inserta un registro en una dependiente de dos tablas relacionadas, y no tiene el id correcto y debe fallar" );
 		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+		
 	}	
 
 	
@@ -180,7 +183,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		}
 		$this->assertEquals( $error_esperado, $error_actual, "cuando se inserta un registro con null deberia fallar" );
 		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+		
 	}	
 	
 	public function test_update_ok(){
@@ -198,7 +201,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor actualizado en el unico registro" );
 
 		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+		
 
 	}
 	
@@ -219,7 +222,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		}
 		$this->assertEquals( $error_esperado, $error_actual, "dos tablas relacionadas, se inserta un registro en una dependiente que no tiene el id correcto, debe fallar" );
 		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+	
 	}	
 
 	/* si convertimos la static en public static podemos probar esto

@@ -75,9 +75,6 @@ namespace mylib {
 		}
 		
 		function ejecutar( $query ){
-			//~ if( $this->db === null )
-				//~ throw new \Exception( "Conexion cerrada!" );
-
 			$res = $this->db->query( $query, MYSQLI_STORE_RESULT );
 
 			if( $this->db->errno != 0 ){
@@ -90,12 +87,14 @@ namespace mylib {
 			$lista = [];
 			while( true ){
 				$arr = $res->fetch_array( MYSQLI_ASSOC );
-				if( $arr === null )
+				if( $arr === null ) {
 					return $lista;
+				}
 				$lista[] = $arr;
 			}
-			return $lista;
+
 		}
+		
 		function esIgual( $db2 ){
 			return $this->db === $db2->db ;
 		}
