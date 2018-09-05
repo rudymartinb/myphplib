@@ -39,7 +39,7 @@ drop table test.relacionada2;
  * 
 */
 
-class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
+class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $host = "192.168.111.3";
 	private $user = "root";
 	private $pwd = "";
@@ -53,29 +53,6 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 	*/
 	
 
-	public function test_mal_catalogo(){
-		// version php 5.6 
-		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
-		
-		// version php 7.2
-		$error_esperado = "mysqli::__construct(): (42000/1049): Unknown database 'no_existe'";
-		
-		
-		$db = new mylib\mysql_wrapper( );			
-		$servidor = new DemoServidorSQL();
-		$servidor->set_catalogo( "no_existe" );
-		$error_actual = "";
-		$usuario = new DemoUsuarioSQL();
-
-		
-		try {
-			$db->abrir( $usuario, $servidor );	
-		} catch ( Exception $e ){
-			$error_actual = $e->getMessage();
-		}
-		$this->assertEquals( $error_esperado, $error_actual, "deberia dar error por no existir el catalogo " );
-		
-	}
 
 	public function test_select_uno_caso_feliz(){
 		
@@ -95,25 +72,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		
 	}
 
-	public function test_error_no_existe_tabla(){
-		$db = new mylib\mysql_wrapper();
-		
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
 
-		$db->abrir( $usuario, $servidor );			
-		
-		try {
-			$arr = $db->ejecutar( "SELECT * from test.algo" );	
-		} catch( Exception $x ) {
-			$error_actual = $x->getMessage();
-		}
-		$error_esperado = "Table 'test.algo' doesn't exist";
-		$this->assertEquals( $error_esperado, $error_actual, "no deberia existir tabla algo " );
-
-        $db->cerrar();
-		
-	}
 
 	public function test_SelectVacio(){
 		$db = new mylib\mysql_wrapper();
@@ -150,56 +109,7 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$db->cerrar();
 	}	
 
-	/* 
-	 * la idea es generar un error de sql mediante una falla de integridad de SQL
-	*/
-	public function test_insert_error(){
-		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
-		
-		$db = new mylib\mysql_wrapper();
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
-		$db->abrir( $usuario, $servidor );			
-        
-        $db->ejecutar( "start transaction;" );
-        
-		$query = "insert into test.relacionada1 set elotroid = 0";
-		
-		try {
-			$arr = $db->ejecutar( $query );
-		} catch( Exception $e ) {
-			$error_actual = $e->getMessage();
-		}
-		$this->assertEquals( $error_esperado, $error_actual, 
-		"cuando se inserta un registro en una dependiente de dos tablas relacionadas, y no tiene el id correcto y debe fallar" );
-		$arr = $db->ejecutar( "rollback;" );
-		
-		$db->cerrar();
-	}	
-
-	// este test funciona contra una tabla existente en catalogo test
-	public function test_insert_falla(){
-		$error_esperado = "Column 'algo' cannot be null";
-		
-		$db = new mylib\mysql_wrapper();
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
-		$db->abrir( $usuario, $servidor );			
-		
-		$db->ejecutar( "start transaction;" );
-		
-
-		try {
-			$arr = $db->ejecutar( "insert into test.relacionada2 set algo = null" );
-		} catch( Exception $e ) {
-			$error_actual = $e->getMessage();
-		}
-		$this->assertEquals( $error_esperado, $error_actual, "cuando se inserta un registro con null deberia fallar" );
-		$arr = $db->ejecutar( "rollback;" );
-		
-		$db->cerrar();
-		
-	}	
+	
 
 	public function test_update_ok(){
 		$db = new mylib\mysql_wrapper();
@@ -220,30 +130,6 @@ class mysql_wrapper_Test extends PHPUnit\Framework\TestCase {
 		$db->cerrar();
 	}
 	
-	public function test_update_error(){
-		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
-		
-		$db = new mylib\mysql_wrapper();
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
-		$db->abrir( $usuario, $servidor );
-		
-		$db->ejecutar( "start transaction;" );
-		$db->ejecutar( "insert into test.relacionada2 set algo = 'algo2'" );
-		$arr = $db->ejecutar( "select last_insert_id() as id" );
-		$db->ejecutar( "insert into test.relacionada1 set elotroid = ".$arr[0]['id'] );
-
-		try {
-			$arr = $db->ejecutar( "update test.relacionada1 set elotroid = 0" );
-		} catch( Exception $e ) {
-			$error_actual = $e->getMessage();
-		}
-		$this->assertEquals( $error_esperado, $error_actual, "dos tablas relacionadas, se inserta un registro en una dependiente que no tiene el id correcto, debe fallar" );
-		$arr = $db->ejecutar( "rollback;" );
-		
-		$db->cerrar();
-	
-	}		
 	
 	
 	/* si convertimos la static en public static podemos probar esto
