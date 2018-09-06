@@ -1,8 +1,14 @@
 <?php
+
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
-require_once( "../db/mysql_wrapper.php" );
-require_once( "credencialessql.php" );
+// $BASE = "/home/mantener/projects/myphplib";
+// $BASETEST = $BASE."/test";
+
+
+// require_once( $BASE."/db/mysql_wrapper.php" ); 
+// require_once( $BASETEST."/credencialessql.php" );
+
 error_reporting(E_ALL);
 
 /*
