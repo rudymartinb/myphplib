@@ -52,24 +52,15 @@ namespace mylib {
 			$this->db = new \mysqli( $host, $user, $pwd, $catalogo, $port );
 		}
 		
-		
-// 		function abierta() {
-// 			if( $this->db === null )
-// 				return false;
-// 			return $this->db->connect_errno != 0;
-// 		}
 
-		/* conviene cerrar unicamente si es estrictamente necesario
-		*/
 		function cerrar( ){
-// 			if( $this->abierta() ){ 
-				
-// 			}
+		    
 			$this->db->close();
 			$this->db = null;
 		}
 		
 		function ejecutar( $query ){
+		    
 			$res = $this->db->query( $query, MYSQLI_STORE_RESULT );
 
 			if( $this->db->errno != 0 ){
