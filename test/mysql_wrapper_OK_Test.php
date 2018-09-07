@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 /*
  * algun dia voy a tener q parar de armar wrappers de mysql
- * 
+ *  
  * que pretendo con la clase de objeto
  * 
  * 1) no tener que lidiar con rutinas internas de mysql
