@@ -2,8 +2,8 @@
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
 // 
-// require_once( "db/mysql_wrapper.php" );
-// require_once( "credencialessql.php" );
+require_once( "db/mysql_wrapper.php" );
+require_once( "credencialessql.php" );
 error_reporting(E_ALL);
 
 /*

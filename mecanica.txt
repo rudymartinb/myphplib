@@ -3,3 +3,10 @@
 quiero resolver cuestiones de a una:
 
 la cuestion de seguridad, armar una clase de objeto que encapsule las funcionalidades necesarias para la cuestion de seguridad.
+
+2018 09 06
+la idea de fondo es tener un testdouble al cual se le pueda preprogramar respuestas a consultas
+
+se pretende escribir pruebas para los controladores/adaptadores/colaboradores responsables de comunicarse con el SQL y obtener los datos.
+
+

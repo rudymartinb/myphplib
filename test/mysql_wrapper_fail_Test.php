@@ -2,12 +2,12 @@
 
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
-// $BASE = "/home/mantener/projects/myphplib";
-// $BASETEST = $BASE."/test";
+$BASE = "/home/rudy/projects/myphplib";
+$BASETEST = $BASE."/test";
 
 
-// require_once( $BASE."/db/mysql_wrapper.php" ); 
-// require_once( $BASETEST."/credencialessql.php" );
+require_once( $BASE."/db/mysql_wrapper.php" ); 
+require_once( $BASETEST."/credencialessql.php" );
 
 error_reporting(E_ALL);
 
