@@ -5,6 +5,7 @@ require_once( "test/credencialessql.php" );
 
 require_once 'test/mysql_wrapper_OK_Test.php';
 require_once 'test/mysql_wrapper_fail_Test.php';
+require_once 'test/getcreds_Test.php';
 
 
 /**
@@ -20,9 +21,11 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite
     {
         $this->setName('mymphplibSuite');
 
-        $this->addTestSuite('mysql_wrapper_OK_Test');
-
-        $this->addTestSuite('mysql_wrapper_fail_Test');
+        $this->addTestSuite( 'credenciales_OK_Test' );
+        
+        $this->addTestSuite( 'mysql_wrapper_OK_Test' );
+        $this->addTestSuite( 'mysql_wrapper_fail_Test' );
+        
     }
 
     /**

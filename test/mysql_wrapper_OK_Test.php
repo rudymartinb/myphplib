@@ -46,7 +46,10 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $pwd = "";
 	private $port = 3306;
 	private $catalogo = "";	
-     
+
+	public function test_gethostname(){
+		$this->assertEquals( "madcat3" , gethostname() );
+	}
 	/*
 	 * tiene sentido esto?
 	 * si voy a abrir una conexion a una base de datos, 
