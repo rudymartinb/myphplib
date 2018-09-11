@@ -2,8 +2,9 @@
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
 // 
-require_once( "db/mysql_wrapper.php" );
-require_once( "credencialessql.php" );
+//~ require_once( "db/mysql_interface.php" );
+//~ require_once( "db/mysql_wrapper.php" );
+//~ require_once( "credencialessql.php" );
 error_reporting(E_ALL);
 
 /*
@@ -47,9 +48,10 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $port = 3306;
 	private $catalogo = "";	
 
-	public function test_gethostname(){
-		$this->assertEquals( "madcat3" , gethostname() );
-	}
+	//~ public function test_gethostname(){
+		//~ $this->assertEquals( "madcat3" , gethostname() );
+	//~ }
+
 	/*
 	 * tiene sentido esto?
 	 * si voy a abrir una conexion a una base de datos, 
@@ -71,12 +73,10 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
         
 		$arr = $db->ejecutar( "SELECT '".$cadena."' as uno" );
 		
-		$this->assertEquals( $arr[0]['uno'] , $cadena, "ejecutar un select que devuelve una string deberia devolver la string" );
+		$this->assertEquals( $arr[0]['uno'] , $cadena, "al ejecutar un select que devuelve una string deberia devolver la string" );
 		$db->cerrar();
 		
 	}
-
-
 
 	public function test_SelectVacio(){
 		$db = new mylib\mysql_wrapper();
@@ -87,11 +87,12 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 		$db->abrir( $usuario, $servidor );			
 		$arr = $db->ejecutar( "SELECT * from (select 1 as uno) as queseyo where false" );
 
-		// $this->assertEquals( "array", gettype( $arr ), "ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"  );
-		$this->assertEquals( 0, count( $arr ), "ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
+		$this->assertEquals( 0, count( $arr ), "al ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
 		
 		$db->cerrar();
-	}		
+	}
+	
+	
 	public function test_InsertOK(){
 		$db = new mylib\mysql_wrapper();
 		
