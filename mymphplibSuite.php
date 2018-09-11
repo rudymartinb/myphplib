@@ -1,7 +1,7 @@
 <?php
 require_once( "db/mysql_interface.php" );
 require_once( "db/mysql_wrapper.php" );
-require_once( "db/mysql_mock.php" );
+require_once( "db/mysql_query_mock.php" );
 require_once( "test/credencialessql.php" );
 
 require_once 'test/mysql_wrapper_OK_Test.php';

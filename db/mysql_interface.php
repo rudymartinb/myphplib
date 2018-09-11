@@ -12,6 +12,10 @@ namespace mylib {
 		public function cerrar( );
 	}	
 	
+	interface proveedor_datos_query {
+		public function ejecutar( $query );
+	}		
+	
 	/* esto es una mezcla de credenciales 
 	 * e info de host de server
 	 * la idea es externalizar la implementacion en particular
