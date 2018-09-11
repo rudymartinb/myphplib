@@ -6,7 +6,7 @@ function leercreds() : Array {
 	$todo = file_get_contents( $_SERVER["HOME"]."/.creds/local.mysql.cred" );
 	$user = explode( PHP_EOL, $todo );
 	$lista = [];
-	foreach( $user as $key => $dato ){
+	foreach( $user as  $dato ){
 		$parte = explode( "=", $dato );
 		$lista[ $parte[0] ]  = $parte[1] ;
 	}
