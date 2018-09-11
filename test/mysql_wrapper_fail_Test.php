@@ -2,12 +2,12 @@
 
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
-$BASE = "/home/rudy/projects/myphplib";
-$BASETEST = $BASE."/test";
+//~ $BASE = $_SERVER["HOME"]."/projects/myphplib";
+//~ $BASETEST = $BASE."/test";
 
-
-require_once( $BASE."/db/mysql_wrapper.php" ); 
-require_once( $BASETEST."/credencialessql.php" );
+//~ require_once( $BASE."/db/mysql_interface.php" );
+//~ require_once( $BASE."/db/mysql_wrapper.php" ); 
+//~ require_once( $BASETEST."/credencialessql.php" );
 
 error_reporting(E_ALL);
 
@@ -73,9 +73,9 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$error_actual = "";
 		$usuario = new DemoUsuarioSQL();
 
-		
+				
 		try {
-			$db->abrir( $usuario, $servidor );	
+			$db->abrir( $usuario, $servidor );
 		} catch ( Exception $e ){
 			$error_actual = $e->getMessage();
 		}
