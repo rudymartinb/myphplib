@@ -1,4 +1,6 @@
 <?php
+use function mylib\build;
+
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
 // 
@@ -12,7 +14,7 @@ class mysql_mock_OK_Test extends PHPUnit\Framework\TestCase {
 	
 	public function test_select_uno_caso_feliz(){
 		
-		$db = new mylib\mysql_query_mock();
+		$db = mylib\mysql_query_mock::Builder()->build();
 		
 		$cadena = "sarasa estuvo aqui";
 		$query = "SELECT '".$cadena."' as uno";
@@ -28,21 +30,21 @@ class mysql_mock_OK_Test extends PHPUnit\Framework\TestCase {
 		
 	}
 
-	public function test_SelectVacio(){
-		$db = new mylib\mysql_query_mock();
+// 	public function test_SelectVacio(){
+// 		$db = new mylib\mysql_query_mock();
 		
 
-		$query = "SELECT * from (select 1 as uno) as queseyo where false";
+// 		$query = "SELECT * from (select 1 as uno) as queseyo where false";
 		
-		$devolver = [];
+// 		$devolver = [];
 		
-		$db->esperar( $query, function() use( $devolver ) { return $devolver; } );
+// 		$db->esperar( $query, function() use( $devolver ) { return $devolver; } );
 		
-		$arr = $db->ejecutar( $query );
+// 		$arr = $db->ejecutar( $query );
 
-		$this->assertEquals( 0, count( $arr ), "al ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
+// 		$this->assertEquals( 0, count( $arr ), "al ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
 		
-	}
+// 	}
 
 	
 

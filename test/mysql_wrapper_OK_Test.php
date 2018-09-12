@@ -74,6 +74,11 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 		$arr = $db->ejecutar( "SELECT '".$cadena."' as uno" );
 		
 		$this->assertEquals( $arr[0]['uno'] , $cadena, "al ejecutar un select que devuelve una string deberia devolver la string" );
+		
+		// $valor= $db->ejecutar( "SELECT last_insert_id() as idalumno" );
+		// var_dump( $valor );
+		
+		
 		$db->cerrar();
 		
 	}
