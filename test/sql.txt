@@ -1,0 +1,20 @@
+en el catalogo TEST del servidor local ejecutar los siguientes comandos
+
+drop table test.relacionada1;
+drop table test.relacionada2;
+
+CREATE TABLE  `test`.`relacionada2` (
+  `elotroid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `algo` varchar(10) NOT NULL,
+  PRIMARY KEY (`elotroid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='dependiente';
+
+CREATE TABLE  `test`.`relacionada1` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `elotroid` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_relacionada1_1` (`elotroid`),
+  CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='dependiente';
+
+
