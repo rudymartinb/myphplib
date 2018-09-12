@@ -1,5 +1,5 @@
 <?php
-use function mylib\build;
+// use function mylib\build;
 
 // require( "config.php" );
 // require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );

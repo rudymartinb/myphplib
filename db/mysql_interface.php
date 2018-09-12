@@ -5,16 +5,17 @@ namespace mylib {
 	 * q estas interfaces formen parte de la clase mysql_wrapper
 	 * pero php no lo permite
 	*/ 
-	interface proveedor_datos_sql {
-		// public function abrir( credenciales_host $cred  );
-		public function abrir( credenciales $usuario, host $servidor );
-		public function ejecutar( $query );
-		public function cerrar( );
-	}	
-	
 	interface proveedor_datos_query {
 		public function ejecutar( $query );
 	}		
+	
+	interface proveedor_datos_sql extends proveedor_datos_query {
+		// public function abrir( credenciales_host $cred  );
+		public function abrir( credenciales $usuario, host $servidor );
+		public function cerrar( );
+	}	
+	
+
 	
 	/* esto es una mezcla de credenciales 
 	 * e info de host de server
