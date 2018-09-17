@@ -54,12 +54,14 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$error_actual = "";
 		$usuario = new DemoUsuarioSQL();
 
+		$db->abrir( $usuario, $servidor );
 				
 		try {
-			$db->abrir( $usuario, $servidor );
+			
 		} catch ( Exception $e ){
 			$error_actual = $e->getMessage();
 		}
+		$error_actual = $db->get_error();
 		$this->assertEquals( $error_esperado, $error_actual, "deberia dar error por no existir el catalogo " );
 		
 	}
@@ -75,11 +77,13 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$db->abrir( $usuario, $servidor );			
 		
 		$error_actual = "";
-		try {
-			$db->ejecutar( "SELECT * from test.algo" );	
-		} catch( Exception $x ) {
-			$error_actual = $x->getMessage();
-		}
+		$db->ejecutar( "SELECT * from test.algo" );
+		$error_actual = $db->get_error();
+// 		try {
+				
+// 		} catch( Exception $x ) {
+// 			$error_actual = $x->getMessage();
+// 		}
 		$error_esperado = "Table 'test.algo' doesn't exist";
 		$this->assertEquals( $error_esperado, $error_actual, "no deberia existir tabla algo " );
 
@@ -104,11 +108,13 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$query = "insert into test.relacionada1 set elotroid = 0";
 		
 		$error_actual = "";
-		try {
-			$db->ejecutar( $query );
-		} catch( Exception $e ) {
-			$error_actual = $e->getMessage();
-		}
+		$db->ejecutar( $query );
+		$error_actual = $db->get_error();
+// 		try {
+			
+// 		} catch( Exception $e ) {
+// 			$error_actual = $e->getMessage();
+// 		}
 		$this->assertEquals( $error_esperado, $error_actual, 
 		"cuando se inserta un registro en una dependiente de dos tablas relacionadas, y no tiene el id correcto y debe fallar" );
 		$db->ejecutar( "rollback;" );
@@ -128,11 +134,15 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$db->ejecutar( "start transaction;" );
 		
 		$error_actual = "";
-		try {
-			$db->ejecutar( "insert into test.relacionada2 set algo = null" );
-		} catch( Exception $e ) {
-			$error_actual = $e->getMessage();
-		}
+		// $db->ejecutar( $query );
+		$db->ejecutar( "insert into test.relacionada2 set algo = null" );
+		$error_actual = $db->get_error();
+		
+// 		try {
+			
+// 		} catch( Exception $e ) {
+// 			$error_actual = $e->getMessage();
+// 		}
 		$this->assertEquals( $error_esperado, $error_actual, "cuando se inserta un registro con null deberia fallar" );
 		$db->ejecutar( "rollback;" );
 		
@@ -156,11 +166,13 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		$db->ejecutar( "insert into test.relacionada1 set elotroid = ".$arr[0]['id'] );
 
 		$error_actual = "";
+		$arr = $db->ejecutar( "update test.relacionada1 set elotroid = 0" );
 		try {
-			$arr = $db->ejecutar( "update test.relacionada1 set elotroid = 0" );
+			
 		} catch( Exception $e ) {
 			$error_actual = $e->getMessage();
 		}
+		$error_actual = $db->get_error();
 		$this->assertEquals( $error_esperado, $error_actual, "dos tablas relacionadas, se inserta un registro en una dependiente que no tiene el id correcto, debe fallar" );
 		$arr = $db->ejecutar( "rollback;" );
 		

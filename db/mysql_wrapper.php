@@ -5,6 +5,8 @@ namespace mylib {
 
 	class mysql_wrapper implements proveedor_datos_sql {
 		private $db = null;
+		private $error = "";
+		private $errno = "";
 
 		function abrir( credenciales $usuario, host $servidor ){
 			if( $this->db !== null )
@@ -19,6 +21,9 @@ namespace mylib {
 
 			$this->db = new \mysqli( $host, $user, $pwd, $catalogo, $port );
 		}
+		function get_error() : string {
+            return $this->error; 
+		}
 		
 
 		function cerrar( ){
@@ -32,7 +37,9 @@ namespace mylib {
 			$res = $this->db->query( $query, MYSQLI_STORE_RESULT );
 
 			if( $this->db->errno != 0 ){
-				throw new \Exception( $this->db->error );
+			    $this->errno = $this->db->errno;
+			    $this->error = $this->db->error;
+				// throw new \Exception( $this->db->error );
 			}
 			
 			if( gettype( $res ) == "boolean" )
