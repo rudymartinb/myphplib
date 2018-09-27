@@ -7,10 +7,20 @@ namespace mylib {
 		private $db = null;
 		private $error = "";
 		private $errno = "";
-
+		
+		function probar( host $servidor ){
+	        $host = $servidor->get_host();
+	        $catalogo = $servidor->get_catalogo();
+	        $port = $servidor->get_port();
+	        
+	        $this->db = new \mysqli( $host );
+	        return $this->db->ping();
+	        // $this->error = $this->db->connect_error;
+		        
+		}
 		function abrir( credenciales $usuario, host $servidor ){
 			if( $this->db !== null )
-				return;
+				return; 
 
 			$user = $usuario->get_user();
 			$pwd  = $usuario->get_pwd();
@@ -19,10 +29,13 @@ namespace mylib {
 			$catalogo = $servidor->get_catalogo();
 			$port = $servidor->get_port();
 
-			$this->db = new \mysqli( $host, $user, $pwd, $catalogo, $port );
+			$this->db = @new \mysqli( $host, $user, $pwd, $catalogo, $port );
+			$this->error = $this->db->connect_error;
+			
 		}
 		function get_error() : string {
-            return $this->error; 
+		    // $this->errno = ;
+		    return $this->error; 
 		}
 		
 
