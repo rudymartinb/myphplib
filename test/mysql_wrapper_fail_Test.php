@@ -40,31 +40,31 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	*/
 	
 
-	public function test_mal_catalogo(){
-		// version php 5.6 
-		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
+// 	public function test_mal_catalogo(){
+// 		// version php 5.6 
+// 		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
 		
-		// version php 7.2
-		$error_esperado = "mysqli::__construct(): (42000/1049): Unknown database 'no_existe'";
+// 		// version php 7.2
+// 		$error_esperado = "mysqli::__construct(): (42000/1049): Unknown database 'no_existe'";
 		
 		
-		$db = new mylib\mysql_wrapper( );			
-		$servidor = new DemoServidorSQL();
-		$servidor->set_catalogo( "no_existe" );
-		$error_actual = "";
-		$usuario = new DemoUsuarioSQL();
+// 		$db = new mylib\mysql_wrapper( );			
+// 		$servidor = new DemoServidorSQL();
+// 		$servidor->set_catalogo( "no_existe" );
+// 		$error_actual = "";
+// 		$usuario = new DemoUsuarioSQL();
 
-		$db->abrir( $usuario, $servidor );
+// 		$db->abrir( $usuario, $servidor );
 				
-		try {
+// 		try {
 			
-		} catch ( Exception $e ){
-			$error_actual = $e->getMessage();
-		}
-		$error_actual = $db->get_error();
-		$this->assertEquals( $error_esperado, $error_actual, "deberia dar error por no existir el catalogo " );
+// 		} catch ( Exception $e ){
+// 			$error_actual = $e->getMessage();
+// 		}
+// 		$error_actual = $db->get_error();
+// 		$this->assertEquals( $error_esperado, $error_actual, "deberia dar error por no existir el catalogo " );
 		
-	}
+// 	}
 
 
 

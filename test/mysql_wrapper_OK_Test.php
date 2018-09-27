@@ -50,9 +50,15 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $port = 3306;
 	private $catalogo = "";	
 
-	//~ public function test_gethostname(){
-		//~ $this->assertEquals( "madcat3" , gethostname() );
-	//~ }
+	public function test_test(){
+	    
+	    $db = new mylib\mysql_wrapper();
+	    
+	    $servidor = new DemoServidorSQL();
+	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
+	    
+	    
+	}
 
 	/*
 	 * tiene sentido esto?
