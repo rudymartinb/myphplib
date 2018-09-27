@@ -5,12 +5,12 @@ require_once( "db/mysql_query_mock.php" );
 
 require_once( "session/session.php" );
 
-require_once( "test/credencialessql.php" );
+require_once( "test/mysql_wrapper/credencialessql.php" );
 
-require_once 'test/mysql_wrapper_OK_Test.php';
-require_once 'test/mysql_mock.Test.php';
-require_once 'test/mysql_wrapper_fail_Test.php';
-require_once 'test/getcreds_Test.php';
+require_once 'test/mysql_wrapper/mysql_wrapper_OK_Test.php';
+require_once 'test/mysql_wrapper/mysql_mock.Test.php';
+require_once 'test/mysql_wrapper/mysql_wrapper_fail_Test.php';
+require_once 'test/mysql_wrapper/getcreds_Test.php';
 
 require_once 'test/session_user.Test.php';
 

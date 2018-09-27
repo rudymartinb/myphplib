@@ -1,10 +1,5 @@
 <?php
-// require( "config.php" );
-// require_once( $DIST.$CLASS.$DEMO."/cFakeDB.php" );
-// 
-//~ require_once( "db/mysql_interface.php" );
-//~ require_once( "db/mysql_wrapper.php" );
-//~ require_once( "credencialessql.php" );
+
 error_reporting(E_ALL);
 
 /*
@@ -65,87 +60,82 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	 * si voy a abrir una conexion a una base de datos, 
 	 * me importar'ia mas saber si funciono o no
 	*/
+
 	
+	function dbsetup( $query  ) {
+	    // return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
+	    $db = new myphplib\mysql_wrapper();
+	    $servidor = new DemoServidorSQL();
+	    $usuario = new DemoUsuarioSQL();
+	    $db->abrir( $usuario, $servidor );
+	    $arr = $db->ejecutar( $query );
+	    $db->cerrar();
+	    return $arr; 
+	    // return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
+	}
+	
+	function dbsetupfun( $query  ) {
+	    $db = new myphplib\mysql_wrapper();
+	    $servidor = new DemoServidorSQL();
+	    $usuario = new DemoUsuarioSQL();
+	    $db->abrir( $usuario, $servidor );
+	    $arr = $query( $db );
+	    $db->cerrar();
+	    return $arr;
+	}
 
 
 	public function test_select_uno_caso_feliz(){
 		
-	    $db = new myphplib\mysql_wrapper();
-		
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
-		$db->abrir( $usuario, $servidor );			
-
-		
-		$cadena = "sarasa estuvo aqui";
-        
-		$arr = $db->ejecutar( "SELECT '".$cadena."' as uno" );
-		
+	    $cadena = "sarasa estuvo aqui";
+	    $query = "SELECT '".$cadena."' as uno";
+	    
+	    $arr = $this->dbsetup( $query );
 		$this->assertEquals( $arr[0]['uno'] , $cadena, "al ejecutar un select que devuelve una string deberia devolver la string" );
-		
-		// $valor= $db->ejecutar( "SELECT last_insert_id() as idalumno" );
-		// var_dump( $valor );
-		
-		
-		$db->cerrar();
 		
 	}
 
 	public function test_SelectVacio(){
-	    $db = new myphplib\mysql_wrapper();
-		
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
+	    $query = "SELECT * from (select 1 as uno) as queseyo where false";
 
-		$db->abrir( $usuario, $servidor );			
-		$arr = $db->ejecutar( "SELECT * from (select 1 as uno) as queseyo where false" );
+		$arr = $this->dbsetup( $query );
 
 		$this->assertEquals( 0, count( $arr ), "al ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
 		
-		$db->cerrar();
 	}
 	
 	
 	public function test_InsertOK(){
-	    $db = new myphplib\mysql_wrapper();
-		
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
 
-		$db->abrir( $usuario, $servidor );			
-        
-		$db->ejecutar( "start transaction;" );
-		$db->ejecutar( "delete from test.relacionada2;" );
-		$db->ejecutar( "insert into test.relacionada2 set algo = 'queseyo'" );
+		$funcion = function( $db ) {
+    		$db->ejecutar( "start transaction;" );
+    		$db->ejecutar( "delete from test.relacionada2;" );
+    		$db->ejecutar( "insert into test.relacionada2 set algo = 'queseyo'" );
+    		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
+    		return $arr;
+		} ;
 		
-		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
-		
+		$arr = $this->dbsetupfun( $funcion );
 		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor insertado en el registro" );
 
-		$arr = $db->ejecutar( "rollback;" );
-		
-		$db->cerrar();
 	}	
 
 	
 
 	public function test_update_ok(){
-	    $db = new myphplib\mysql_wrapper();
-		$servidor = new DemoServidorSQL();
-		$usuario = new DemoUsuarioSQL();		
-		$db->abrir( $usuario, $servidor );			
-				
-		$db->ejecutar( "start transaction;" );
-		$db->ejecutar( "delete from test.relacionada2;" );
-		$db->ejecutar( "insert into test.relacionada2 set algo = 'otra'" );
-		$db->ejecutar( "update test.relacionada2 set algo = 'queseyo'" );
-		
-		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
-		
-		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor actualizado en el unico registro" );
+	    
+		$funcion = function( $db ) {
+		    $db->ejecutar( "start transaction;" );
+		    $db->ejecutar( "delete from test.relacionada2;" );
+		    $db->ejecutar( "insert into test.relacionada2 set algo = 'otra'" );
+		    $db->ejecutar( "update test.relacionada2 set algo = 'queseyo'" );
+		    $arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
+		    return $arr;
+		    
+		};
+		$arr = $this->dbsetupfun( $funcion );
 
-		$arr = $db->ejecutar( "rollback;" );
-		$db->cerrar();
+		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor actualizado en el unico registro" );
 	}
 	
 	
