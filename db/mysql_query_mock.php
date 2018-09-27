@@ -1,7 +1,7 @@
 <?php
 
 
-namespace mylib {
+namespace myphplib {
     
 	class mysql_query_mock implements proveedor_datos_query {
 		private $adevolver = [];

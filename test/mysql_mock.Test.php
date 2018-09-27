@@ -14,7 +14,7 @@ class mysql_mock_OK_Test extends PHPUnit\Framework\TestCase {
 	
 	public function test_select_uno_caso_feliz(){
 		
-		$db = mylib\mysql_query_mock::Builder()->build();
+	    $db = myphplib\mysql_query_mock::Builder()->build();
 		
 		$cadena = "sarasa estuvo aqui";
 		$query = "SELECT '".$cadena."' as uno";

@@ -1,5 +1,5 @@
 <?php
-namespace mylib {
+namespace myphplib {
 	
 	/* lo optimo hubiera sido 
 	 * q estas interfaces formen parte de la clase mysql_wrapper

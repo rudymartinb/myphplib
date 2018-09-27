@@ -1,7 +1,7 @@
 <?php
 
 
-namespace mylib {
+namespace myphplib {
 
 	class mysql_wrapper implements proveedor_datos_sql {
 		private $db = null;
@@ -9,10 +9,7 @@ namespace mylib {
 		private $errno = "";
 		
 		function probar( host $servidor ){
-	        $host = $servidor->get_host();
-	        $catalogo = $servidor->get_catalogo();
-	        $port = $servidor->get_port();
-	        
+	        $host = $servidor->get_host();        
 	        $this->db = new \mysqli( $host );
 	        return $this->db->ping();
 	        // $this->error = $this->db->connect_error;

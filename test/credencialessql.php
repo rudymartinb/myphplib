@@ -14,8 +14,8 @@ function leercreds() : Array {
 }
 
 
-class DemoUsuarioSQL implements mylib\credenciales {
-	private static $user = "";
+class DemoUsuarioSQL implements myphplib\credenciales {
+	private static $user = ""; 
 	private static $pwd = "";
 	
 	public function get_user(){ 
@@ -41,7 +41,7 @@ class DemoUsuarioSQL implements mylib\credenciales {
 	}
 }
 
-class DemoServidorSQL implements mylib\host {
+class DemoServidorSQL implements myphplib\host {
 	private $host = "127.0.0.1";
 	private $port = 3306;
 	private $catalogo = "";	

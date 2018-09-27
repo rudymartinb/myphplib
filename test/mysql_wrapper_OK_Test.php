@@ -52,7 +52,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 
 	public function test_test(){
 	    
-	    $db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 	    
 	    $servidor = new DemoServidorSQL();
 	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
@@ -70,7 +70,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 
 	public function test_select_uno_caso_feliz(){
 		
-		$db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
@@ -92,7 +92,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	}
 
 	public function test_SelectVacio(){
-		$db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
@@ -107,7 +107,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	
 	
 	public function test_InsertOK(){
-		$db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
@@ -130,7 +130,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	
 
 	public function test_update_ok(){
-		$db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );			
@@ -153,13 +153,13 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	/* si convertimos la static en public static podemos probar esto
 	 * */
 	function test_Mismo_Obj(){
-		$db = new mylib\mysql_wrapper( );
+	    $db = new myphplib\mysql_wrapper( );
 
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );
 						
-		$db2 = new mylib\mysql_wrapper(  );
+		$db2 = new myphplib\mysql_wrapper(  );
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		

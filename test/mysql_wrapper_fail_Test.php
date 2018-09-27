@@ -69,7 +69,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 
 
 	public function test_error_no_existe_tabla(){
-		$db = new mylib\mysql_wrapper();
+	    $db = new myphplib\mysql_wrapper();
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
@@ -98,7 +98,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	public function test_insert_error(){
 		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
-		$db = new mylib\mysql_wrapper();
+		$db = new myphplib\mysql_wrapper();
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );			
@@ -126,7 +126,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	public function test_insert_falla(){
 		$error_esperado = "Column 'algo' cannot be null";
 		
-		$db = new mylib\mysql_wrapper();
+		$db = new myphplib\mysql_wrapper();
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );			
@@ -155,7 +155,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	public function test_update_error(){
 		$error_esperado = "Cannot add or update a child row: a foreign key constraint fails (`test`.`relacionada1`, CONSTRAINT `FK_relacionada1_1` FOREIGN KEY (`elotroid`) REFERENCES `relacionada2` (`elotroid`))";
 		
-		$db = new mylib\mysql_wrapper();
+		$db = new myphplib\mysql_wrapper();
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );
