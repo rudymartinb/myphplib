@@ -31,7 +31,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	 * me importar'ia mas saber si funciono o no
 	*/
 
-	function dbsetup( $query  ) {
+	function dbsetup( $query  ) { 
 	    return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
 	}
 
@@ -52,12 +52,6 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	}
 	
 	public function test_mal_catalogo(){
-		// version php 5.6 
-		$error_esperado = "mysqli::mysqli(): (HY000/1049): Unknown database 'no_existe'";
-		
-		// version php 7.2
-		$error_esperado = "mysqli::__construct(): (42000/1049): Unknown database 'no_existe'";
-
 		// ultimo cambio despues de sacar el try
 		$error_esperado = "Unknown database 'no_existe'";
 		

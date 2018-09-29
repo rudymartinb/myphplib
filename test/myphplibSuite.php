@@ -13,7 +13,7 @@ require_once 'test/mysql_wrapper/mysql_wrapper_fail_Test.php';
 require_once 'test/mysql_wrapper/getcreds_Test.php';
 
 require_once 'test/session_user.Test.php';
-
+ 
 
 /**
  * Static test suite.

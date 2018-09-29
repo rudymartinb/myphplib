@@ -45,33 +45,19 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $port = 3306;
 	private $catalogo = "";	
 
-	public function test_test(){
-	    
-	    $db = new myphplib\mysql_wrapper();
-	    
-	    $servidor = new DemoServidorSQL();
-	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
-	    
-	    
-	}
-
 	/*
 	 * tiene sentido esto?
-	 * si voy a abrir una conexion a una base de datos, 
+	 * si voy a abrir una conexion a una base de datos,
 	 * me importar'ia mas saber si funciono o no
-	*/
-
-	
-	function dbsetup( $query  ) {
-	    // return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
+	 */
+	public function test_test(){
 	    $db = new myphplib\mysql_wrapper();
 	    $servidor = new DemoServidorSQL();
-	    $usuario = new DemoUsuarioSQL();
-	    $db->abrir( $usuario, $servidor );
-	    $arr = $db->ejecutar( $query );
-	    $db->cerrar();
-	    return $arr; 
-	    // return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
+	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
+	}
+
+	function dbsetup( $query  ) {
+	    return $this->dbsetupfun( function( $db ) use( $query ) { return $db->ejecutar( $query ); } ) ;
 	}
 	
 	function dbsetupfun( $query  ) {
@@ -84,29 +70,20 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	    return $arr;
 	}
 
-
 	public function test_select_uno_caso_feliz(){
-		
 	    $cadena = "sarasa estuvo aqui";
 	    $query = "SELECT '".$cadena."' as uno";
-	    
 	    $arr = $this->dbsetup( $query );
 		$this->assertEquals( $arr[0]['uno'] , $cadena, "al ejecutar un select que devuelve una string deberia devolver la string" );
-		
 	}
 
 	public function test_SelectVacio(){
 	    $query = "SELECT * from (select 1 as uno) as queseyo where false";
-
 		$arr = $this->dbsetup( $query );
-
 		$this->assertEquals( 0, count( $arr ), "al ejecutar un select que devuelve una consulta vacia deberia devolver un array vacio"    );
-		
 	}
 	
-	
 	public function test_InsertOK(){
-
 		$funcion = function( $db ) {
     		$db->ejecutar( "start transaction;" );
     		$db->ejecutar( "delete from test.relacionada2;" );
@@ -114,16 +91,13 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
     		$arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
     		return $arr;
 		} ;
-		
 		$arr = $this->dbsetupfun( $funcion );
 		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor insertado en el registro" );
-
 	}	
 
 	
 
 	public function test_update_ok(){
-	    
 		$funcion = function( $db ) {
 		    $db->ejecutar( "start transaction;" );
 		    $db->ejecutar( "delete from test.relacionada2;" );
@@ -131,14 +105,10 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 		    $db->ejecutar( "update test.relacionada2 set algo = 'queseyo'" );
 		    $arr = $db->ejecutar( "SELECT algo from test.relacionada2" );
 		    return $arr;
-		    
 		};
 		$arr = $this->dbsetupfun( $funcion );
-
 		$this->assertEquals( "queseyo", $arr[0]['algo'], "valor actualizado en el unico registro" );
 	}
-	
-	
 	
 	/* si convertimos la static en public static podemos probar esto
 	 * */
@@ -161,8 +131,6 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 		$db->cerrar();		
 		$db2->cerrar();
 	}
-	
-	
 
 }
 ?>
