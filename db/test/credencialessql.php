@@ -1,44 +1,32 @@
 <?php
 error_reporting(E_ALL);
 
-
-function leercreds() : Array {
-	$todo = file_get_contents( $_SERVER["HOME"]."/.creds/local.mysql.cred" );
-	$user = explode( PHP_EOL, $todo );
-	$lista = [];
-	foreach( $user as  $dato ){
-		$parte = explode( "=", $dato );
-		$lista[ $parte[0] ]  = $parte[1] ;
-	}
-	return $lista;
-}
-
-
 class DemoUsuarioSQL implements myphplib\credenciales {
 	private static $user = ""; 
 	private static $pwd = "";
+
+	function __construct(){
+	    $todo = file_get_contents( $_SERVER["HOME"]."/.creds/local.mysql.cred" );
+	    $user = explode( PHP_EOL, $todo );
+	    $list = [];
+	    foreach( $user as  $dato ){
+	        $parte = explode( "=", $dato );
+	        $list[ $parte[0] ]  = $parte[1] ;
+	    }
+	    
+	    self::$user = $list["user"];
+	    self::$pwd  = $list["pwd"];
+	}
 	
 	public function get_user(){ 
-		if( self::$user == "" ){
-			$this->leercreds();
-		}
-		
 		return self::$user;	
 	}
 	public function get_pwd() { 
-		if( self::$pwd == "" ){
-			$this->leercreds();
-		}		
-		
 		return self::$pwd;	
 	}
 	
-	public function leercreds() {
-		$list = leercreds();
-		self::$user = $list["user"];
-		self::$pwd  = $list["pwd"];
-		
-	}
+// 	public function leercreds() {
+// 	}
 }
 
 class DemoServidorSQL implements myphplib\host {

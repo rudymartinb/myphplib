@@ -12,9 +12,8 @@ namespace myphplib {
 	        $host = $servidor->get_host();        
 	        $this->db = new \mysqli( $host );
 	        return $this->db->ping();
-	        // $this->error = $this->db->connect_error;
-		        
 		}
+		
 		function abrir( credenciales $usuario, host $servidor ){
 			if( $this->db !== null )
 				return; 

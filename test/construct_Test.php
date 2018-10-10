@@ -1,5 +1,4 @@
 <?php
-
 /*
  * esta prueba *no* incluida en el test Suite
  */

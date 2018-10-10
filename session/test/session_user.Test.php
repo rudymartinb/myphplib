@@ -1,7 +1,6 @@
 <?php
 use myphplib\session\session_user;
 
-
 class session_user_test extends PHPUnit\Framework\TestCase {
 	
     function mysetup( $evaluar )  {
