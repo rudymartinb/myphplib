@@ -10,3 +10,7 @@ la idea de fondo es tener un testdouble al cual se le pueda preprogramar respues
 se pretende escribir pruebas para los controladores/adaptadores/colaboradores responsables de comunicarse con el SQL y obtener los datos.
 
 
+2018 10 10
+inicio derivador, la idea es tener codigo sobre el cual se registren las llamadas get y a donde tiene que ir a parar.
+no estoy convencido respecto de ejecutar() porque hace una validacion 
+
