@@ -13,7 +13,6 @@
 use ldap\ldap;
 
 class ldap_test extends PHPUnit\Framework\TestCase {
-    // private $server = ;
     
     public function mysetup( string $username, string $password ) : ldap {
         $ldap = new ldap();
@@ -22,7 +21,7 @@ class ldap_test extends PHPUnit\Framework\TestCase {
         return $ldap;
     }
 
-    /* microtest para corroborar el pattern usado
+    /* microtest para corroborar el pattern usado en convertiradn()
      */
     public function test_server_a_dn(){
         $pattern = "|((?<parte>[a-z0-0A-Z]*)[\.]?)|";
@@ -31,13 +30,7 @@ class ldap_test extends PHPUnit\Framework\TestCase {
         $this->assertEquals( "dep", $matches["parte"][0] );
         $this->assertEquals( "local", $matches["parte"][1] );
     }
-    
-    public function test_convertir_server_a_dn(){
-        $ldap = new ldap();
-        $this->assertEquals( "CN=Users,DC=dep,DC=local" , $ldap->convertiradn( "dep.local" ) );
-    }
-        
-    
+
 	public function test_caso1_conectar(){
         $username = '1armador';
 		$password = '1armador1';

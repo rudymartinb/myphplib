@@ -56,12 +56,10 @@ namespace ldap {
                         $this->grupos[] = $matches["grupo"][0];
                     }
                 }
-                
             }
-            
         }
         
-        function convertiradn( $server ){
+        private function convertiradn( $server ){
             $pattern = "|((?<parte>[a-z0-0A-Z]*)[\.]?)|";
             $matches = null;
             preg_match_all($pattern, $server, $matches );
@@ -78,7 +76,7 @@ namespace ldap {
         function pertenece_grupo( $grupo ) : bool {
             return array_search( $grupo, $this->grupos ) !== false ;
         }
-        
+         
         function get_grupos(){
             return $this->grupos;
         }
