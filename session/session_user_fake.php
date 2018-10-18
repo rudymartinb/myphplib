@@ -19,14 +19,19 @@ namespace myphplib\session {
             return $this->name == $name;
         }
         
-        function set( $nombre, $valor ){
+        function data_set( $nombre, $valor ){
             $this->valores[ $nombre ] = $valor ;
         }
         
-        function get( $nombre ){
+        function data_get( $nombre ) {
             if( array_key_exists( $nombre, $this->valores ) )
                 return $this->valores[ $nombre ];
-                return "";
+            return "";
+        }
+        
+        function data_unset( string $clave ){
+            if( array_key_exists( $clave, $this->valores ) )
+                unset( $this->valores[ $clave ] );
         }
         
         function unset(){

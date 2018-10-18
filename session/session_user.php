@@ -5,8 +5,9 @@ namespace myphplib\session {
         function status();
         function name( $name );
         function is_registered( $name  );
-        function set( $nombre, $valor );
-        function get( $nombre );
+        function data_set( $nombre, $valor );
+        function data_get( $nombre );
+        function data_unset( string $clave );
         function unset();
         function destroy();
     }
@@ -31,16 +32,21 @@ namespace myphplib\session {
             return isset( $_SESSION[ $name ] );
         }
         
-        function set( $nombre, $valor ){
+        function data_set( $nombre, $valor ){
             global $_SESSION;
             $_SESSION[ $nombre ] = $valor ;
         }
         
-        function get( $nombre ){
+        function data_get( $nombre ){
             global $_SESSION;
             if( array_key_exists( $nombre,  $_SESSION ) )
                 return $_SESSION[ $nombre ];
                 return "";
+        }
+        function data_unset( string $clave ){
+            global $_SESSION;
+            if( array_key_exists( $clave, $_SESSION ) )
+                unset( $_SESSION[ $clave ] ) ;
         }
         
         function unset(){
