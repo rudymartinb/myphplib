@@ -25,8 +25,6 @@ class DemoUsuarioSQL implements myphplib\credenciales {
 		return self::$pwd;	
 	}
 	
-// 	public function leercreds() {
-// 	}
 }
 
 class DemoServidorSQL implements myphplib\host {

@@ -30,6 +30,13 @@ require_once 'ldap/ldap.php';
 
 require_once 'ldap/test/ldap.Test.php';
 
+// session_data
+require_once "session_data/session_data.php" ;
+require_once "session_data/session_data_fake.php" ;
+require_once "session_data/test/session_data_Test.php" ;
+require_once "session_data/test/session_data_fake.Test.php" ;
+
+
 
 
 class mymphplibSuite extends PHPUnit\Framework\TestSuite {
@@ -51,6 +58,9 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'derivadorListaTest' );
         
         $this->addTestSuite( 'ldap_test' );
+        
+        $this->addTestSuite( 'session_data_Test' );
+        $this->addTestSuite( 'session_data_fake_Test' );
         
     }
 

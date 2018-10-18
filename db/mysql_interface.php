@@ -10,12 +10,9 @@ namespace myphplib {
 	}		
 	
 	interface proveedor_datos_sql extends proveedor_datos_query {
-		// public function abrir( credenciales_host $cred  );
 		public function abrir( credenciales $usuario, host $servidor );
 		public function cerrar( );
 	}	
-	
-
 	
 	/* esto es una mezcla de credenciales 
 	 * e info de host de server
@@ -24,13 +21,10 @@ namespace myphplib {
 	 * o que la info devuelta sea dinamica en funcion del usuario que se loguea
 	 * interface credenciales_host extends credenciales, host {	}
 	*/
-	
-
 	interface credenciales {
 		public function get_user();
 		public function get_pwd();
 	}
-	
 	
 	interface host {
 		public function get_host();

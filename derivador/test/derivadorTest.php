@@ -5,13 +5,14 @@ use derivador\Derivador;
 /**
  * derivador test case.
  */
-class derivadorTest extends PHPUnit\Framework\TestCase
-{
+class derivadorTest extends PHPUnit\Framework\TestCase {
 
-    function testSarasa(){
+    function testCasoFeliz(){
         $este = $this;
         $url = "/sarasa"; 
-        $funcion = function() use ($este){ $este->assertTrue( true );  };
+        $funcion = function() use ($este){ 
+            $este->assertTrue( true );  
+        };
         
         $derivador = new Derivador();
         

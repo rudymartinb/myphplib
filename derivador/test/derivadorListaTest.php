@@ -20,16 +20,15 @@ class derivadorListaTest extends PHPUnit\Framework\TestCase {
     
     function testFuncion(){
         $url = "/sarasa";
-        $funcion = function(){
-            return true;
+        $funcion = function() {
+            $this->assertTrue( true );
         };
         
         $lista = new derivadorLista();
         $lista->agregar( $url, $funcion  );
         
         $ret = $lista->funcion( $url );
-        $this->assertTrue( is_callable( $ret ) );
-        
+        $ret();
         
     }
     

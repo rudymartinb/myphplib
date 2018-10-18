@@ -14,3 +14,5 @@ se pretende escribir pruebas para los controladores/adaptadores/colaboradores re
 inicio derivador, la idea es tener codigo sobre el cual se registren las llamadas get y a donde tiene que ir a parar.
 no estoy convencido respecto de ejecutar() porque hace una validacion 
 
+2018 10 15
+eliminado phpunit del repo. eclipse hace macanas y me extrae el phar

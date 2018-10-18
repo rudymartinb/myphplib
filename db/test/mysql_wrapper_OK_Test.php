@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 /*
  * algun dia voy a tener q parar de armar wrappers de mysql
@@ -8,7 +8,7 @@ error_reporting(E_ALL);
  * 
  * 1) no tener que lidiar con rutinas internas de mysql
  * 2) delegar totalmente el tratamiento de errores (is this wise?)
- * 3) no tener q andar pasando un  objeto conexion_a_db a todos lados
+ * 3) no tener q andar pasando un  objeto conexion_a_db a todos lados 
  * 4) hacer una coinsulta y recibir todos los datos como array
  * 5) hacer una subclase como testdouble  (IMPORTANTE ?!)
  * 
@@ -44,17 +44,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	private $port = 3306;
 	private $catalogo = "";	
 
-	/*
-	 * tiene sentido esto?
-	 * si voy a abrir una conexion a una base de datos,
-	 * me importar'ia mas saber si funciono o no
-	 */
-	public function test_test(){
-	    $db = new myphplib\mysql_wrapper();
-	    $servidor = new DemoServidorSQL();
-	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
-	}
-
+	
 	function dbsetup( $query  ) {
 	    return $this->dbsetupfun( function( $db ) use( $query ) { return $db->ejecutar( $query ); } ) ;
 	}
@@ -67,6 +57,16 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	    $arr = $query( $db );
 	    $db->cerrar();
 	    return $arr;
+	}
+	
+	/*
+	 * si voy a abrir una conexion a una base de datos,
+	 * estaria bueno saber de antemano si la conexion funciona
+	 */
+	public function test_test(){
+	    $db = new myphplib\mysql_wrapper();
+	    $servidor = new DemoServidorSQL();
+	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
 	}
 
 	public function test_select_uno_caso_feliz(){
