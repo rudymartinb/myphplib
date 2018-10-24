@@ -1,21 +1,23 @@
 <?php
-namespace myphplib\session {
+namespace session_user {
+    use session_data\session_data_fake;
+    use session_data\session_data_interface;
     
     class session_user_fake implements session_user_interface  {
         private $status = PHP_SESSION_NONE;
         private $name = "";
         private $valores = [];
         
-        function start(){
+        function inicio(){
             $this->status = PHP_SESSION_ACTIVE;
         }
-        function status(){
+        function estado(){
             return $this->status;
         }
-        function name( $name ){
+        function nombre( $name ){
             $this->name = $name;
         }
-        function is_registered( $name  ){
+        function esta_registrada( $name  ){
             return $this->name == $name;
         }
         
@@ -42,6 +44,12 @@ namespace myphplib\session {
             $this->status = PHP_SESSION_NONE;
             $this->valores = [];
         }
+        public function get_data() : session_data_interface  {
+            $data = new session_data_fake();
+            return $data;
+        }
+    
+    
         
     }
 }

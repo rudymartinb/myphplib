@@ -11,13 +11,6 @@ require_once 'db/test/mysql_wrapper_OK_Test.php';
 require_once 'db/test/mysql_wrapper_fail_Test.php';
 
 // ---------------
-require_once( "session/session_user.php" );
-require_once( "session/session_user_fake.php" );
-
-require_once 'session/test/session_user.Test.php';
-require_once 'session/test/session_user_fake.Test.php';
-
-// ---------------
 require_once 'derivador/derivadorLista.php';
 require_once 'derivador/test/derivadorListaTest.php';
 
@@ -31,10 +24,19 @@ require_once 'ldap/ldap.php';
 require_once 'ldap/test/ldap.Test.php';
 
 // session_data
+require_once "session_data/session_data_interface.php" ;
 require_once "session_data/session_data.php" ;
 require_once "session_data/session_data_fake.php" ;
 require_once "session_data/test/session_data_Test.php" ;
 require_once "session_data/test/session_data_fake.Test.php" ;
+
+// ---------------
+require_once( "session_user/session_user_interface.php" );
+require_once( "session_user/session_user.php" );
+require_once( "session_user/session_user_fake.php" );
+
+require_once 'session_user/test/session_user.Test.php';
+require_once 'session_user/test/session_user_fake.Test.php';
 
 
 

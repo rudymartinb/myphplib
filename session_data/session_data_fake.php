@@ -1,11 +1,11 @@
 <?php
 namespace session_data {
-    class session_data_fake {
+    class session_data_fake implements session_data_interface {
     	private $valores;
-    	function session_fake () {
-    		$this->valores = [];
+    	function __construct(){
+    	    $this->valores = [];
     	}
-    	function get( $clave ) {
+    	function get( string $clave ) {
     		if( !isset( $this->valores[ $clave ] ) ){
     			return "";
     		}
@@ -13,9 +13,11 @@ namespace session_data {
     		return $this->valores[ $clave ] ;
     	}
     
-    	function set( $clave, $valor ) {
+    	function set( string $clave, $valor ) {
     		$this->valores[ $clave ] = $valor;
     		return ;
+    	}
+    	function unset( string $clave ) {
     	}
     }
 }

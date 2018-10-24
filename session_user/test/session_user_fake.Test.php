@@ -1,6 +1,6 @@
 <?php
 
-use myphplib\session\session_user_fake;
+use session_user\session_user_fake;
 
 /**
  * session_user_fake test case.
@@ -14,7 +14,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
      */
     function mysetup( $evaluar )  {
         $session_user = new session_user_fake();
-        $session_user->start();
+        $session_user->inicio();
         $actual = $evaluar( $session_user );
         $session_user->unset();
         $session_user->destroy();
@@ -27,7 +27,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
      */
     function test_session_start(){
         $actual = $this->mysetup( function( $session ) {
-            return $session->status();
+            return $session->estado();
         }   );
             
         $this->assertEquals( PHP_SESSION_ACTIVE, $actual, "PHP_SESSION_ACTIVE" );
@@ -39,7 +39,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
      */
     function test_session_name_fail(){
         $actual = $this->mysetup( function( $session_user ) {
-            return $session_user->is_registered( "sarasaxyz" ) ;
+            return $session_user->esta_registrada( "sarasaxyz" ) ;
         }   );
             
         $this->assertEquals( false, $actual , "is_registered" );
@@ -73,7 +73,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     function test_unset_destroy(){
         
         $session_user = new session_user_fake();
-        $session_user->start();
+        $session_user->inicio();
         $session_user->data_set( "sarasa", "palomon" );
         $session_user->unset();
         $session_user->destroy();
@@ -86,7 +86,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     function test_data_unset(){
         
         $session_user = new session_user_fake();
-        $session_user->start();
+        $session_user->inicio();
         $session_user->data_set( "sarasa", "palomon" );
         $session_user->data_unset("sarasa");
         $this->assertEquals( "", $session_user->data_get( "sarasa" ), "get" );
