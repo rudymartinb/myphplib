@@ -1,17 +1,12 @@
 <?php
-
 use derivador\Derivador;
 
-/**
- * derivador test case.
- */
 class derivadorTest extends PHPUnit\Framework\TestCase {
 
     function testCasoFeliz(){
-        $este = $this;
         $url = "/sarasa"; 
-        $funcion = function() use ($este){ 
-            $este->assertTrue( true );  
+        $funcion = function() {
+            $this->assertTrue( true );  
         };
         
         $derivador = new Derivador();
@@ -20,11 +15,16 @@ class derivadorTest extends PHPUnit\Framework\TestCase {
         $derivador->ejecutar( $url );
     }
     
+    /*
+     * no tiene sentido correr ejecutar() con un dato inexistente sin verificar nada
+     * (la prueba es demasiado trivial y no demuestra nada por si misma)
+     * tiene mas color hacer la prueba sobre existe() que devuelve algo  
+     */
     function testFail(){
         $derivador = new Derivador();
-        
-        $derivador->ejecutar( "/nada" );
-        $this->assertTrue( true );
+        $derivador->ejecutar( "/estonohacenada" );
+
+        $this->assertFalse( $derivador->existe( "/estotampoco" ) );
     }
     
 }

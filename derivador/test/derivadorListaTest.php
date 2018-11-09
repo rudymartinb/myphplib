@@ -5,31 +5,41 @@ use derivador\derivadorLista;
  * derivadorItem test case.
  */
 class derivadorListaTest extends PHPUnit\Framework\TestCase {
-    function testNew(){
-        $url = "/sarasa";
-        $funcion = function(){
-          return true;  
+    private $lista;
+    private $url;
+    function mysetup(){
+        $this->url = "/sarasa";
+        $funcion = function() {
+            return true;
         };
-        
-        $lista = new derivadorLista();
-        $lista->agregar( $url, $funcion  );
-        
-        $this->assertTrue( $lista->existe( $url ) );
-        
+        $this->lista = new derivadorLista();
+        $this->lista->agregar( $this->url, $funcion  );
     }
     
-    function testFuncion(){
-        $url = "/sarasa";
-        $funcion = function() {
-            $this->assertTrue( true );
-        };
+    function __contruct(){
+        $this->mysetup();
+    }
+    
+    function testFuncion_CasoFeliz(){
+        $this->mysetup();
         
-        $lista = new derivadorLista();
-        $lista->agregar( $url, $funcion  );
+        // no tengo manera de distingir una funcion anonima de otra
+        // entonces tengo que valerme del resultado de la misma para saber si se ejecuto o no
+        $ret = $this->lista->funcion( $this->url );
         
-        $ret = $lista->funcion( $url );
-        $ret();
+        $actual = $ret();
+        $this->assertTrue( $actual );
         
+    }
+
+    function testExiste_CasoFeliz(){
+        $this->mysetup();
+        $this->assertTrue( $this->lista->existe( $this->url ) );
+    }
+
+    function testExiste_CasoInfeliz(){
+        $this->mysetup();
+        $this->assertFalse( $this->lista->existe( "/nadaquever" ) );
     }
     
 }

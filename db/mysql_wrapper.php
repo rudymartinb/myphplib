@@ -1,5 +1,4 @@
 <?php
- 
 
 namespace mysql_wrapper {
 
@@ -64,7 +63,6 @@ namespace mysql_wrapper {
 			return $this->db === $db2->db ;
 		}
 	}
-	
 	
 }
 ?>

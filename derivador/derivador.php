@@ -10,10 +10,8 @@ namespace derivador {
         }
         
         public function ejecutar( string $cual ){
-            if( $this->existe( $cual ) ){
-                $funcion = $this->lista->funcion( $cual );
-                $funcion();
-            }
+            $funcion = $this->lista->funcion( $cual );
+            $funcion();
         }
         public function existe( string $cual ) : bool {
             return $this->lista->existe( $cual );

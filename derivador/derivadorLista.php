@@ -1,10 +1,8 @@
 <?php
-namespace derivador{ 
+namespace derivador { 
+    
     class derivadorLista {
         private $lista = []; 
-        function __construct( ){
-        }
-        
         
         function agregar( string $url, callable $funcion ){
             $this->lista[] = [ "url" => $url, "funcion" => $funcion ];
@@ -14,7 +12,6 @@ namespace derivador{
             foreach( $this->lista as $value ){
                 if( $value["url"] == $url )
                     return true;
-                
             }
             return false;
         }
@@ -24,7 +21,7 @@ namespace derivador{
                 if( $value["url"] == $url )
                     return $value["funcion"];
             }
-            return "";
+            return function() {};
         }
         
     }

@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL);
-
+/*
+ * esto tiene sentido para las pruebas que corren localmente o en un servidor fijo.
+ */
 class DemoUsuarioSQL implements mysql_wrapper\credenciales {
 	private static $user = ""; 
 	private static $pwd = "";
