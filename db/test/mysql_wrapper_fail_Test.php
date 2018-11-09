@@ -35,7 +35,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	}
 
 	function dbsetupfun( $query  ) {
-	    $db = new myphplib\mysql_wrapper();
+	    $db = new mysql_wrapper\mysql_wrapper();
 	    
 	    $servidor = new DemoServidorSQL();
 	    $usuario = new DemoUsuarioSQL();
@@ -54,7 +54,7 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 		// ultimo cambio despues de sacar el try
 		$error_esperado = "Unknown database 'no_existe'";
 		
-		$db = new myphplib\mysql_wrapper( );			
+		$db = new mysql_wrapper\mysql_wrapper( );			
 		$servidor = new DemoServidorSQL();
 		$servidor->set_catalogo( "no_existe" );
 		$usuario = new DemoUsuarioSQL();

@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 
-class DemoUsuarioSQL implements myphplib\credenciales {
+class DemoUsuarioSQL implements mysql_wrapper\credenciales {
 	private static $user = ""; 
 	private static $pwd = "";
 
@@ -27,7 +27,7 @@ class DemoUsuarioSQL implements myphplib\credenciales {
 	
 }
 
-class DemoServidorSQL implements myphplib\host {
+class DemoServidorSQL implements mysql_wrapper\host {
 	private $host = "127.0.0.1";
 	private $port = 3306;
 	private $catalogo = "";	

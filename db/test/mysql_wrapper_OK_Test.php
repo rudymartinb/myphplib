@@ -50,7 +50,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	}
 	
 	function dbsetupfun( $query  ) {
-	    $db = new myphplib\mysql_wrapper();
+	    $db = new mysql_wrapper\mysql_wrapper();
 	    $servidor = new DemoServidorSQL();
 	    $usuario = new DemoUsuarioSQL();
 	    $db->abrir( $usuario, $servidor );
@@ -64,7 +64,7 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	 * estaria bueno saber de antemano si la conexion funciona
 	 */
 	public function test_test(){
-	    $db = new myphplib\mysql_wrapper();
+	    $db = new mysql_wrapper\mysql_wrapper();
 	    $servidor = new DemoServidorSQL();
 	    $this->assertTrue( $db->probar( $servidor ), "al probar la conexion deberia funcionar" );
 	}
@@ -112,13 +112,13 @@ class mysql_wrapper_OK_Test extends PHPUnit\Framework\TestCase {
 	/* si convertimos la static en public static podemos probar esto
 	 * */
 	function test_Mismo_Obj(){
-	    $db = new myphplib\mysql_wrapper( );
+	    $db = new mysql_wrapper\mysql_wrapper( );
 
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		
 		$db->abrir( $usuario, $servidor );
 						
-		$db2 = new myphplib\mysql_wrapper(  );
+		$db2 = new mysql_wrapper\mysql_wrapper(  );
 		
 		$servidor = new DemoServidorSQL();
 		$usuario = new DemoUsuarioSQL();		

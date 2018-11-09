@@ -1,7 +1,7 @@
 <?php
+ 
 
-
-namespace myphplib {
+namespace mysql_wrapper {
 
 	class mysql_wrapper implements proveedor_datos_sql {
 		private $db = null;

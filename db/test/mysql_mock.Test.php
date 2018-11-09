@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 class mysql_mock_OK_Test extends PHPUnit\Framework\TestCase {
 	public function test_select_uno_caso_feliz(){
 		
-	    $db = myphplib\mysql_query_mock::Builder()->build();
+	    $db = mysql_wrapper\mysql_query_mock::Builder()->build();
 		
 		$cadena = "sarasa estuvo aqui";
 		$query = "SELECT '".$cadena."' as uno";
@@ -22,7 +22,7 @@ class mysql_mock_OK_Test extends PHPUnit\Framework\TestCase {
 
 	public function test_SelectVacio(){
 		// $db = new mylib\mysql_query_mock(); 
-		$db = myphplib\mysql_query_mock::Builder()->build();
+	    $db = mysql_wrapper\mysql_query_mock::Builder()->build();
 		$query = "SELECT * from (select 1 as uno) as queseyo where false";
 		$devolver = [];
 		$db->esperar( $query, function() use( $devolver ) { return $devolver; } );
