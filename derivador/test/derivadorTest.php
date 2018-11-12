@@ -17,7 +17,10 @@ class derivadorTest extends PHPUnit\Framework\TestCase {
     
     /* no tiene sentido correr ejecutar() con un dato inexistente sin verificar nada
      * (la prueba es demasiado trivial y no demuestra nada por si misma)
-     * tiene mas color hacer la prueba sobre existe() que devuelve algo  
+     * tiene mas color hacer la prueba sobre existe() que devuelve algo
+     * 
+     *   la idea de default() es determinar que hacer cuando no hay una funcion valida
+     *   probablemente cargaremos un 404
      */
     function testFail(){
         $derivador = new Derivador();

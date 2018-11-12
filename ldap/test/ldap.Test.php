@@ -31,6 +31,7 @@ class ldap_test extends PHPUnit\Framework\TestCase {
         $this->assertEquals( "local", $matches["parte"][1] );
     }
 
+    
 	public function test_caso1_conectar(){
         $username = '1armador';
 		$password = '1armador1';
@@ -61,7 +62,6 @@ class ldap_test extends PHPUnit\Framework\TestCase {
 	    $this->assertFalse( $ldap->pertenece_grupo("AR") );
 	    $ldap->cerrar();
 	}
-	
 	
 	public function test_caso2(){
 		$username = '1armador';

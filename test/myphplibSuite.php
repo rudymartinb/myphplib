@@ -1,26 +1,25 @@
 <?php
 
-/*
- * aqui van todas las clases de objeto que no dependen de servicios externos como MySQL o LDAP
- * 
+/* aqui van todas las pruebas de clases de objeto 
+ * que no dependen de servicios externos como MySQL o LDAP
  */
 
-// ---------------
-// require_once 'derivador/derivadorLista.php';
-// require_once 'derivador/test/derivadorListaTest.php';
-
+/* la idea del derivador esta afanda de nodejs
+ * y se supone que tengo que engancharlo con seguridad de usuarios 
+ */
 require_once 'derivador/derivador.php';
 require_once 'derivador/test/derivadorTest.php';
 
 
-// session_data
+// session_data (encapsulsa la variable $SESSION y una clase que la simula )
 require_once "session_data/session_data_interface.php" ;
 require_once "session_data/session_data.php" ;
 require_once "session_data/session_data_fake.php" ;
+
 require_once "session_data/test/session_data_Test.php" ;
 require_once "session_data/test/session_data_fake.Test.php" ;
 
-// ---------------
+// encapsula session_start()
 require_once( "session_user/session_user_interface.php" );
 require_once( "session_user/session_user.php" );
 require_once( "session_user/session_user_fake.php" );
@@ -28,7 +27,7 @@ require_once( "session_user/session_user_fake.php" );
 require_once 'session_user/test/session_user.Test.php';
 require_once 'session_user/test/session_user_fake.Test.php';
 
-// ---------------
+// encapsula headers()
 require_once 'myheaders/myheaders_interface.php';
 require_once 'myheaders/myheaders.php';
 require_once 'myheaders/myheaders_fake.php';
@@ -45,7 +44,6 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'session_user_faketest' );
         
         $this->addTestSuite( 'derivadorTest' );
-        // $this->addTestSuite( 'derivadorListaTest' );
         
         $this->addTestSuite( 'session_data_Test' );
         $this->addTestSuite( 'session_data_fake_Test' );

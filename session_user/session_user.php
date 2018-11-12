@@ -7,7 +7,6 @@ namespace session_user {
         private $name = "";
         private $valores = [];
         
-        
         function inicio(){
             session_start();
         }
@@ -21,23 +20,6 @@ namespace session_user {
         function esta_registrada( string $name  ){
             return isset( $_SESSION[ $name ] );
         }
-        
-//         function data_set( string $nombre, $valor ){
-//             global $_SESSION;
-//             $_SESSION[ $nombre ] = $valor ;
-//         }
-        
-//         function data_get( string $nombre ){
-//             global $_SESSION;
-//             if( array_key_exists( $nombre,  $_SESSION ) )
-//                 return $_SESSION[ $nombre ];
-//             return "";
-//         }
-//         function data_unset( string $clave ){
-//             global $_SESSION;
-//             if( array_key_exists( $clave, $_SESSION ) )
-//                 unset( $_SESSION[ $clave ] ) ;
-//         }
         
         function unset(){
             session_unset();
