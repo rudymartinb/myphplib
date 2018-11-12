@@ -6,8 +6,8 @@
  */
 
 // ---------------
-require_once 'derivador/derivadorLista.php';
-require_once 'derivador/test/derivadorListaTest.php';
+// require_once 'derivador/derivadorLista.php';
+// require_once 'derivador/test/derivadorListaTest.php';
 
 require_once 'derivador/derivador.php';
 require_once 'derivador/test/derivadorTest.php';
@@ -45,7 +45,7 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'session_user_faketest' );
         
         $this->addTestSuite( 'derivadorTest' );
-        $this->addTestSuite( 'derivadorListaTest' );
+        // $this->addTestSuite( 'derivadorListaTest' );
         
         $this->addTestSuite( 'session_data_Test' );
         $this->addTestSuite( 'session_data_fake_Test' );
