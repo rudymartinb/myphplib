@@ -27,8 +27,6 @@ require_once( "session_user/session_user_fake.php" );
 require_once 'session_user/test/session_user.Test.php';
 require_once 'session_user/test/session_user_fake.Test.php';
 
-require_once 'seguridad_usuarios/test/seguridad_usuarios.Test.php';
-
 // encapsula headers()
 require_once 'myheaders/myheaders_interface.php';
 require_once 'myheaders/myheaders.php';
@@ -52,8 +50,6 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         
         $this->addTestSuite( 'MyHeaders_Test' );
         $this->addTestSuite( 'myheaders_fakeTest' );
-        
-        // $this->addTestSuite( 'seguridad_usuariosTest' );
         
     }
 
