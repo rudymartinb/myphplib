@@ -9,8 +9,7 @@ require_once 'ldap/test/ldap.Test.php';
 /** 
  * Static test suite.
  */
-class ldap_testSuite extends PHPUnit\Framework\TestSuite
-{
+class ldap_testSuite extends PHPUnit\Framework\TestSuite {
 
     /**
      * Constructs the test suite handler.

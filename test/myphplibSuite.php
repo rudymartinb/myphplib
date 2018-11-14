@@ -35,6 +35,11 @@ require_once 'myheaders/myheaders_fake.php';
 require_once 'myheaders/test/myheaders_test.php';
 require_once 'myheaders/test/myheaders_fakeTest.php';
 
+// seguridad_usuarios
+require_once 'seguridad_usuarios/test/seguridad_usuarios.Test.php';
+
+
+
 class mymphplibSuite extends PHPUnit\Framework\TestSuite {
 
     public function __construct() {
@@ -50,6 +55,7 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         
         $this->addTestSuite( 'MyHeaders_Test' );
         $this->addTestSuite( 'myheaders_fakeTest' );
+        $this->addTestSuite( 'seguridad_usuariosTest' );
         
     }
 
