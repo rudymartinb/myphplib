@@ -36,6 +36,8 @@ require_once 'myheaders/test/myheaders_test.php';
 require_once 'myheaders/test/myheaders_fakeTest.php';
 
 // seguridad_usuarios
+require_once 'seguridad_usuarios/menu.php';
+require_once 'seguridad_usuarios/menu_primario.php';
 require_once 'seguridad_usuarios/test/seguridad_usuarios.Test.php';
 
 
