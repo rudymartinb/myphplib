@@ -1,6 +1,11 @@
 <?php
 use session_user\session_user;
-
+/*
+ * la idea de esta clase: encapsular session_start()
+ * por eso cada prueba debe correrse en un proceso aparte
+ * para no pisarse entre ellas
+ * 
+ */
 class session_user_test extends PHPUnit\Framework\TestCase {
 	
     function mysetup( $evaluar )  {
