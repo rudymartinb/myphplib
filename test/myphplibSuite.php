@@ -36,9 +36,9 @@ require_once 'myheaders/test/myheaders_test.php';
 require_once 'myheaders/test/myheaders_fakeTest.php';
 
 // seguridad_usuarios
-require_once 'seguridad_usuarios/menu.php';
-require_once 'seguridad_usuarios/menu_primario.php';
-require_once 'seguridad_usuarios/test/seguridad_usuarios.Test.php';
+require_once 'menu/menu.php';
+require_once 'menu/menu_primario.php';
+require_once 'menu/test/menu.Test.php';
 
 
 
@@ -57,7 +57,8 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         
         $this->addTestSuite( 'MyHeaders_Test' );
         $this->addTestSuite( 'myheaders_fakeTest' );
-        $this->addTestSuite( 'seguridad_usuariosTest' );
+        
+        $this->addTestSuite( 'menuTest' );
         
     }
 

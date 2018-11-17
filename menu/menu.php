@@ -3,7 +3,7 @@ namespace seguridad_usuarios;
 
 class Menu {
     private $primarios;
-    private $defaultFun;
+    private $defaultFun; 
     
     private function __construct(){
         $this->primarios = [];
@@ -15,7 +15,7 @@ class Menu {
     }
     
     function agregarPrimario( string $opcion ){
-        $pri = new MenuPrimario( $this, $opcion );
+        $pri = new MenuPrimarioBuilder( $this, $opcion );
         $this->primarios[] = $pri;
         return $pri;
     }
@@ -29,15 +29,26 @@ class Menu {
         $funcion = $this->defaultFun;
         $funcion();
     }
-    
+
+    // esta funcion no deberia ser invocada 
+    // directamente sin antes correr las dos validaciones
+    // necesarioas: existe_tag  y existe_fuente
     function cargar_archivo( $tag ){
-        if( ! $this->existe_tag( $tag ) )
-            return;
-        
         $sec = $this->buscar_tag( $tag );
         require_once( $sec->get_fuente() );
     }
-     
+
+    function try_cargar_archivo( $tag ) {
+        if( ! $this->existe_tag( $tag ) ){
+            return;
+        }
+        if( ! $this->existe_fuente( $tag ) ){
+            return;
+        }
+
+        $this->cargar_archivo( $tag );
+    }
+    
     
     function buscar_tag( $tag ) : Sec {
         foreach ($this->primarios as $pri ){
@@ -45,8 +56,6 @@ class Menu {
                 return $pri->obtenerOpciones( $tag );
             }
         }
-        // nunca deberia llegar a este punto por cuando se deberia validar el tag antes con existe_tag()
-        return null; 
     }
     function existe_tag( $tag ) : bool {
         foreach ($this->primarios as $pri ){

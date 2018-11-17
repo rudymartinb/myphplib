@@ -1,7 +1,7 @@
 <?php
 namespace seguridad_usuarios;
 
-class MenuPrimario extends Menu {
+class MenuPrimarioBuilder extends Menu {
     private $menu;
     private $nombre;
     private $secundarios;
@@ -41,8 +41,9 @@ class MenuPrimario extends Menu {
         return null;
     }
     
-    function AgregarSecundario( ){
+    function AgregarSecundario( string $nombre ){
         $sec = Sec::BuilderSec( $this );
+        $sec->nombre( $nombre );
         return $sec;
     }
     protected function addsec( Sec $sec ){
@@ -56,7 +57,7 @@ class MenuPrimario extends Menu {
 }
 
 
-class Sec extends MenuPrimario  {
+class Sec extends MenuPrimarioBuilder  {
     protected $nombre;
     protected $tag;
     protected $grupos;
@@ -85,10 +86,12 @@ class Sec extends MenuPrimario  {
     }
     
 }
-
+/* podria haber usado una clase anonima
+ * pero la herramienta para hacer el UML se pega un pedo terrible
+ */
 class BuilderSecundario extends Sec {
     private $pri ;
-    public function __construct( MenuPrimario  $pri ){
+    public function __construct( MenuPrimarioBuilder  $pri ){
         $this->pri = $pri;
     }
     
@@ -112,7 +115,7 @@ class BuilderSecundario extends Sec {
         $this->funcion = $nombre;
         return $this;
     }
-    function buildOpcion() : MenuPrimario  {
+    function buildOpcion() : MenuPrimarioBuilder  {
         $sec = new Sec();
         $sec->nombre = $this->nombre;
         $sec->tag = $this->tag;

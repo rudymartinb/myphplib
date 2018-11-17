@@ -1,8 +1,19 @@
 #!/bin/bash
 
-# correr este script desde la raiz del repo (o sea, el directorio que contiene "scripts" y no desde scripts directamente)
+# nota: al final termine usando phUML individualmente para cada directorio
+# me genera el grafico con las clases. No es una maravilla pero cumple el proposito:
+# visualizar la relacion entre las clases.
+# el script es crearUML.sh y se debe correr en cada directorio individualmente
 
-# la idea es importar el archivo generado por este script en ArgoUML o similar
+
+# correr este script desde la raiz del repo 
+# ejemplo:
+# scripts/crear_xmi_UML.sh
+# 
+
+# la idea de este script es generar el archivo 
+# para luego importar el archivo en ArgoUML o BoUML
+
 
 # if [! -d  tmp ]; then exit; fi
 # mkdir tmp
@@ -30,7 +41,7 @@ TEST=`cat << EndOfMessage
 ./seguridad_usuarios/dummy.php
 EndOfMessage`
 
-echo "$TEST" 
-
+# para debug 
+# echo "$TEST" 
 
 php2xmi --no-private --no-protected --output=tmp/myphplib.xmi $TEST 

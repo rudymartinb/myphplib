@@ -2,18 +2,18 @@
 use seguridad_usuarios\Menu;
 
 
-class seguridad_usuariosTest extends PHPUnit\Framework\TestCase {
-    private $archivo = "seguridad_usuarios/dummy.php";
-    private $tag = "nose";
+class menuTest extends PHPUnit\Framework\TestCase {
+    private $archivo = "menu/dummy.php";
+    private $archivo_inexistente = "seguridad_usuarios/dummy2.php";
+    private $tag_alta = "altaclientes";
+    private $tag_modi = "modiclientes";
     
-    // me hace ruido meter un assert en un setup
     function mysetup1() : Menu {
         $menu = Menu::Builder() // devuelve un nuevo Menu()
         ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
         
-        ->AgregarSecundario()
-        ->nombre( "Agregar Clientes" )
-        ->tag( $this->tag )
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->fuente( $this->archivo )
         ->funcion( function() { $this->assertTrue( muy_dummy() ); } )
@@ -25,22 +25,20 @@ class seguridad_usuariosTest extends PHPUnit\Framework\TestCase {
     
     function mysetup2( callable $funcion, callable $funcionDefault  ) : Menu {
         
-        $menu = Menu::Builder() // devuelve un nuevo Menu()
-        ->setFuncionDefault( $funcionDefault ) // parametros generales
-        ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
+        $menu = Menu::Builder()
+        ->setFuncionDefault( $funcionDefault )
+        ->AgregarPrimario( "Clientes" )
         
-        ->AgregarSecundario()
-        ->nombre( "Agregar Clientes")
-        ->tag( $this->tag )
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->fuente( $this->archivo )
         ->funcion( $funcion )->buildOpcion()
         
-        ->AgregarSecundario()
-        ->nombre( "Modificar Clientes")
-        ->tag( $this->tag )
+        ->AgregarSecundario( "Modificar Clientes" )
+        ->tag( $this->tag_modi )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-        ->fuente( $this->archivo )
+        ->fuente( $this->archivo_inexistente )
         ->funcion( $funcion )->buildOpcion()
         
         ->buildMenu();
@@ -55,7 +53,7 @@ class seguridad_usuariosTest extends PHPUnit\Framework\TestCase {
         
         $menu = $this->mysetup2( $funcion, $funcionDefault  );
         
-        $menu->ejecutar( $this->tag );
+        $menu->ejecutar( $this->tag_alta );
     }
 
     
@@ -75,7 +73,7 @@ class seguridad_usuariosTest extends PHPUnit\Framework\TestCase {
         
         $menu = $this->mysetup1();
         
-        $this->assertTrue( $menu->existe_fuente( $this->tag ) );
+        $this->assertTrue( $menu->existe_fuente( $this->tag_alta ) );
 
     }
 
@@ -92,19 +90,32 @@ class seguridad_usuariosTest extends PHPUnit\Framework\TestCase {
   
         $menu = $this->mysetup1();
  
-        $menu->cargar_archivo( $this->tag );
-        $menu->ejecutar(  $this->tag );
+        $menu->cargar_archivo( $this->tag_alta );
+        $menu->ejecutar(  $this->tag_alta );
 
         
     }
 
+    /* 
+     * objetivo: la idea es tener una funcion try_cargarfuente() 
+     * que impida que php se cierre por un fuente inexistente.
+     * 
+     * entrada: un objeto estructura de menu
+     * proceso: se pide cargar el fuente de un tag existente pero fuente inexistente
+     * salida esperada: excepcion de php? no sirve, da fatal. No tiene que probar nada
+     * 
+     */
     function test_CargarFuente_fail(){
         
-        $menu = $this->mysetup1();
+        $funcion = function() { };
+        $funcionDefault = function() { };
         
-        $menu->cargar_archivo( "asdf" );
+        $menu = $this->mysetup2( $funcion, $funcionDefault  );
 
+        // si se cambia por cargar_archivo() el script no termina porque da error fatal
+        $menu->try_cargar_archivo( $this->tag_modi );
         
+        $this->assertTrue( true );
         
     }
     
