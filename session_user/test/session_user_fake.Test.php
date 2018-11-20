@@ -2,15 +2,10 @@
 
 use session_user\session_user_fake;
 
-/**
- * session_user_fake test case.
- */
 class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     
-    /*
-     * este metodo ejecuta las acciones que luego son evaluadas 
-     * en los demas metodos. se le pasa una funcion anonima 
-     * con el objeto sobre el cual se ejecuta lo que se busca evaluar
+    /* dice setup pero en realidad 
+     * hace una prueba y devuelve el resultado.
      */
     function mysetup( $evaluar )  {
         $session_user = new session_user_fake();
@@ -21,10 +16,6 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
         return $actual;
     }
     
-    
-    /**
-     * @runInSeparateProcess
-     */
     function test_session_start(){
         $actual = $this->mysetup( function( $session ) {
             return $session->estado();
@@ -33,10 +24,6 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals( PHP_SESSION_ACTIVE, $actual, "PHP_SESSION_ACTIVE" );
     }
     
-    
-    /**
-     * @runInSeparateProcess
-     */
     function test_session_name_fail(){
         $actual = $this->mysetup( function( $session_user ) {
             return $session_user->esta_registrada( "sarasaxyz" ) ;
@@ -44,9 +31,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
             
         $this->assertEquals( false, $actual , "is_registered" );
     }
-    /**
-     * @runInSeparateProcess
-     */
+
     function test_set_get(){
         $actual = $this->mysetup( function( $session_user ) {
             $session_user->data_set( "sarasa", "palomon" );
@@ -55,9 +40,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
             
         $this->assertEquals( "palomon", $actual , "get" );
     }
-    /**
-     * @runInSeparateProcess
-     */
+
     function test_unset(){
         $actual = $this->mysetup( function( $session_user ) {
             $session_user->data_set( "sarasa", "palomon" );
@@ -67,22 +50,17 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals( "", $actual, "get" );
             
     }
-    /**
-     * @runInSeparateProcess
-     */
+
     function test_unset_destroy(){
         
         $session_user = new session_user_fake();
         $session_user->inicio();
         $session_user->data_set( "sarasa", "palomon" );
         $session_user->unset();
-        $session_user->destroy();
+        $session_user->destroy(); 
         $this->assertEquals( "", $session_user->data_get( "sarasa" ), "get" );
     }
     
-    /**
-     * @runInSeparateProcess
-     */
     function test_data_unset(){
         
         $session_user = new session_user_fake();

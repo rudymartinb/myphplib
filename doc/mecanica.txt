@@ -16,3 +16,12 @@ no estoy convencido respecto de ejecutar() porque hace una validacion
 
 2018 10 15
 eliminado phpunit del repo. eclipse hace macanas y me extrae el phar
+
+2018 11 17
+me di cuenta que cometi algunos errores
+
+el primero es crear mocks sobre clases de objeto sin tener donde usarlos. Semejante a hacer una mezcla de hormigon y despues preguntarse "que hago con esto"
+
+
+
+
