@@ -3,6 +3,7 @@ namespace derivador {
     class Derivador {
         private $lista = [];
         private $default = null;
+
         function __construct() {
             $this->default = function() {};
         }

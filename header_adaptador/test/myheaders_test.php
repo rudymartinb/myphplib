@@ -1,6 +1,6 @@
 <?php
 use header_adaptador\HeaderAdaptador; 
-class MyHeaders_Test extends PHPUnit\Framework\TestCase {
+class myheaders_test extends PHPUnit\Framework\TestCase {
     
     function test_new(){
         $webserver = new HeaderAdaptador();

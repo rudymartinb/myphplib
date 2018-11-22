@@ -1,10 +1,10 @@
 <?php
 use session_variable_adaptador\session_variable_adaptador;
 
+class session_variable_adaptador_Test extends PHPUnit\Framework\TestCase {
 
-
-class session_data_Test extends PHPUnit\Framework\TestCase {
-
+    /* esta es una prueba de caja blanca que no tendria que existir.
+     */
 	function test_get(){
 	    $session = new session_variable_adaptador();
 		$_SESSION['sarasa'] = 'palomon';
@@ -29,7 +29,6 @@ class session_data_Test extends PHPUnit\Framework\TestCase {
 	    $session = new session_variable_adaptador();
 		$this->assertEquals( "", $session->get( "sarasa" ) ); 
 	}
-	
 	
 }
 

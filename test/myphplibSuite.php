@@ -16,8 +16,8 @@ require_once "session_variable_adaptador/session_variable_adaptador_interface.ph
 require_once "session_variable_adaptador/session_variable_adaptador.php" ;
 require_once "session_variable_adaptador/session_variable_adaptador_fake.php" ;
 
-require_once "session_variable_adaptador/test/session_data_Test.php" ;
-require_once "session_variable_adaptador/test/session_data_fake.Test.php" ;
+require_once "session_variable_adaptador/test/session_variable_adaptador_Test.php" ;
+require_once "session_variable_adaptador/test/session_variable_adaptador_fake.Test.php" ;
 
 // encapsula session_start()
 require_once( "session_start_adaptador/session_user_interface.php" );
@@ -52,13 +52,13 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         
         $this->addTestSuite( 'derivadorTest' );
         
-        $this->addTestSuite( 'session_data_Test' );
-        $this->addTestSuite( 'session_data_fake_Test' );
+        $this->addTestSuite( 'session_variable_adaptador_Test' );
+        $this->addTestSuite( 'session_variable_adaptador_fake_Test' );
         
-        $this->addTestSuite( 'MyHeaders_Test' );
+        $this->addTestSuite( 'myheaders_test' );
         $this->addTestSuite( 'myheaders_fakeTest' );
         
-        $this->addTestSuite( 'menuTest' );
+        $this->addTestSuite( 'menutest' );
         
     }
 
