@@ -27,13 +27,13 @@ require_once( "session_start_adaptador/session_start_adaptador_fake.php" );
 require_once 'session_start_adaptador/test/session_user.Test.php';
 require_once 'session_start_adaptador/test/session_user_fake.Test.php';
 
-// encapsula headers()
-require_once 'myheaders/myheaders_interface.php';
-require_once 'myheaders/myheaders.php';
-require_once 'myheaders/myheaders_fake.php';
+// encapsula headers() 
+require_once 'header_adaptador/header_adaptador_interface.php';
+require_once 'header_adaptador/header_adaptador.php';
+require_once 'header_adaptador/header_adaptador_fake.php';
 
-require_once 'myheaders/test/myheaders_test.php';
-require_once 'myheaders/test/myheaders_fakeTest.php';
+require_once 'header_adaptador/test/myheaders_test.php';
+require_once 'header_adaptador/test/myheaders_fakeTest.php';
 
 // seguridad_usuarios
 require_once 'menu/menu.php';

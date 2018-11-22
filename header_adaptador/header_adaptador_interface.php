@@ -1,7 +1,7 @@
 <?php
-namespace myheaders;
+namespace header_adaptador;
 
-interface myheaders_interface {
+interface headerad_aptador_interface {
     public function enviar( string $cadena );
     public function enviados() : bool ;
     

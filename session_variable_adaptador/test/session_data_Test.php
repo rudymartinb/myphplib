@@ -22,8 +22,8 @@ class session_data_Test extends PHPUnit\Framework\TestCase {
 	    $session = new session_variable_adaptador();
 		$this->assertEquals( "", $session->get( "sarasax" ) ); 
 	}
-	/*
-	 * esta prueba dejo de funcionar por cuanto phpunit ahora tiene sesiones
+	
+	/* esta prueba dejo de funcionar por cuanto phpunit 7.* ahora tiene sesiones
 	 * */	
 	function test_get_fail2(){
 	    $session = new session_variable_adaptador();

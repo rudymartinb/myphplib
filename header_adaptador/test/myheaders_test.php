@@ -1,14 +1,9 @@
 <?php
-
-use myheaders\MyHeaders;
-
-/**
- * MyHeaders test case.
- */
+use header_adaptador\HeaderAdaptador; 
 class MyHeaders_Test extends PHPUnit\Framework\TestCase {
     
     function test_new(){
-        $webserver = new MyHeaders();
+        $webserver = new HeaderAdaptador();
         try {
             $webserver->enviar( "Location:/" );
             $this->assertTrue( false );
@@ -20,7 +15,7 @@ class MyHeaders_Test extends PHPUnit\Framework\TestCase {
         
     }
     function test_sent(){
-        $webserver = new MyHeaders();
+        $webserver = new HeaderAdaptador();
         $this->assertTrue( $webserver->enviados() );
     }
     

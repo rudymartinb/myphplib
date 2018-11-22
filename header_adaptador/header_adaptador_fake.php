@@ -1,5 +1,5 @@
 <?php
-namespace myheaders;
+namespace header_adaptador;
 
 /*
  * parece una pavada como esta implementado esto pero
@@ -10,7 +10,7 @@ namespace myheaders;
  * preferentemente como parametro  de un metodo
  * 
  */
-class MyHeaders_fake implements myheaders_interface {
+class HeaderAdaptadorFake implements headerad_aptador_interface   {
 
     public function enviar( $cadena ) {
         

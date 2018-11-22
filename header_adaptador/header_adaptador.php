@@ -1,7 +1,7 @@
 <?php
-namespace myheaders;
+namespace header_adaptador;
 
-class MyHeaders implements myheaders_interface {
+class HeaderAdaptador  implements headerad_aptador_interface   {
 
     public function enviar( string $cadena ) {
         header($cadena);

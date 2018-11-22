@@ -1,6 +1,6 @@
 <?php
 namespace session_start_adaptador {
-    use session_variable_adaptador\session_data_fake;
+    use session_variable_adaptador\session_variable_adaptador_fake;
     use session_variable_adaptador\session_variable_adaptador_interface;
     
     class session_start_adaptador_fake implements session_start_adaptador_interface  {
@@ -44,9 +44,10 @@ namespace session_start_adaptador {
             $this->status = PHP_SESSION_NONE;
             $this->valores = [];
         }
-        public function get_data() : session_variable_adaptador_interface  {
-            $data = new session_data_fake();
-            return $data;
+        
+        function get_data() : session_variable_adaptador_interface  {
+            // $data = new session_data_fake();
+            // return $data;
         }
     
     
