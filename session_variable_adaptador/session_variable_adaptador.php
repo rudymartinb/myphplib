@@ -1,6 +1,6 @@
 <?php
-namespace session_data  {
-    class session_data implements session_data_interface {
+namespace session_variable_adaptador   {
+    class session_variable_adaptador implements session_variable_adaptador_interface {
 
         function get( string $clave ) {
     		global $_SESSION;

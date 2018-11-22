@@ -1,5 +1,5 @@
 <?php
-use session_user\session_user;
+use session_start_adaptador\session_start_adaptador;
 /*
  * la idea de esta clase: encapsular session_start()
  * por eso cada prueba debe correrse en un proceso aparte
@@ -9,7 +9,7 @@ use session_user\session_user;
 class session_user_test extends PHPUnit\Framework\TestCase {
 	
     function mysetup( $evaluar )  {
-        $session_user = new session_user();
+        $session_user = new session_start_adaptador();
         $session_user->inicio();
         $actual = $evaluar( $session_user );
         $session_user->unset();
@@ -60,7 +60,7 @@ class session_user_test extends PHPUnit\Framework\TestCase {
 	 */
 	function test_unset_destroy(){
 	        
-	    $session_user = new session_user();
+	    $session_user = new session_start_adaptador();
 	    $session_user->inicio();
 	    $data = $session_user->get_data();
 	    $data->set( "sarasa", "palomon" );
@@ -75,7 +75,7 @@ class session_user_test extends PHPUnit\Framework\TestCase {
 	 */
 	function test_data_unset(){
 	    
-	    $session_user = new session_user();
+	    $session_user = new session_start_adaptador();
 	    $session_user->inicio();
 	    $data = $session_user->get_data();
 	    $data->set( "sarasa", "palomon" );

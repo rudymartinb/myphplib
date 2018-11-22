@@ -1,7 +1,7 @@
 <?php
-namespace session_data;
+namespace session_variable_adaptador;
 
-interface session_data_interface {
+interface session_variable_adaptador_interface { 
     function get( string $clave );
     function set( string $clave, $valor );
     function unset( string $clave );

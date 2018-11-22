@@ -1,6 +1,6 @@
 <?php
 
-use session_user\session_user_fake;
+use session_start_adaptador\session_start_adaptador_fake; 
 
 class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     
@@ -8,7 +8,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
      * hace una prueba y devuelve el resultado.
      */
     function mysetup( $evaluar )  {
-        $session_user = new session_user_fake();
+        $session_user = new session_start_adaptador_fake();
         $session_user->inicio();
         $actual = $evaluar( $session_user );
         $session_user->unset();
@@ -53,7 +53,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
 
     function test_unset_destroy(){
         
-        $session_user = new session_user_fake();
+        $session_user = new session_start_adaptador_fake();
         $session_user->inicio();
         $session_user->data_set( "sarasa", "palomon" );
         $session_user->unset();
@@ -63,7 +63,7 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     
     function test_data_unset(){
         
-        $session_user = new session_user_fake();
+        $session_user = new session_start_adaptador_fake();
         $session_user->inicio();
         $session_user->data_set( "sarasa", "palomon" );
         $session_user->data_unset("sarasa");

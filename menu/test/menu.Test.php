@@ -92,8 +92,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
  
         $menu->cargar_archivo( $this->tag_alta );
         $menu->ejecutar(  $this->tag_alta );
-
-        
+   
     }
 
     /* 
@@ -116,7 +115,6 @@ class menuTest extends PHPUnit\Framework\TestCase {
         $menu->try_cargar_archivo( $this->tag_modi );
         
         $this->assertTrue( true );
-        
     }
     
     

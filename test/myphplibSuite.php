@@ -12,20 +12,20 @@ require_once 'derivador/test/derivadorTest.php';
 
 
 // session_data (encapsulsa la variable $SESSION y una clase que la simula )
-require_once "session_data/session_data_interface.php" ;
-require_once "session_data/session_data.php" ;
-require_once "session_data/session_data_fake.php" ;
+require_once "session_variable_adaptador/session_variable_adaptador_interface.php" ;
+require_once "session_variable_adaptador/session_variable_adaptador.php" ;
+require_once "session_variable_adaptador/session_variable_adaptador_fake.php" ;
 
-require_once "session_data/test/session_data_Test.php" ;
-require_once "session_data/test/session_data_fake.Test.php" ;
+require_once "session_variable_adaptador/test/session_data_Test.php" ;
+require_once "session_variable_adaptador/test/session_data_fake.Test.php" ;
 
 // encapsula session_start()
-require_once( "session_user/session_user_interface.php" );
-require_once( "session_user/session_user.php" );
-require_once( "session_user/session_user_fake.php" );
+require_once( "session_start_adaptador/session_user_interface.php" );
+require_once( "session_start_adaptador/session_start_adaptador.php" );
+require_once( "session_start_adaptador/session_start_adaptador_fake.php" );
 
-require_once 'session_user/test/session_user.Test.php';
-require_once 'session_user/test/session_user_fake.Test.php';
+require_once 'session_start_adaptador/test/session_user.Test.php';
+require_once 'session_start_adaptador/test/session_user_fake.Test.php';
 
 // encapsula headers()
 require_once 'myheaders/myheaders_interface.php';

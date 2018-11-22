@@ -1,6 +1,6 @@
 <?php
-namespace session_data {
-    class session_data_fake implements session_data_interface {
+namespace session_variable_adaptador {
+    class session_variable_adaptador_fake implements session_variable_adaptador_interface {
     	private $valores;
     	function __construct(){
     	    $this->valores = [];

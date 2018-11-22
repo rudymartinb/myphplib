@@ -30,34 +30,29 @@ class Menu {
         $funcion();
     }
 
-    // esta funcion no deberia ser invocada 
-    // directamente sin antes correr las dos validaciones
-    // necesarioas: existe_tag  y existe_fuente
     function cargar_archivo( $tag ){
-        $sec = $this->buscar_tag( $tag );
+        $sec = $this->_buscar_tag( $tag );
         require_once( $sec->get_fuente() );
     }
 
     function try_cargar_archivo( $tag ) {
-        if( ! $this->existe_tag( $tag ) ){
+        if( ! $this->_existe_tag( $tag ) )
             return;
-        }
-        if( ! $this->existe_fuente( $tag ) ){
+        if( ! $this->existe_fuente( $tag ) )
             return;
-        }
 
         $this->cargar_archivo( $tag );
     }
     
-    
-    function buscar_tag( $tag ) : Sec {
+    function _buscar_tag( $tag ) : Sec {
         foreach ($this->primarios as $pri ){
             if( $pri->existe_tag( $tag ) ){
                 return $pri->obtenerOpciones( $tag );
             }
         }
     }
-    function existe_tag( $tag ) : bool {
+    
+    function _existe_tag( $tag ) : bool {
         foreach ($this->primarios as $pri ){
             if( $pri->existe_tag( $tag ) ){
                 return true;
@@ -67,10 +62,10 @@ class Menu {
     }
     
     function existe_fuente( $tag ){
-        if( ! $this->existe_tag( $tag ) )
+        if( ! $this->_existe_tag( $tag ) )
             return false;
         
-        $sec = $this->buscar_tag( $tag );
+        $sec = $this->_buscar_tag( $tag );
         return file_exists(  $sec->get_fuente() );
     }
     
@@ -80,3 +75,4 @@ class Menu {
     }
     
 }
+?>
