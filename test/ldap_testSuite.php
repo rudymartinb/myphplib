@@ -1,10 +1,10 @@
 <?php
 
 
-require_once 'ldap/ldap_interface.php';
-require_once 'ldap/ldap.php';
+require_once 'ldap_adaptador/ldap_interface.php';
+require_once 'ldap_adaptador/ldap.php';
 
-require_once 'ldap/test/ldap.Test.php';
+require_once 'ldap_adaptador/test/ldap.Test.php';
 
 class ldap_testSuite extends PHPUnit\Framework\TestSuite {
 

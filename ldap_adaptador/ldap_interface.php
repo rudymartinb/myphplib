@@ -1,5 +1,5 @@
 <?php
-namespace ldap {
+namespace ldap_adaptador  {
     
     interface ldap_conectar_interface {
         function conectar( $username, $password );

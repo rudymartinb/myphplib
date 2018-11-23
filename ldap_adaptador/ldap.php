@@ -1,10 +1,9 @@
 <?php
-
-
-namespace ldap {
-    define(LDAP_OPT_DIAGNOSTIC_MESSAGE, 0x0032);
+ 
+namespace ldap_adaptador {
+    // define(LDAP_OPT_DIAGNOSTIC_MESSAGE, 0x0032);
     
-    class ldap implements ldap_interface  {
+    class ldap_adaptador implements ldap_interface  {
         private $server ;
         private $bind;
         private $username ;

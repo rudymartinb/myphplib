@@ -10,12 +10,12 @@
  
 */
 
-use ldap\ldap;
+use ldap_adaptador\ldap_adaptador;
 
 class ldap_test extends PHPUnit\Framework\TestCase {
     
-    public function mysetup( string $username, string $password ) : ldap {
-        $ldap = new ldap();
+    public function mysetup( string $username, string $password ) : ldap_adaptador {
+        $ldap = new ldap_adaptador();
         $ldap->set_server( 'dep.local' );
         $ldap->conectar( $username, $password );
         return $ldap;

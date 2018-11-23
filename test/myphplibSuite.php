@@ -58,7 +58,7 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'myheaders_test' );
         $this->addTestSuite( 'myheaders_fakeTest' );
         
-        $this->addTestSuite( 'menutest' );
+        $this->addTestSuite( 'menuTest' );
         
     }
 
