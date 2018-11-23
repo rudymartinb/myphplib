@@ -1,5 +1,5 @@
 <?php
-namespace seguridad_usuarios;
+namespace menu;  
 
 class Menu {
     private $primarios;
@@ -11,7 +11,7 @@ class Menu {
     
     static function Builder() {
         $menu = new Menu();
-        return $menu;
+        return $menu; 
     }
     
     function agregarPrimario( string $opcion ){

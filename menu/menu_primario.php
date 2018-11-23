@@ -1,5 +1,5 @@
 <?php
-namespace seguridad_usuarios;
+namespace menu;
 
 class MenuPrimarioBuilder extends Menu {
     private $menu;

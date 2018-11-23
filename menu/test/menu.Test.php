@@ -1,5 +1,5 @@
 <?php
-use seguridad_usuarios\Menu;
+use menu\Menu;
 
 
 class menuTest extends PHPUnit\Framework\TestCase {
