@@ -22,6 +22,9 @@ me di cuenta que cometi algunos errores
 
 el primero es crear mocks sobre clases de objeto sin tener donde usarlos. Semejante a hacer una mezcla de hormigon y despues preguntarse "que hago con esto"
 
+2018 11 23
+sigo armando objetos que no se donde los voy a usar
+
 
 
 
