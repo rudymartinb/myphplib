@@ -5,36 +5,8 @@
  * 
  * http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
  * 
+ * no se como va a quedar esto, pero al menos es un principio
  */
-
-interface InputPortInterface {
-    function recibir( $datos );
-}
-
-interface OutputPortInterface {
-    function salida( $datos );
-}
-
-interface ControllerInterface {
-    function setInputPort( InputPortInterface $input );
-    function recibir( $datos );
-}
-
-
-class EjemploController  {
-    protected $inputPort;
-    function setInputPort( InputPortInterface $input ){
-        $this->inputPort = $input ;
-    }
-    function recibir( $datos ){
-        $this->inputPort->recibir( $datos );
-        
-    }
-}
-
-abstract class UseCase implements InputPortInterface {
-    
-}
 
 class EjemploUseCase extends UseCase {
     private $output;
@@ -47,8 +19,8 @@ class EjemploUseCase extends UseCase {
     function setOutputPort( OutputPortInterface  $output ){
         $this->output = $output ;
     }
-        
-  
+    
+    
 }
 
 class EjemploPresenter implements OutputPortInterface {
@@ -57,12 +29,27 @@ class EjemploPresenter implements OutputPortInterface {
     }
     
     private $funcion;
+    
     function salida( $datos ){
         $funcion = $this->funcion;
         $funcion( $datos  );
     }
-        
+    
 }
+
+
+class EjemploController implements ControllerInterface {
+    protected $inputPort;
+    function setInputPort( InputPortInterface $input ){
+        $this->inputPort = $input ;
+    }
+    function recibir( $datos ){
+        $this->inputPort->recibir( $datos );
+        
+    }
+}
+
+
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
     function testNew(){
@@ -74,7 +61,7 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         
         $controller = new EjemploController(  );
         $controller->setInputPort( $usecase );
-        $controller->recibir( ["A"] );
+        $controller->recibir( ["A"] ); 
         
         
         

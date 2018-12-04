@@ -41,7 +41,9 @@ require_once 'menu/menu_primario.php';
 require_once 'menu/test/menu.Test.php';
 
 // usecase
+require_once 'usecase/UseCase.php';
 require_once 'usecase/test/UseCaseTest.php';
+
 
 
 class mymphplibSuite extends PHPUnit\Framework\TestSuite {
