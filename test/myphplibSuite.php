@@ -40,6 +40,8 @@ require_once 'menu/menu.php';
 require_once 'menu/menu_primario.php';
 require_once 'menu/test/menu.Test.php';
 
+// usecase
+require_once 'usecase/test/UseCaseTest.php';
 
 
 class mymphplibSuite extends PHPUnit\Framework\TestSuite {
@@ -59,6 +61,8 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'myheaders_fakeTest' );
         
         $this->addTestSuite( 'menuTest' );
+        
+        $this->addTestSuite( 'UseCaseTest' );
         
     }
 
