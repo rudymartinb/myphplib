@@ -16,8 +16,6 @@ interface ControllerInterface {
 
 abstract class UseCase implements InputPortInterface {
     abstract function setOutputPort( OutputPortInterface  $output );
-    // abstract function Precondiciones() : bool;
-    
     
 }
 
