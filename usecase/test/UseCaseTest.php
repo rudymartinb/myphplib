@@ -13,12 +13,16 @@ class EjemploUseCase extends UseCase {
     
     function recibir( $datos ) {
         // $output = $this->output;
-        $this->output->salida( $datos );
+        $this->output->generar_salida( $datos );
     }
     
     function setOutputPort( OutputPortInterface  $output ){
         $this->output = $output ;
     }
+    public function esSituacionValida($contexto): bool {
+        return true;
+    }
+
     
     
 }
@@ -30,7 +34,7 @@ class EjemploPresenter implements OutputPortInterface {
     
     private $funcion;
     
-    function salida( $datos ){
+    function generar_salida( $datos ){
         $funcion = $this->funcion;
         $funcion( $datos  );
     }
@@ -43,7 +47,7 @@ class EjemploController implements ControllerInterface {
     function setInputPort( InputPortInterface $input ){
         $this->inputPort = $input ;
     }
-    function recibir( $datos ){
+    function recibir_cualquiera( $datos ){
         $this->inputPort->recibir( $datos );
         
     }
@@ -52,6 +56,7 @@ class EjemploController implements ControllerInterface {
 
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
+
     function testNew(){
         
         $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
@@ -61,10 +66,17 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         
         $controller = new EjemploController(  );
         $controller->setInputPort( $usecase );
-        $controller->recibir( ["A"] ); 
-        
-        
+        $controller->recibir_cualquiera( ["A"] ); 
         
     }
+    /*
+     * lo que me hace ruido de esto es si corresponde validar el caso
+     * o simplemente hacerlo desde el controlador.
+     */
+    function testEsValido(){
+        $usecase = new EjemploUseCase(  );
+        $this->assertTrue( $usecase->esSituacionValida( null ) );
+    }
+    
 }
 ?>

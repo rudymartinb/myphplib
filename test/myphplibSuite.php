@@ -44,6 +44,8 @@ require_once 'menu/test/menu.Test.php';
 require_once 'usecase/UseCase.php';
 require_once 'usecase/test/UseCaseTest.php';
 
+require_once 'contexto/contexto.php';
+require_once 'contexto/test/contextoTest.php';
 
 
 class mymphplibSuite extends PHPUnit\Framework\TestSuite {
@@ -65,6 +67,8 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'menuTest' );
         
         $this->addTestSuite( 'UseCaseTest' );
+        
+        $this->addTestSuite( 'contextoTest' );
         
     }
 
