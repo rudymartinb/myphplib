@@ -22,9 +22,7 @@ class EjemploUseCase extends UseCase {
     public function esSituacionValida($contexto): bool {
         return true;
     }
-
-    
-    
+   
 }
 
 class EjemploPresenter implements OutputPortInterface {
