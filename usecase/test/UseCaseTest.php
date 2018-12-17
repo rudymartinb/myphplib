@@ -7,12 +7,15 @@
  * 
  * no se como va a quedar esto, pero al menos es un principio
  */
-
+use usecase\UseCase;
+use usecase\OutputPortInterface;
+use usecase\ControllerInterface;
+use usecase\InputPortInterface;
+ 
 class EjemploUseCase extends UseCase {
     private $output;
     
     function recibir( $datos ) {
-        // $output = $this->output;
         $this->output->generar_salida( $datos );
     }
     
@@ -31,7 +34,6 @@ class EjemploPresenter implements OutputPortInterface {
     }
     
     private $funcion;
-    
     function generar_salida( $datos ){
         $funcion = $this->funcion;
         $funcion( $datos  );
@@ -54,9 +56,7 @@ class EjemploController implements ControllerInterface {
 
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
-
     function testNew(){
-        
         $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
         $usecase = new EjemploUseCase(  );
         
@@ -65,10 +65,9 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         $controller = new EjemploController(  );
         $controller->setInputPort( $usecase );
         $controller->recibir_cualquiera( ["A"] ); 
-        
     }
-    /*
-     * lo que me hace ruido de esto es si corresponde validar el caso
+    
+    /* lo que me hace ruido de esto es si corresponde validar el caso
      * o simplemente hacerlo desde el controlador.
      */
     function testEsValido(){

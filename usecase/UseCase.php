@@ -1,4 +1,6 @@
 <?php
+namespace usecase;
+
 interface InputPortInterface {
     function esSituacionValida( $contexto ) : bool ;
     function recibir( $datos );
