@@ -11,7 +11,13 @@ use usecase\UseCase;
 use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
- 
+use usecase\UseCaseValidador;
+class Validador implements UseCaseValidador {
+    public function es_valido(): bool {
+        
+    }
+    
+}
 class EjemploUseCase extends UseCase {
     private $output;
     
@@ -25,6 +31,10 @@ class EjemploUseCase extends UseCase {
     public function esSituacionValida($contexto): bool {
         return true;
     }
+    public function es_valido(UseCaseValidador $validador): bool {
+        return $validador->es_valido();
+    }
+
    
 }
 
@@ -67,11 +77,13 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         $controller->recibir_cualquiera( ["A"] ); 
     }
     
-    /* lo que me hace ruido de esto es si corresponde validar el caso
+    /* lo que me hace ruido de esto es 
+     * si corresponde validar el caso desde el usecase
      * o simplemente hacerlo desde el controlador.
      */
     function testEsValido(){
         $usecase = new EjemploUseCase(  );
+        
         $this->assertTrue( $usecase->esSituacionValida( null ) );
     }
     
