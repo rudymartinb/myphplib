@@ -8,7 +8,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
     private $tag_alta = "altaclientes";
     private $tag_modi = "modiclientes";
     
-    function mysetup1() : Menu {
+    function BuildMenu1() : Menu {
         $menu = Menu::Builder() // devuelve un nuevo Menu()
         ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
         
@@ -23,7 +23,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         return $menu;
     }
     
-    function mysetup2( callable $funcion, callable $funcionDefault  ) : Menu {
+    function BuildMenu2( callable $funcion, callable $funcionDefault  ) : Menu {
         
         $menu = Menu::Builder()
         ->setFuncionDefault( $funcionDefault )
@@ -51,7 +51,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         };
         $funcionDefault = function() { };
         
-        $menu = $this->mysetup2( $funcion, $funcionDefault  );
+        $menu = $this->BuildMenu2( $funcion, $funcionDefault  );
         
         $menu->ejecutar( $this->tag_alta );
     }
@@ -59,19 +59,21 @@ class menuTest extends PHPUnit\Framework\TestCase {
     
     function test_ejecutar_fail(){
 
-        $funcion = function() { };
+        $funcion = function() { // no deberia correr pero = dejo codigo que lo invalide 
+            $this->assertTrue( false ); 
+        };
         $funcionDefault = function() {
             $this->assertTrue( true );
         };
         
-        $menu = $this->mysetup2( $funcion, $funcionDefault  );
+        $menu = $this->BuildMenu2( $funcion, $funcionDefault  );
         
         $menu->ejecutar( "adsfadfasdf" );
     }
     
     function test_ExisteFuente(){
         
-        $menu = $this->mysetup1();
+        $menu = $this->BuildMenu1();
         
         $this->assertTrue( $menu->existe_fuente( $this->tag_alta ) );
 
@@ -79,7 +81,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
 
     function test_ExisteFuente_Fail(){
         
-        $menu = $this->mysetup1();
+        $menu = $this->BuildMenu1();
         
         $this->assertFalse( $menu->existe_fuente( "sarasa" ) );
         
@@ -88,7 +90,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
     
     function test_CargarFuente(){
   
-        $menu = $this->mysetup1();
+        $menu = $this->BuildMenu1();
  
         $menu->cargar_archivo( $this->tag_alta );
         $menu->ejecutar(  $this->tag_alta );
@@ -109,7 +111,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         $funcion = function() { };
         $funcionDefault = function() { };
         
-        $menu = $this->mysetup2( $funcion, $funcionDefault  );
+        $menu = $this->BuildMenu2( $funcion, $funcionDefault  );
 
         // si se cambia por cargar_archivo() el script no termina porque da error fatal
         $menu->try_cargar_archivo( $this->tag_modi );

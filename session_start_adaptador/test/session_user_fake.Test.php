@@ -17,8 +17,9 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     }
     
     function test_session_start(){
-        $actual = $this->mysetup( function( $session ) {
-            return $session->estado();
+        $actual = $this->mysetup( 
+            function( $session ) {
+                return $session->estado();
         }   );
             
         $this->assertEquals( PHP_SESSION_ACTIVE, $actual, "PHP_SESSION_ACTIVE" );
@@ -33,19 +34,21 @@ class session_user_fakeTest extends PHPUnit\Framework\TestCase {
     }
 
     function test_set_get(){
-        $actual = $this->mysetup( function( $session_user ) {
-            $session_user->data_set( "sarasa", "palomon" );
-            return $session_user->data_get( "sarasa" ) ;
+        $actual = $this->mysetup( 
+            function( $session_user ) {
+                $session_user->data_set( "sarasa", "palomon" );
+                return $session_user->data_get( "sarasa" ) ;
         }   );
             
         $this->assertEquals( "palomon", $actual , "get" );
     }
 
     function test_unset(){
-        $actual = $this->mysetup( function( $session_user ) {
-            $session_user->data_set( "sarasa", "palomon" );
-            $session_user->unset();
-            return $session_user->data_get( "sarasa" );
+        $actual = $this->mysetup( 
+            function( $session_user ) {
+                $session_user->data_set( "sarasa", "palomon" );
+                $session_user->unset();
+                return $session_user->data_get( "sarasa" );
         }   );
         $this->assertEquals( "", $actual, "get" );
             

@@ -1,5 +1,7 @@
 <?php
 use session_start_adaptador\session_start_adaptador;
+use session_variable_adaptador\session_variable_adaptador;
+
 /*
  * la idea de esta clase: encapsular session_start()
  * por eso cada prueba debe correrse en un proceso aparte
@@ -46,10 +48,11 @@ class session_user_test extends PHPUnit\Framework\TestCase {
 	 */
 	function test_unset(){
 	    $actual = $this->mysetup( function( $session_user ) {
-	        $data = $session_user->get_data();
-	        $data->set( "sarasa", "palomon" );
-	        $session_user->unset();
-	        return $data->get( "sarasa" );
+	        $session_user->data_set( "sarasa", "palomon" );
+	        // $data = $session_user->get_data();
+	        // $data->set( "sarasa", "palomon" );
+	        $session_user->data_unset("sarasa");
+	        return $session_user->data_get( "sarasa" );
 	    }   );
 		$this->assertEquals( "", $actual, "get" );
 
@@ -62,28 +65,32 @@ class session_user_test extends PHPUnit\Framework\TestCase {
 	        
 	    $session_user = new session_start_adaptador();
 	    $session_user->inicio();
-	    $data = $session_user->get_data();
-	    $data->set( "sarasa", "palomon" );
+	    
+	    $session = new session_variable_adaptador();
+	    $session->set( 'sarasa', 'palomon' );
+	    $this->assertEquals( "palomon", $_SESSION['sarasa'] );
+	    
 	    
 		$session_user->unset();
 		$session_user->destroy();
-		$this->assertEquals( "", $data->get( "sarasa" ), "get" );
+		
+		$this->assertEquals( "", $session->get( "sarasa" ) ); 
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
-	function test_data_unset(){
+// 	/**
+// 	 * @runInSeparateProcess
+// 	 */
+// 	function test_data_unset(){
 	    
-	    $session_user = new session_start_adaptador();
-	    $session_user->inicio();
-	    $data = $session_user->get_data();
-	    $data->set( "sarasa", "palomon" );
+// 	    $session_user = new session_start_adaptador();
+// 	    $session_user->inicio();
+// 	    $data = $session_user->get_data();
+// 	    $data->set( "sarasa", "palomon" );
 	    
-	    $data->unset("sarasa");
+// 	    $data->unset("sarasa");
 	    
-	    $this->assertEquals( "", $data->get( "sarasa" ), "get" );
-	}
+// 	    $this->assertEquals( "", $data->get( "sarasa" ), "get" );
+// 	}
 	
 	
 }

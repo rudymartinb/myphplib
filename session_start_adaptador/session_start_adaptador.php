@@ -6,7 +6,7 @@ namespace session_start_adaptador {
         private $status ;
         private $name = "";
         private $valores = [];
-        
+    
         function inicio(){
             session_start();
         }
@@ -28,11 +28,24 @@ namespace session_start_adaptador {
         function destroy(){
             session_destroy();
         }
-        public function get_data() : session_variable_adaptador_interface {
-            $data = new session_variable_adaptador();
-            return $data;
+        
+        function get_data() : session_variable_adaptador_interface {
+            // $data = new session_variable_adaptador();
+            // return $data;
         }
-    
+  
+        // encapsulado de la variable $_SESSION
+        function data_set( string $nombre, $valor ){
+            
+        }
+        function data_get( string $nombre ){
+            
+        }
+        function data_unset( string $nombre ){
+            
+        }
+        
+        
         
     }
     

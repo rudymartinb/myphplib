@@ -6,7 +6,12 @@ namespace session_start_adaptador {
         function estado();
         function nombre( string $name );
         function esta_registrada( string $name  );
-        function get_data() : session_variable_adaptador_interface ;
+        
+        function data_set( string $nombre, $valor );
+        function data_get( string $nombre );
+        function data_unset( string $nombre );
+        
+        // function get_data() : session_variable_adaptador_interface ;
         function unset();
         function destroy();
     }

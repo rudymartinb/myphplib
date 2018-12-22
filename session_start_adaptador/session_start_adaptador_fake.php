@@ -1,6 +1,5 @@
 <?php
 namespace session_start_adaptador {
-    use session_variable_adaptador\session_variable_adaptador_fake;
     use session_variable_adaptador\session_variable_adaptador_interface;
     
     class session_start_adaptador_fake implements session_start_adaptador_interface  {
@@ -19,13 +18,13 @@ namespace session_start_adaptador {
         }
         function esta_registrada( $name  ){
             return $this->name == $name;
-        }
+        } 
         
         function data_set( $nombre, $valor ){
             $this->valores[ $nombre ] = $valor ;
         }
         
-        function data_get( $nombre ) {
+        function data_get( $nombre ) : string {
             if( array_key_exists( $nombre, $this->valores ) )
                 return $this->valores[ $nombre ];
             return "";
@@ -50,6 +49,7 @@ namespace session_start_adaptador {
             // return $data;
         }
     
+        
     
         
     }

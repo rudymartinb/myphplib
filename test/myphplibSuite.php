@@ -20,7 +20,7 @@ require_once "session_variable_adaptador/test/session_variable_adaptador_Test.ph
 require_once "session_variable_adaptador/test/session_variable_adaptador_fake.Test.php" ;
 
 // encapsula session_start()
-require_once( "session_start_adaptador/session_user_interface.php" );
+require_once( "session_start_adaptador/session_start_interface.php" );
 require_once( "session_start_adaptador/session_start_adaptador.php" );
 require_once( "session_start_adaptador/session_start_adaptador_fake.php" );
 
