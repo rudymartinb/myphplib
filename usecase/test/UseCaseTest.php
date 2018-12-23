@@ -12,7 +12,7 @@ use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
 use usecase\UseCaseValidador;
-class Validador implements UseCaseValidador {
+class ValidadorEjemplo implements UseCaseValidador {
     public function es_valido(): bool {
         
     }
@@ -83,6 +83,8 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
      */
     function testEsValido(){
         $usecase = new EjemploUseCase(  );
+        
+        $this->assertTrue( $usecase->esSituacionValida( null ) );
         
         $this->assertTrue( $usecase->esSituacionValida( null ) );
     }

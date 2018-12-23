@@ -1,51 +1,20 @@
 <?php
 namespace session_start_adaptador {
-    use session_variable_adaptador\session_variable_adaptador; 
-    use session_variable_adaptador\session_variable_adaptador_interface;
+
     class session_start_adaptador implements session_start_adaptador_interface  {
-        private $status ;
-        private $name = "";
-        private $valores = [];
     
-        function inicio(){
+        function iniciar(){
             session_start();
         }
         
         function estado(){
             return session_status();
         }
-        function nombre( string $name ){
-            session_name( $name );
-        }
-        function esta_registrada( string $name  ){
-            return isset( $_SESSION[ $name ] );
-        }
         
-        function unset(){
+        function terminar(){
             session_unset();
-        }
-        
-        function destroy(){
             session_destroy();
         }
-        
-        function get_data() : session_variable_adaptador_interface {
-            // $data = new session_variable_adaptador();
-            // return $data;
-        }
-  
-        // encapsulado de la variable $_SESSION
-        function data_set( string $nombre, $valor ){
-            
-        }
-        function data_get( string $nombre ){
-            
-        }
-        function data_unset( string $nombre ){
-            
-        }
-        
-        
         
     }
     
