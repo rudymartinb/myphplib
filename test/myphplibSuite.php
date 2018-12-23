@@ -28,6 +28,7 @@ require_once 'session_start_adaptador/test/session_start_adaptador.Test.php';
 require_once 'session_start_adaptador/test/session_start_adaptador_fake.Test.php';
 
 // session_facade (agrupa los dos anteriores)
+require_once 'session_facade/session_facade.php';
 require_once 'session_facade/test/session_facade.Test.php';
 
 // encapsula headers() 

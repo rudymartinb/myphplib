@@ -1,16 +1,15 @@
 <?php
+
 use session_facade\SessionFacade;
 use session_facade\session_facade_interface;
 
-
-class session_facade_Test extends session_facade_Tester {
+class session_facade_fake_Test extends session_facade_Tester  {
     
     function mysetup() : session_facade_interface {
-        $session = SessionFacade::BuilderBasico();
+        $session = SessionFacade::BuilderFake();
         $session->iniciar();
         return $session;
     }
-    
     
 }
 

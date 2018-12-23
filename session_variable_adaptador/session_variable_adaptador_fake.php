@@ -18,6 +18,7 @@ namespace session_variable_adaptador {
     		return ;
     	}
     	function unset( string $clave ) {
+    	    unset( $this->valores[ $clave ] );
     	}
     }
 }
