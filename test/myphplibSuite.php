@@ -73,7 +73,7 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         
         $this->addTestSuite( 'contextoTest' );
         
-        // $this->addTestSuite( 'session_facade_Test' );
+        $this->addTestSuite( 'session_facade_Test' );
         
     }
 

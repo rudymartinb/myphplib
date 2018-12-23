@@ -4,6 +4,12 @@ namespace session_variable_adaptador   {
 
         function get( string $clave ) {
     		global $_SESSION;
+    		/* parece muy ilogico esto pero
+    		 * si la prueba corre en diferentes procesos entonces $_SESSION 
+    		 * puede no estar definida
+    		 */
+    		if( !isset( $_SESSION ) ) 
+    		    return "";
     		if( array_key_exists( $clave, $_SESSION ) )
     			return $_SESSION[ $clave ] ;
     		return "";
