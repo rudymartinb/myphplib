@@ -20,12 +20,15 @@ require_once "session_variable_adaptador/test/session_variable_adaptador_Test.ph
 require_once "session_variable_adaptador/test/session_variable_adaptador_fake.Test.php" ;
 
 // encapsula session_start()
-require_once( "session_start_adaptador/session_start_interface.php" );
-require_once( "session_start_adaptador/session_start_adaptador.php" );
-require_once( "session_start_adaptador/session_start_adaptador_fake.php" );
+require_once "session_start_adaptador/session_start_adaptador_interface.php" ;
+require_once "session_start_adaptador/session_start_adaptador.php" ;
+require_once "session_start_adaptador/session_start_adaptador_fake.php" ;
 
-require_once 'session_start_adaptador/test/session_user.Test.php';
-require_once 'session_start_adaptador/test/session_user_fake.Test.php';
+require_once 'session_start_adaptador/test/session_start_adaptador.Test.php';
+require_once 'session_start_adaptador/test/session_start_adaptador_fake.Test.php';
+
+// session_facade (agrupa los dos anteriores)
+require_once 'session_facade/test/session_facade.Test.php';
 
 // encapsula headers() 
 require_once 'header_adaptador/header_adaptador_interface.php';
@@ -53,8 +56,8 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
     public function __construct() {
         $this->setName('mymphplibSuite');
 
-        $this->addTestSuite( 'session_user_test' );
-        $this->addTestSuite( 'session_user_faketest' );
+        $this->addTestSuite( 'session_start_adaptador_test' );
+        $this->addTestSuite( 'session_start_adaptador_faketest' );
         
         $this->addTestSuite( 'derivadorTest' );
         
@@ -69,6 +72,8 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'UseCaseTest' );
         
         $this->addTestSuite( 'contextoTest' );
+        
+        // $this->addTestSuite( 'session_facade_Test' );
         
     }
 
