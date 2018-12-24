@@ -14,7 +14,7 @@ require_once 'db/test/mysql_wrapper_fail_Test.php';
 class db_testSuite extends PHPUnit\Framework\TestSuite {
 
 
-    public function __construct() {
+    public function __construct() { 
         $this->setName('db_testSuite');
 
         $this->addTestSuite('mysql_wrapper_fail_Test');

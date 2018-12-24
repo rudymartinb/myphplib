@@ -80,13 +80,15 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
     /* lo que me hace ruido de esto es 
      * si corresponde validar el caso desde el usecase
      * o simplemente hacerlo desde el controlador.
+     * 
+     * 
      */
     function testEsValido(){
         $usecase = new EjemploUseCase(  );
         
         $this->assertTrue( $usecase->esSituacionValida( null ) );
         
-        $this->assertTrue( $usecase->esSituacionValida( null ) );
+        // $this->assertTrue( $usecase->esSituacionValida( null ) );
     }
     
 }

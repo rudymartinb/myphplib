@@ -29,7 +29,9 @@ require_once 'session_start_adaptador/test/session_start_adaptador_fake.Test.php
 
 // session_facade (agrupa los dos anteriores)
 require_once 'session_facade/session_facade.php';
+require_once 'session_facade/test/session_facade_Tester.php';
 require_once 'session_facade/test/session_facade.Test.php';
+require_once 'session_facade/test/session_facade_fake.Test.php';
 
 // encapsula headers() 
 require_once 'header_adaptador/header_adaptador_interface.php';
@@ -75,6 +77,7 @@ class mymphplibSuite extends PHPUnit\Framework\TestSuite {
         $this->addTestSuite( 'contextoTest' );
         
         $this->addTestSuite( 'session_facade_Test' );
+        $this->addTestSuite( 'session_facade_fake_Test' );
         
     }
 
