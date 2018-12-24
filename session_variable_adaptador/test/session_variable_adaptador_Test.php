@@ -19,9 +19,11 @@ class session_variable_adaptador_Test extends PHPUnit\Framework\TestCase {
 	 function test_set_unset(){
 	    $session = new session_variable_adaptador();
 		$session->set( 'sarasa', 'palomon' );
-		$this->assertEquals( "palomon", $_SESSION['sarasa'] );
+		$clave = 'sarasa';
+		// $this->assertEquals( "palomon", $_SESSION['sarasa'] );
 		$session->unset( 'sarasa' );
-		$this->assertEquals( "", $_SESSION['sarasa'] );
+		
+		$this->assertFalse( array_key_exists( $clave, $_SESSION ) );
 	}
 
 	/**

@@ -24,6 +24,7 @@ require_once "session_start_adaptador/session_start_adaptador_interface.php" ;
 require_once "session_start_adaptador/session_start_adaptador.php" ;
 require_once "session_start_adaptador/session_start_adaptador_fake.php" ;
 
+require_once 'session_start_adaptador/test/session_start_adaptador_Tester.php';
 require_once 'session_start_adaptador/test/session_start_adaptador.Test.php';
 require_once 'session_start_adaptador/test/session_start_adaptador_fake.Test.php';
 

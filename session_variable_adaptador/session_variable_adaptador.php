@@ -8,7 +8,7 @@ namespace session_variable_adaptador   {
     		 * si la prueba corre en diferentes procesos entonces $_SESSION 
     		 * puede no estar definida
     		 */
-    		if( !isset( $_SESSION ) ) 
+    		if( !isset( $_SESSION ) )
     		    return "";
     		if( array_key_exists( $clave, $_SESSION ) )
     			return $_SESSION[ $clave ] ;
