@@ -35,9 +35,6 @@ abstract class session_variable_adaptador_Tester extends PHPUnit\Framework\TestC
      */
     function test_get_fail2(){
         $session = $this->mysetup();
-        // variable usada en prueba anterior
-        // si eliminamos el @runInSeparateProcess
-        // podria dar error
         $this->assertEquals( "", $session->get( "sarasa" ) );
     }
     
