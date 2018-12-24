@@ -16,6 +16,7 @@ require_once "session_variable_adaptador/session_variable_adaptador_interface.ph
 require_once "session_variable_adaptador/session_variable_adaptador.php" ;
 require_once "session_variable_adaptador/session_variable_adaptador_fake.php" ;
 
+require_once "session_variable_adaptador/test/session_variable_adaptador_Tester.php" ;
 require_once "session_variable_adaptador/test/session_variable_adaptador_Test.php" ;
 require_once "session_variable_adaptador/test/session_variable_adaptador_fake.Test.php" ;
 
