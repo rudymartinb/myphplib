@@ -69,6 +69,7 @@ class Sec extends MenuPrimarioBuilder  {
     static function BuilderSec( $pri ){
         return new BuilderSecundario( $pri );
     }
+    
     function get_nombre(){
         return $this->nombre;
     }
@@ -107,11 +108,11 @@ class BuilderSecundario extends Sec {
         $this->grupos = $nombre;
         return $this;
     }
-    function fuente( string $nombre ){
+    function setfuente( string $nombre ){
         $this->fuente = $nombre;
         return $this;
-    }
-    function funcion( callable $nombre ){
+    } 
+    function setfuncion( callable $nombre ){
         $this->funcion = $nombre;
         return $this;
     }
@@ -125,6 +126,12 @@ class BuilderSecundario extends Sec {
         $this->pri->addSec( $sec );
         return $this->pri;
     }
+    function buildmenu(){
+        $this->buildOpcion();
+        return $this->pri->buildmenu();
+    }
+
+    
 }
 
 ?>

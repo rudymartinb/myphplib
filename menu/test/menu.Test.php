@@ -15,9 +15,8 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-        ->fuente( $this->archivo )
-        ->funcion( function() { $this->assertTrue( muy_dummy() ); } )
-        ->buildOpcion()
+        ->setfuente( $this->archivo )
+        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
         ->buildMenu();
         
         return $menu;
@@ -32,14 +31,14 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-        ->fuente( $this->archivo )
-        ->funcion( $funcion )->buildOpcion()
+        ->setfuente( $this->archivo )
+        ->setfuncion( $funcion )
         
         ->AgregarSecundario( "Modificar Clientes" )
         ->tag( $this->tag_modi )
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-        ->fuente( $this->archivo_inexistente )
-        ->funcion( $funcion )->buildOpcion()
+        ->setfuente( $this->archivo_inexistente )
+        ->setfuncion( $funcion )
         
         ->buildMenu();
         return $menu;
@@ -97,15 +96,15 @@ class menuTest extends PHPUnit\Framework\TestCase {
    
     }
 
-    /* 
-     * objetivo: la idea es tener una funcion try_cargarfuente() 
-     * que impida que php se cierre por un fuente inexistente.
-     * 
-     * entrada: un objeto estructura de menu
-     * proceso: se pide cargar el fuente de un tag existente pero fuente inexistente
-     * salida esperada: excepcion de php? no sirve, da fatal. No tiene que probar nada
-     * 
-     */
+//     /* 
+//      * objetivo: la idea es tener una funcion try_cargarfuente() 
+//      * que impida que php se cierre por un fuente inexistente.
+//      * 
+//      * entrada: un objeto estructura de menu
+//      * proceso: se pide cargar el fuente de un tag existente pero fuente inexistente
+//      * salida esperada: excepcion de php? no sirve, da fatal. No tiene que probar nada
+//      * 
+//      */
     function test_CargarFuente_fail(){
         
         $funcion = function() { };
