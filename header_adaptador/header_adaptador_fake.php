@@ -10,7 +10,7 @@ namespace header_adaptador;
  * preferentemente como parametro  de un metodo
  * 
  */
-class HeaderAdaptadorFake implements headerad_aptador_interface   {
+class HeaderAdaptadorFake implements header_adaptador_interface   {
 
     public function enviar( $cadena ) {
         

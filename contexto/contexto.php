@@ -1,17 +1,23 @@
 <?php
 namespace contexto;
 
-use \session_variable_adaptador\session_variable_adaptador_interface;
-use \session_variable_adaptador\session_variable_adaptador;
-
+use session_variable_adaptador\session_variable_adaptador_interface;
+use session_variable_adaptador\session_variable_adaptador;
+/*
+ * creo que Contexto deberia ser un Facade 
+ * que implemente varias de las clases que tiene esta liberia
+ * base de datos
+ * derivador?
+ * 
+ */
 class Contexto implements session_variable_adaptador_interface {
     
     function __construct(){
         $this->variables = new session_variable_adaptador();
     }
+     
     
-    
-    private $variable; // TODO: que nombre mejor hay?
+    private $variables; // TODO: que nombre mejor hay?
     public function set(string $clave, $valor) {
         $this->variables->set( $clave, $valor );
     }
@@ -28,6 +34,6 @@ class Contexto implements session_variable_adaptador_interface {
     public function setVariable( session_variable_adaptador_interface $session ){
         $this->variable = $session;
     }
-    
+  
 }
 ?>

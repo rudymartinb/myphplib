@@ -1,7 +1,7 @@
 <?php
 namespace header_adaptador;
 
-class HeaderAdaptador  implements headerad_aptador_interface   {
+class HeaderAdaptador  implements header_adaptador_interface   {
 
     public function enviar( string $cadena ) {
         header($cadena);
