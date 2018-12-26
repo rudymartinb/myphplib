@@ -7,8 +7,10 @@ class menuTest extends PHPUnit\Framework\TestCase {
     private $archivo_inexistente = "seguridad_usuarios/dummy2.php";
     private $tag_alta = "altaclientes";
     private $tag_modi = "modiclientes";
+    private $tag_alta_prov = "altaprov";
+    private $tag_modi_prov = "modiprov";
     
-    function BuildMenu1() : Menu {
+    function BuildMenu_real() : Menu  {
         $menu = Menu::Builder() // devuelve un nuevo Menu()
         ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
         
@@ -17,11 +19,14 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        
         ->buildMenu();
         
         return $menu;
     }
     
+    // la diferencia entre este y el anterior 
+    // es la funcion, en este caso se la forzamos 
     function BuildMenu2( callable $funcion, callable $funcionDefault  ) : Menu {
         
         $menu = Menu::Builder()
@@ -39,16 +44,48 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
+
+        ->AgregarPrimario( "Proveedores" )
+        
+        ->AgregarSecundario( "Agregar Proveedor" )
+        ->tag( $this->tag_alta_prov )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->setfuente( $this->archivo )
+        ->setfuncion( $funcion )
+        
+        ->AgregarSecundario( "Modificar Proveedor" )
+        ->tag( $this->tag_modi_prov )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->setfuente( $this->archivo_inexistente )
+        ->setfuncion( $funcion )
         
         ->buildMenu();
         return $menu;
     }
+    
+    function BuildMenu_mal_fuente() : Menu  {
+        $menu = Menu::Builder() // devuelve un nuevo Menu()
+        ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
+        
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->setfuente( $this->archivo_inexistente )
+        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        
+        ->buildMenu();
+        
+        return $menu;
+    }
         
     function test_ejecutar(){
+        $funcionDefault = function() {
+            $this->assertTrue( false ); // no deberia llegar aqui
+        };
         $funcion = function() {
             $this->assertTrue( true );
         };
-        $funcionDefault = function() { };
+
         
         $menu = $this->BuildMenu2( $funcion, $funcionDefault  );
         
@@ -70,53 +107,17 @@ class menuTest extends PHPUnit\Framework\TestCase {
         $menu->ejecutar( "adsfadfasdf" );
     }
     
-    function test_ExisteFuente(){
-        
-        $menu = $this->BuildMenu1();
-        
-        $this->assertTrue( $menu->existe_fuente( $this->tag_alta ) );
-
-    }
-
-    function test_ExisteFuente_Fail(){
-        
-        $menu = $this->BuildMenu1();
-        
-        $this->assertFalse( $menu->existe_fuente( "sarasa" ) );
-        
-    }
-    
-    
     function test_CargarFuente(){
-  
-        $menu = $this->BuildMenu1();
- 
-        $menu->cargar_archivo( $this->tag_alta );
+        $menu = $this->BuildMenu_real();
         $menu->ejecutar(  $this->tag_alta );
-   
     }
-
-//     /* 
-//      * objetivo: la idea es tener una funcion try_cargarfuente() 
-//      * que impida que php se cierre por un fuente inexistente.
-//      * 
-//      * entrada: un objeto estructura de menu
-//      * proceso: se pide cargar el fuente de un tag existente pero fuente inexistente
-//      * salida esperada: excepcion de php? no sirve, da fatal. No tiene que probar nada
-//      * 
-//      */
+    
     function test_CargarFuente_fail(){
-        
-        $funcion = function() { };
-        $funcionDefault = function() { };
-        
-        $menu = $this->BuildMenu2( $funcion, $funcionDefault  );
-
-        // si se cambia por cargar_archivo() el script no termina porque da error fatal
-        $menu->try_cargar_archivo( $this->tag_modi );
-        
-        $this->assertTrue( true );
+        $menu = $this->BuildMenu_mal_fuente();
+        $menu->ejecutar(  $this->tag_alta );
     }
+    
+
     
     
 }

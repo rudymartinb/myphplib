@@ -1,78 +1,89 @@
 <?php
-namespace menu;  
+namespace menu;
+
+/* 20181226 decidi hacerlo de nuevo porque me estaba complicando la vida de gusto
+ * de momento no tenia una necesidad real de crear tantos builders
+ *
+ * queda una sola clase con dos atributos principales:
+ * una lista simple de tags con los fuentes y funciones asociadas
+ * una lista de opciones con la estructura de subopciones asociadas y el tag que le corresponde a cada una
+ * 
+ * de esta evitamos iteraciones y el codigo queda mas compacto
+ */
 
 class Menu {
     private $primarios;
-    private $defaultFun; 
+    private $actual_opcion;
+    private $actual_subopcion;
+
+    private $tags;
     
     private function __construct(){
         $this->primarios = [];
+        $this->submenu = [];
+        $this->tags = [];
     }
     
-    static function Builder() {
+    static function Builder(){
         $menu = new Menu();
-        return $menu; 
+        return $menu;
     }
-    
-    function agregarPrimario( string $opcion ){
-        $pri = new MenuPrimarioBuilder( $this, $opcion );
-        $this->primarios[] = $pri;
-        return $pri;
+    function AgregarPrimario( string $opcion ){
+        $this->primarios[ $opcion ] = [];
+        $this->actual_opcion = $opcion;
+        return $this;
     }
-    
-    function ejecutar( $tag ){
-        foreach ($this->primarios as $pri ){
-            if( $pri->ejecutar_x_tag($tag) )
-                return;
-        }
+    function AgregarSecundario( string $subopcion ){
 
-        $funcion = $this->defaultFun;
-        $funcion();
-    }
-
-    function cargar_archivo( $tag ){
-        $sec = $this->_buscar_tag( $tag );
-        require_once( $sec->get_fuente() );
-    }
-
-    function try_cargar_archivo( $tag ) {
-        if( ! $this->_existe_tag( $tag ) )
-            return;
-        if( ! $this->existe_fuente( $tag ) )
-            return;
-
-        $this->cargar_archivo( $tag );
-    }
-    
-    function _buscar_tag( $tag ) : Sec {
-        foreach ($this->primarios as $pri ){
-            if( $pri->existe_tag( $tag ) ){
-                return $pri->obtenerOpciones( $tag );
-            }
-        }
-    }
-    
-    function _existe_tag( $tag ) : bool {
-        foreach ($this->primarios as $pri ){
-            if( $pri->existe_tag( $tag ) ){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    function existe_fuente( $tag ){
-        if( ! $this->_existe_tag( $tag ) )
-            return false;
+        $this->primarios[ $this->actual_opcion  ][ $subopcion ] = [];
+        $this->actual_subopcion = $subopcion;
         
-        $sec = $this->_buscar_tag( $tag );
-        return file_exists(  $sec->get_fuente() );
+        return $this;
+    }
+    function tag( string $tag ){
+        $this->tags[ $tag ] = [];
+        $this->tag_actual = $tag;
+        
+        $this->primarios[ $this->actual_opcion  ][ $this->actual_subopcion  ]["tag"] = $tag;
+        
+        return $this; 
     }
     
-    function setFuncionDefault( callable $fun ){
-        $this->defaultFun = $fun;
+    function grupos( Array $grupos ){
+
+        $this->tags[ $this->tag_actual ]["grupos"] = $grupos;
+        return $this;
+    }
+    function setfuente( string $fuente ){
+        $this->tags[ $this->tag_actual ]["fuente"] = $fuente;
+        return $this;
+    }
+
+    function setfuncion( Callable $funcion ){
+        $this->tags[ $this->tag_actual ]["funcion"] = $funcion;
+        return $this;
+    }
+    function setfuncionDefault( Callable $funcion ){
+        $this->defaultFun = $funcion;
+        return $this;
+    }
+    function buildMenu( ){
         return $this;
     }
     
+    
+
+    function ejecutar( string $tag ){
+        
+        if( array_key_exists($tag, $this->tags ) ){
+            if( file_exists( $this->tags[ $tag ]["fuente"]) )
+                require_once( $this->tags[ $tag ]["fuente"] );
+            $funcion = $this->tags[ $tag ]["funcion"];
+        } else {
+            $funcion = $this->defaultFun;
+        }
+        $funcion();
+    }
 }
+
 ?>

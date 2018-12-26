@@ -5,7 +5,8 @@
  * 
  * eliminar el @runInSeparateProcess
  * causa que las pruebas fallen
- * y funciona con phpunit 7 
+ * 
+ * funciona con phpunit 7 
  */
 use session_facade\session_facade_interface;
 abstract class session_facade_Tester extends PHPUnit\Framework\TestCase {
@@ -21,8 +22,6 @@ abstract class session_facade_Tester extends PHPUnit\Framework\TestCase {
         $this->assertEquals( PHP_SESSION_ACTIVE, $actual, "PHP_SESSION_ACTIVE" );
         
     }
-    
-    
     
     /** @runInSeparateProcess
      */
