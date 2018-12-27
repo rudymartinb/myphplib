@@ -62,22 +62,10 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->buildMenu();
         return $menu;
     }
+
     
-    function BuildMenu_mal_fuente() : Menu  {
-        $menu = Menu::Builder() // devuelve un nuevo Menu()
-        ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
-        
-        ->AgregarSecundario( "Agregar Clientes" )
-        ->tag( $this->tag_alta )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-        ->setfuente( $this->archivo_inexistente )
-        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
-        
-        ->buildMenu();
-        
-        return $menu;
-    }
-        
+
+    
     function test_ejecutar(){
         $funcionDefault = function() {
             $this->assertTrue( false ); // no deberia llegar aqui
@@ -106,17 +94,63 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         $menu->ejecutar( "adsfadfasdf" );
     }
+
+    function test_ejecutar_fail2(){
+        
+        // no tiene relevancia el contenido del menu
+        $menu = Menu::Builder()->buildMenu();
+        
+        $menu->ejecutar( "adsfadfasdf" );
+        // por cuanto se ejecuta un tag no existente 
+        // y no hay funcion default definida, no debe dar error
+        // en todo caso habra que agregar un log_error en ejecutar()
+        $this->assertTrue( true ); 
+    }
+    
+    
     
     function test_CargarFuente(){
         $menu = $this->BuildMenu_real();
         $menu->ejecutar(  $this->tag_alta );
     }
     
+    
+    /* tag existente pero el fuente no existe
+     * pero tiene funcion anonima asociada
+     */
     function test_CargarFuente_fail(){
-        $menu = $this->BuildMenu_mal_fuente();
+        $menu = Menu::Builder() 
+        ->AgregarPrimario( "Clientes" ) 
+        
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->setfuente( $this->archivo_inexistente )
+        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        
+        ->buildMenu();
+        
         $menu->ejecutar(  $this->tag_alta );
     }
-    
+
+//     /* tag existente pero el fuente no existe
+//      * y tiene funcion anonima asociada
+//      * por lo tanto debe ejecutar la funcion default
+//      */
+//     function test_CargarFuente_fail2(){
+//         $menu = Menu::Builder()
+//         ->AgregarPrimario( "Clientes" )
+        
+//         ->AgregarSecundario( "Agregar Clientes" )
+//         ->tag( $this->tag_alta )
+//         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+//         ->setfuente( $this->archivo_inexistente )
+//         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        
+//         ->buildMenu();
+        
+//         $menu->ejecutar(  $this->tag_alta );
+//     }
 
     
     
