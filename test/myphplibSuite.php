@@ -45,7 +45,6 @@ require_once 'header_adaptador/test/myheaders_fakeTest.php';
 
 // seguridad_usuarios
 require_once 'menu/menu.php';
-require_once 'menu/menu_primario.php';
 require_once 'menu/test/menu.Test.php';
 
 // usecase
