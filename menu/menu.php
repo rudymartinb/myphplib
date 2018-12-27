@@ -1,16 +1,6 @@
 <?php
 namespace menu;
 
-/* 20181226 decidi hacerlo de nuevo porque me estaba complicando la vida de gusto
- * de momento no tenia una necesidad real de crear tantos builders
- *
- * queda una sola clase con dos atributos principales:
- * una lista simple de tags con los fuentes y funciones asociadas
- * una lista de opciones con la estructura de subopciones asociadas y el tag que le corresponde a cada una
- * 
- * de esta evitamos iteraciones y el codigo queda mas compacto
- */
-
 class Menu {
     protected $primarios;
     protected $defaultFun;
@@ -47,7 +37,10 @@ class Menu {
             function tag( string $tag ){
                 $this->tags[ $tag ] = [];
                 $this->tag_actual = $tag;
+                
                 $this->primarios[ $this->actual_opcion  ][ $this->actual_subopcion  ]["tag"] = $tag;
+                
+                $this->tags[ $this->tag_actual ]["funcion"] = function() {};
                 return $this;
             }
             
@@ -77,15 +70,19 @@ class Menu {
                 return $menu;
             }
             
-            
         };
 
     }
-
+    
     private function cargar_fuente( string $tag ){
-        if( array_key_exists($tag, $this->tags ) )
-            if( file_exists( $this->tags[ $tag ]["fuente"]) )
-                require_once( $this->tags[ $tag ]["fuente"] );
+        if( ! array_key_exists( $tag, $this->tags ) )
+            return null; 
+        if( ! array_key_exists("fuente", $this->tags[ $tag ] ) )
+            return null;
+        if( ! file_exists( $this->tags[ $tag ]["fuente"]) )
+            return null;
+        
+        require_once( $this->tags[ $tag ]["fuente"] );
     }
 
     
@@ -101,15 +98,9 @@ class Menu {
     }
     
     function ejecutar( string $tag ){
-        
         $this->cargar_fuente( $tag );
-        
         $funcion = $this->devolver_funcion( $tag );
-        
-        // dado que los parametros de funciones anonimas son opcionales
-        // entonces evitamos un error bobo. TODO: agregar error_log?
-        if( ! is_callable( $funcion ) )
-            return null;
+
         $funcion();
     }
 }

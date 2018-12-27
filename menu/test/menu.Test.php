@@ -16,7 +16,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
         
@@ -35,13 +35,13 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( $funcion )
         
         ->AgregarSecundario( "Modificar Clientes" )
         ->tag( $this->tag_modi )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
 
@@ -49,13 +49,13 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Proveedor" )
         ->tag( $this->tag_alta_prov )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( $funcion )
         
         ->AgregarSecundario( "Modificar Proveedor" )
         ->tag( $this->tag_modi_prov )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
         
@@ -124,7 +124,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
-        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
         
@@ -132,26 +132,38 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         $menu->ejecutar(  $this->tag_alta );
     }
+    
 
-//     /* tag existente pero el fuente no existe
-//      * y tiene funcion anonima asociada
-//      * por lo tanto debe ejecutar la funcion default
-//      */
-//     function test_CargarFuente_fail2(){
-//         $menu = Menu::Builder()
-//         ->AgregarPrimario( "Clientes" )
+    function test_CargarFuente_fail2(){
+        $menu = Menu::Builder()
+        ->AgregarPrimario( "Clientes" )
         
-//         ->AgregarSecundario( "Agregar Clientes" )
-//         ->tag( $this->tag_alta )
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
 //         ->grupos( [ "Autorizados","Administradores","Operadores" ] )
-//         ->setfuente( $this->archivo_inexistente )
-//         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
         
-//         ->buildMenu();
+        ->buildMenu();
         
-//         $menu->ejecutar(  $this->tag_alta );
-//     }
-
+        $menu->ejecutar(  $this->tag_alta );
+    }
+    
+    /* RDD : Readme development driven.
+     * 
+     * quiero resolver la cuestion de los grupos de usuarios
+     * al menos de una manera un tanto torpe y despues veo
+     * 
+     * en principio el usuario tiene que estar registrado antes de cargarse el menu
+     * por lo tanto es razonable suponer que para una app que no sea publica
+     * le pasemos los grupos validos sobre los cuales debe operar
+     * 
+     * ahora el problema es como construyo el objeto menu
+     * dado que hasta que no declaro los grupos validos para la opcion
+     * no tengo forma de saber cual va y cual no
+     * 
+     * 
+     */
+    
     
     
 }
