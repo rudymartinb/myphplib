@@ -35,13 +35,13 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
-        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( $funcion )
         
         ->AgregarSecundario( "Modificar Clientes" )
         ->tag( $this->tag_modi )
-        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->grupos( [ "Autorizados","Administradores","grupo1" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
 
@@ -49,13 +49,13 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Proveedor" )
         ->tag( $this->tag_alta_prov )
-        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
         ->setfuncion( $funcion )
         
         ->AgregarSecundario( "Modificar Proveedor" )
         ->tag( $this->tag_modi_prov )
-        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->grupos( [ "Autorizados","Administradores","grupo1" ] )
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
         
@@ -161,10 +161,53 @@ class menuTest extends PHPUnit\Framework\TestCase {
      * dado que hasta que no declaro los grupos validos para la opcion
      * no tengo forma de saber cual va y cual no
      * 
+     * quien decide que opcoin va y que opcion no?
+     * o puesto de otra manera, donde coloco una funcion que decida eso?
+     * 
+     * el codigo responsable de contruir el menu debe ser unico
      * 
      */
+//     function test_primarios() {
     
+//         $funcion = function() { };
+//         $menu = $this->BuildMenu2( $funcion, $funcion  );
+        
+//         $actual = $menu->get_primarios();
+
+//         $this->assertEquals( 2, count( $actual ) );
+//     }
+
+    function test_tags() {
+        
+        $funcion = function() { };
+        $menu = $this->BuildMenu2( $funcion, $funcion  );
+        
+        $actual = $menu->get_tags();
+        $this->assertEquals( 4, count( $actual ) );
+    }
     
+    /*
+     * se me ocurrio la mas facil de todas:
+     * armar un metodo estatico que devuelva un nuevo objeto menu
+     * con el menu filtrado
+     */
+
+    function test_filtrar1() {
+  
+        $funcion = function() { };
+        $menu = $this->BuildMenu2( $funcion, $funcion  );
+        $menu = $menu->filtrar( [ "grupo1" ] );
+        $actual = $menu->get_tags();
+        $this->assertEquals( 2, count( $actual ) );
+    }
     
+    function test_filtrar1_fail() {
+        
+        $funcion = function() { };
+        $menu = $this->BuildMenu2( $funcion, $funcion  );
+        $menu = $menu->filtrar( [ "grupo", "grupo11" ] );
+        $actual = $menu->get_tags();
+        $this->assertEquals( 0, count( $actual ) );
+    }
 }
 ?>
