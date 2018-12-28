@@ -86,9 +86,7 @@ class Menu {
     }
     
     private function cargar_fuente( string $tag ){
-        if( ! array_key_exists( $tag, $this->tags ) )
-            return null; 
-        if( ! array_key_exists("fuente", $this->tags[ $tag ] ) )
+        if( ! array_key_exists( $tag, $this->tags ) or  ! array_key_exists("fuente", $this->tags[ $tag ] ) )
             return null;
         if( ! file_exists( $this->tags[ $tag ]["fuente"]) )
             return null;
@@ -120,21 +118,20 @@ class Menu {
     }
     
     
-    /*
-     * $this->grupos contiene la lista de tags de cada grupo existente
+    /* $this->grupos contiene la lista de tags de cada grupo existente
      * como esta planteado esto puede sucede que un mismo tag se "incorpore"
      * mas de una vez pero los array en php no pueden tener claves duplicadas
-     * 
      */
     function filtrar( Array $gruposUsuario ) : Menu {
         $menu = new Menu();
 
-        foreach ($gruposUsuario as $grupo ){
-            if( array_key_exists( $grupo, $this->grupos )){
-                foreach ($this->grupos[$grupo] as $tag  ){
-                    $valores = $this->tags[$tag];
-                    $menu->agregar_tag( $tag, $valores);
-                    $menu->separar_grupos($tag, $valores["grupos"]);
+        // $gruposUsuario es Array de strings
+        foreach( $gruposUsuario as $grupo ){
+            if( array_key_exists( $grupo, $this->grupos ) ){
+                foreach( $this->grupos[ $grupo ] as $tag  ){
+                    $valores = $this->tags[ $tag ];
+                    $menu->agregar_tag( $tag, $valores );
+                    $menu->separar_grupos( $tag, $valores[ "grupos" ] );
                 }
             }
                 
@@ -142,16 +139,16 @@ class Menu {
         
         return $menu;
     }
-    function agregar_tag( string $tag, Array $valores ){
+    
+    protected function agregar_tag( string $tag, Array $valores ){
         $this->tags[ $tag ] = $valores;
     }
     
-    /*
-     * arma una grilla de grupos y tags
+    /* arma una grilla de grupos y tags
      * puede que no exista una lista de grupos
      * de ahi la necesidad de separarlos
      */
-    function separar_grupos( string $tag, Array $grupos ){
+    protected function separar_grupos( string $tag, Array $grupos ){
         foreach ($grupos as $grupo){
             $this->grupos[ $grupo ][] = $tag ;
         }
