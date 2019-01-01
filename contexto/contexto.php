@@ -8,7 +8,7 @@ use session_variable_adaptador\session_variable_adaptador;
  * que implemente varias de las clases que tiene esta liberia
  * base de datos
  * derivador?
- * 
+ *  
  */
 class Contexto implements session_variable_adaptador_interface {
     

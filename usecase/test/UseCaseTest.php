@@ -12,12 +12,15 @@ use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
 use usecase\UseCaseValidador;
+
+// capa 2
 class ValidadorEjemplo implements UseCaseValidador {
     public function es_valido(): bool {
         
     }
     
 }
+// capa 2 
 class EjemploUseCase extends UseCase {
     private $output;
     
@@ -37,7 +40,7 @@ class EjemploUseCase extends UseCase {
 
    
 }
-
+// capa 3
 class EjemploPresenter implements OutputPortInterface {
     function __construct( Callable $funcion ){
         $this->funcion = $funcion;
@@ -51,7 +54,7 @@ class EjemploPresenter implements OutputPortInterface {
     
 }
 
-
+// capa 3
 class EjemploController implements ControllerInterface {
     protected $inputPort;
     function setInputPort( InputPortInterface $input ){
@@ -62,12 +65,46 @@ class EjemploController implements ControllerInterface {
         
     }
 }
+// capa 3
+interface renderizador {
+    function generar_salida( );
+    
+}
+// capa 4
+class EjemploRenderizador implements renderizador {
+    function generar_salida( ){
+        
+    }
+}
 
 
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
     function testNew(){
-        $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
+        /*
+         * para el ejemplo y validar que vamos
+         * desde inputport -> usecase -> outputport
+         * 
+         * es logico q quiera enganchar algo en la salida para evaluar 
+         * que se ejecuta todo
+         * 
+         * pero para el codigo productivo no tiene logica.
+         * el presenter tiene que usar un servicio que genere algo
+         * 
+         * el presenter es una clase 
+         * que implementa la interface provista por el caso de uso
+         * y como tal debe hacer uso de un servicio externo 
+         * que renderize la presentacion que nos interesa
+         * 
+         */
+        
+        
+        $presenter = new EjemploPresenter( 
+            function( $datos ) { 
+                $this->assertEquals( "A", $datos[0]  ); 
+            } );
+        
+        
         $usecase = new EjemploUseCase(  );
         
         $usecase->setOutputPort( $presenter );
