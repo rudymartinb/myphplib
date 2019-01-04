@@ -9,8 +9,11 @@
  * 1) no tener que lidiar con rutinas internas de mysql
  * 2) delegar totalmente el tratamiento de errores (is this wise?)
  * 3) no tener q andar pasando un  objeto conexion_a_db a todos lados 
+ * (puedo realmente evitar esto?)
  * 4) hacer una coinsulta y recibir todos los datos como array
- * 5) hacer una subclase como testdouble  (IMPORTANTE ?!)
+ * 5) hacer una subclase como testdouble  
+ * (tengo el mock armado pero me pregunto si no era mejor doubles
+ * pegados contra interfaces)
  * 
  * 
 CREATE TABLE  `test`.`relacionada1` (

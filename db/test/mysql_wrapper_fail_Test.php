@@ -31,7 +31,10 @@ class mysql_wrapper_fail_Test extends PHPUnit\Framework\TestCase {
 	*/
 
 	function dbsetup( $query  ) { 
-	    return $this->dbsetupfun( function( $db ) use( $query ) { $db->ejecutar( $query ); } ) ;
+	    return $this->dbsetupfun( 
+	        function( $db ) use( $query ) { 
+	            $db->ejecutar( $query ); 
+	        } ) ;
 	}
 
 	function dbsetupfun( $query  ) {
