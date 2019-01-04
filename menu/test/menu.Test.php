@@ -167,15 +167,6 @@ class menuTest extends PHPUnit\Framework\TestCase {
      * el codigo responsable de contruir el menu debe ser unico
      * 
      */
-//     function test_primarios() {
-    
-//         $funcion = function() { };
-//         $menu = $this->BuildMenu2( $funcion, $funcion  );
-        
-//         $actual = $menu->get_primarios();
-
-//         $this->assertEquals( 2, count( $actual ) );
-//     }
 
     function test_tags() {
         

@@ -3,10 +3,12 @@
 /*
  * idea general: aplicar criterios de CleanArchitecture
  * 
+ * ver grafico en 
+ * 
  * http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
  * 
- * no se como va a quedar esto, pero al menos es un principio
  */
+
 use usecase\UseCase;
 use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
@@ -67,8 +69,9 @@ class EjemploController implements ControllerInterface {
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
     function testNew(){
-        $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
         $usecase = new EjemploUseCase(  );
+        
+        $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
         
         $usecase->setOutputPort( $presenter );
         
@@ -80,15 +83,12 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
     /* lo que me hace ruido de esto es 
      * si corresponde validar el caso desde el usecase
      * o simplemente hacerlo desde el controlador.
-     * 
-     * 
      */
     function testEsValido(){
         $usecase = new EjemploUseCase(  );
         
         $this->assertTrue( $usecase->esSituacionValida( null ) );
         
-        // $this->assertTrue( $usecase->esSituacionValida( null ) );
     }
     
 }
