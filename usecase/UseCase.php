@@ -19,6 +19,10 @@ interface ControllerInterface {
 
 /*
  * estoy pensando en una clase que se dedique a validar si un caso corresponde o no
+ * la ventaja es que le podemos pasar lo que querramos al constructor.
+ * el unico tema es que para que tenga sentido todo se tiene que hacer en el momento.
+ * de cualquier manera, es una interface. La clase que la imeplemente debe resolver el problema.
+ *  
  */
 interface UseCaseValidador {
     function esValido() : bool;
