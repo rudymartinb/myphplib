@@ -9,6 +9,7 @@
  * funciona con phpunit 7 
  */
 use session_facade\session_facade_interface;
+
 abstract class session_facade_Tester extends PHPUnit\Framework\TestCase {
     abstract function mysetup() : session_facade_interface ;
     
