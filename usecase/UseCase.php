@@ -2,7 +2,7 @@
 namespace usecase;
 
 interface InputPortInterface {
-    function esSituacionValida( $contexto ) : bool ;
+    // function esSituacionValida( $contexto ) : bool ;
     function recibir( $datos );
 }
 
@@ -21,13 +21,16 @@ interface ControllerInterface {
  * estoy pensando en una clase que se dedique a validar si un caso corresponde o no
  */
 interface UseCaseValidador {
-    function es_valido() : bool;
+    function esValido() : bool;
     
 }
 
 abstract class UseCase implements InputPortInterface {
+    // TODO: mover a un builder?
     abstract function setOutputPort( OutputPortInterface  $output );
-    abstract function es_valido( UseCaseValidador $validador ) : bool;
+    abstract function setValidador( UseCaseValidador $validador ) ;
+    
+    abstract function esSituacionValida() : bool ;
 }
 
     

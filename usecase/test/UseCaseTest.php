@@ -16,15 +16,21 @@ use usecase\InputPortInterface;
 use usecase\UseCaseValidador;
 
 // capa 2
-class ValidadorEjemplo implements UseCaseValidador {
-    public function es_valido(): bool {
-        
+class ValidadorTrueEjemplo implements UseCaseValidador {
+    public function esValido(): bool {
+        return true;
     }
-    
 }
+class ValidadorFalseEjemplo implements UseCaseValidador {
+    public function esValido(): bool {
+        return false;
+    }
+}
+
 // capa 2 
 class EjemploUseCase extends UseCase {
     private $output;
+    private $validador;
     
     function recibir( $datos ) {
         $this->output->generar_salida( $datos );
@@ -33,11 +39,11 @@ class EjemploUseCase extends UseCase {
     function setOutputPort( OutputPortInterface  $output ){
         $this->output = $output ;
     }
-    public function esSituacionValida($contexto): bool {
-        return true;
+    public function esSituacionValida( ): bool {
+        return $this->validador->esValido();
     }
-    public function es_valido(UseCaseValidador $validador): bool {
-        return $validador->es_valido();
+    public function setValidador( UseCaseValidador $validador ) {
+        $this->validador = $validador;
     }
 
    
@@ -83,8 +89,6 @@ class EjemploRenderizador implements renderizador {
 class UseCaseTest extends PHPUnit\Framework\TestCase {
     
     function testNew(){
-<<<<<<< HEAD
-=======
         /*
          * para el ejemplo y validar que vamos
          * desde inputport -> usecase -> outputport
@@ -109,10 +113,8 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
             } );
         
         
->>>>>>> db02104a7e3c336ca31f1160f10d97d7c7ab55c9
         $usecase = new EjemploUseCase(  );
         
-        $presenter = new EjemploPresenter( function( $datos ) { $this->assertEquals( "A", $datos[0]  ); } );
         
         $usecase->setOutputPort( $presenter );
         
@@ -126,9 +128,22 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
      * o simplemente hacerlo desde el controlador.
      */
     function testEsValido(){
-        $usecase = new EjemploUseCase(  );
+        $validador = new ValidadorTrueEjemplo();
         
-        $this->assertTrue( $usecase->esSituacionValida( null ) );
+        $usecase = new EjemploUseCase(  );
+        $usecase->setValidador($validador);
+        
+        $this->assertTrue( $usecase->esSituacionValida( ) );
+        
+    }
+  
+    function testEsValidoFalse(){
+        $validador = new ValidadorFalseEjemplo();
+        
+        $usecase = new EjemploUseCase(  );
+        $usecase->setValidador($validador);
+        
+        $this->assertFalse( $usecase->esSituacionValida( ) );
         
     }
     
