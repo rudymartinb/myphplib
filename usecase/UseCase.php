@@ -1,9 +1,13 @@
 <?php
 namespace usecase;
 
+/*
+ * quiza estas interfaces deban ser extendidas
+ * para implementar funcionalidades especificas
+ */
+
 interface InputPortInterface {
-    function esSituacionValida( $contexto ) : bool ;
-    function recibir( $datos );
+    function es_valido() : bool ;
 }
 
 interface OutputPortInterface {
@@ -13,21 +17,11 @@ interface OutputPortInterface {
 
 interface ControllerInterface {
     function setInputPort( InputPortInterface $input );
-    function recibir_cualquiera( $datos );
-}
-
-
-/*
- * estoy pensando en una clase que se dedique a validar si un caso corresponde o no
- */
-interface UseCaseValidador {
-    function es_valido() : bool;
-    
+    // function recibir_cualquiera( $datos );
 }
 
 abstract class UseCase implements InputPortInterface {
     abstract function setOutputPort( OutputPortInterface  $output );
-    abstract function es_valido( UseCaseValidador $validador ) : bool;
 }
 
     

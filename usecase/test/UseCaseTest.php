@@ -11,15 +11,15 @@ use usecase\UseCase;
 use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
-use usecase\UseCaseValidador;
 
-// capa 2
-class ValidadorEjemplo implements UseCaseValidador {
-    public function es_valido(): bool {
+
+// // capa 2
+// class ValidadorEjemplo implements UseCaseValidador {
+//     public function es_valido(): bool {
         
-    }
+//     }
     
-}
+// }
 // capa 2 
 class EjemploUseCase extends UseCase {
     private $output;
@@ -34,35 +34,43 @@ class EjemploUseCase extends UseCase {
     public function esSituacionValida($contexto): bool {
         return true;
     }
-    public function es_valido(UseCaseValidador $validador): bool {
-        return $validador->es_valido();
+    public function es_valido(): bool {
+        // return $this->validador->es_valido();
     }
 
    
 }
+
 // capa 3
+
 class EjemploPresenter implements OutputPortInterface {
     function __construct( Callable $funcion ){
         $this->funcion = $funcion;
     }
     
     private $funcion;
+    
     function generar_salida( $datos ){
         $funcion = $this->funcion;
         $funcion( $datos  );
     }
     
 }
-
+interface EjemploInputPortInterface extends InputPortInterface {
+    function recibir( $datos );
+}
 // capa 3
 class EjemploController implements ControllerInterface {
-    protected $inputPort;
+    private $datos ;
+    function __construct( $datos ) {
+        $this->datos = $datos;
+        
+    }
+    
+    protected $inputPort ;
     function setInputPort( InputPortInterface $input ){
         $this->inputPort = $input ;
-    }
-    function recibir_cualquiera( $datos ){
-        $this->inputPort->recibir( $datos );
-        
+        $this->inputPort->recibir( $this->datos );
     }
 }
 // capa 3
@@ -98,7 +106,10 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
          * 
          */
         
-        
+        /*
+         * quiero que esta funcion anonima se ejecute 
+         * cuando se genera la salida
+         */
         $presenter = new EjemploPresenter( 
             function( $datos ) { 
                 $this->assertEquals( "A", $datos[0]  ); 
@@ -109,9 +120,9 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         
         $usecase->setOutputPort( $presenter );
         
-        $controller = new EjemploController(  );
+        $controller = new EjemploController( ["A"]  );
         $controller->setInputPort( $usecase );
-        $controller->recibir_cualquiera( ["A"] ); 
+        // $controller->recibir_cualquiera(  ); 
     }
     
     /* lo que me hace ruido de esto es 
