@@ -3,15 +3,18 @@
 /*
  * idea general: aplicar criterios de CleanArchitecture
  * 
+ * ver grafico en 
+ * 
  * http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
  * 
- * no se como va a quedar esto, pero al menos es un principio
  */
+
 use usecase\UseCase;
 use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
 
+<<<<<<< HEAD
 
 // // capa 2
 // class ValidadorEjemplo implements UseCaseValidador {
@@ -20,9 +23,24 @@ use usecase\InputPortInterface;
 //     }
     
 // }
+=======
+// capa 2
+class ValidadorTrueEjemplo implements UseCaseValidador {
+    public function esValido(): bool {
+        return true;
+    }
+}
+class ValidadorFalseEjemplo implements UseCaseValidador {
+    public function esValido(): bool {
+        return false;
+    }
+}
+
+>>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
 // capa 2 
 class EjemploUseCase extends UseCase {
     private $output;
+    private $validador;
     
     function recibir( $datos ) {
         $this->output->generar_salida( $datos );
@@ -31,11 +49,16 @@ class EjemploUseCase extends UseCase {
     function setOutputPort( OutputPortInterface  $output ){
         $this->output = $output ;
     }
-    public function esSituacionValida($contexto): bool {
-        return true;
+    public function esSituacionValida( ): bool {
+        return $this->validador->esValido();
     }
+<<<<<<< HEAD
     public function es_valido(): bool {
         // return $this->validador->es_valido();
+=======
+    public function setValidador( UseCaseValidador $validador ) {
+        $this->validador = $validador;
+>>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
     }
 
    
@@ -118,6 +141,7 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         
         $usecase = new EjemploUseCase(  );
         
+        
         $usecase->setOutputPort( $presenter );
         
         $controller = new EjemploController( ["A"]  );
@@ -128,15 +152,25 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
     /* lo que me hace ruido de esto es 
      * si corresponde validar el caso desde el usecase
      * o simplemente hacerlo desde el controlador.
-     * 
-     * 
      */
     function testEsValido(){
+        $validador = new ValidadorTrueEjemplo();
+        
         $usecase = new EjemploUseCase(  );
+        $usecase->setValidador($validador);
         
-        $this->assertTrue( $usecase->esSituacionValida( null ) );
+        $this->assertTrue( $usecase->esSituacionValida( ) );
         
-        // $this->assertTrue( $usecase->esSituacionValida( null ) );
+    }
+  
+    function testEsValidoFalse(){
+        $validador = new ValidadorFalseEjemplo();
+        
+        $usecase = new EjemploUseCase(  );
+        $usecase->setValidador($validador);
+        
+        $this->assertFalse( $usecase->esSituacionValida( ) );
+        
     }
     
 }

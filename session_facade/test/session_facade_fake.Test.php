@@ -14,6 +14,7 @@ class session_facade_fake_Test extends session_facade_Tester  {
         $session->iniciar();
         return $session;
     }
+
     
 }
 
