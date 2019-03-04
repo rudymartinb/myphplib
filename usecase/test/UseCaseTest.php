@@ -9,11 +9,12 @@
  * 
  */
 
-use usecase\UseCase;
-use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
+use usecase\OutputPortInterface;
+use usecase\UseCase;
 use usecase\UseCaseValidador;
+
 
 // capa 2
 class ValidadorTrueEjemplo implements UseCaseValidador {
@@ -68,7 +69,7 @@ class EjemploController implements ControllerInterface {
     function setInputPort( InputPortInterface $input ){
         $this->inputPort = $input ;
     }
-    function recibir_cualquiera( $datos ){
+    function recibir( $datos ){
         $this->inputPort->recibir( $datos );
         
     }
@@ -106,7 +107,8 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
          * 
          */
         
-        
+
+        // class EjemploPresenter implements OutputPortInterface {
         $presenter = new EjemploPresenter( 
             function( $datos ) { 
                 $this->assertEquals( "A", $datos[0]  ); 
@@ -120,7 +122,7 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         
         $controller = new EjemploController(  );
         $controller->setInputPort( $usecase );
-        $controller->recibir_cualquiera( ["A"] ); 
+        $controller->recibir( ["A"] ); 
     }
     
     /* lo que me hace ruido de esto es 

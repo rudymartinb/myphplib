@@ -1,8 +1,8 @@
 <?php
 namespace usecase;
 
+// clases "usecase" deben implementar esto
 interface InputPortInterface {
-    // function esSituacionValida( $contexto ) : bool ;
     function recibir( $datos );
 }
 
@@ -11,9 +11,11 @@ interface OutputPortInterface {
 }
 
 
+
 interface ControllerInterface {
     function setInputPort( InputPortInterface $input );
-    function recibir_cualquiera( $datos );
+
+    function recibir( bool $datos );
 }
 
 
@@ -30,7 +32,7 @@ interface UseCaseValidador {
 }
 
 abstract class UseCase implements InputPortInterface {
-    // TODO: mover a un builder?
+    // TODO: mover todo esto a un builder?
     abstract function setOutputPort( OutputPortInterface  $output );
     abstract function setValidador( UseCaseValidador $validador ) ;
     
