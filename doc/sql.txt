@@ -1,5 +1,6 @@
-en el catalogo TEST del servidor local de mysql ejecutar los siguientes comandos:
+para que funcionen las pruebas que trabajan sobre SQL real:
 
+en el catalogo TEST del servidor local de mysql ejecutar los siguientes comandos:
 
 
 drop table test.relacionada1;

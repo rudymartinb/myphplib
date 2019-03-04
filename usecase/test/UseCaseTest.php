@@ -9,21 +9,13 @@
  * 
  */
 
-use usecase\UseCase;
-use usecase\OutputPortInterface;
 use usecase\ControllerInterface;
 use usecase\InputPortInterface;
+use usecase\OutputPortInterface;
+use usecase\UseCase;
+use usecase\UseCaseValidador;
 
-<<<<<<< HEAD
 
-// // capa 2
-// class ValidadorEjemplo implements UseCaseValidador {
-//     public function es_valido(): bool {
-        
-//     }
-    
-// }
-=======
 // capa 2
 class ValidadorTrueEjemplo implements UseCaseValidador {
     public function esValido(): bool {
@@ -36,7 +28,7 @@ class ValidadorFalseEjemplo implements UseCaseValidador {
     }
 }
 
->>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
+
 // capa 2 
 class EjemploUseCase extends UseCase {
     private $output;
@@ -52,13 +44,8 @@ class EjemploUseCase extends UseCase {
     public function esSituacionValida( ): bool {
         return $this->validador->esValido();
     }
-<<<<<<< HEAD
-    public function es_valido(): bool {
-        // return $this->validador->es_valido();
-=======
     public function setValidador( UseCaseValidador $validador ) {
         $this->validador = $validador;
->>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
     }
 
    
@@ -95,6 +82,9 @@ class EjemploController implements ControllerInterface {
         $this->inputPort = $input ;
         $this->inputPort->recibir( $this->datos );
     }
+    function recibir( $datos ){
+        $this->inputPort->recibir( $datos );
+    }
 }
 // capa 3
 interface renderizador {
@@ -129,10 +119,8 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
          * 
          */
         
-        /*
-         * quiero que esta funcion anonima se ejecute 
-         * cuando se genera la salida
-         */
+
+        // class EjemploPresenter implements OutputPortInterface {
         $presenter = new EjemploPresenter( 
             function( $datos ) { 
                 $this->assertEquals( "A", $datos[0]  ); 
@@ -147,6 +135,8 @@ class UseCaseTest extends PHPUnit\Framework\TestCase {
         $controller = new EjemploController( ["A"]  );
         $controller->setInputPort( $usecase );
         // $controller->recibir_cualquiera(  ); 
+        $controller->recibir( ["A"] ); 
+
     }
     
     /* lo que me hace ruido de esto es 

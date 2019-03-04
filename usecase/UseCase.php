@@ -6,13 +6,9 @@ namespace usecase;
  * para implementar funcionalidades especificas
  */
 
+// clases "usecase" deben implementar esto
 interface InputPortInterface {
-<<<<<<< HEAD
-    function es_valido() : bool ;
-=======
-    // function esSituacionValida( $contexto ) : bool ;
     function recibir( $datos );
->>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
 }
 
 interface OutputPortInterface {
@@ -20,12 +16,9 @@ interface OutputPortInterface {
 }
 
 
+
 interface ControllerInterface {
     function setInputPort( InputPortInterface $input );
-<<<<<<< HEAD
-    // function recibir_cualquiera( $datos );
-=======
-    function recibir_cualquiera( $datos );
 }
 
 
@@ -38,19 +31,14 @@ interface ControllerInterface {
  */
 interface UseCaseValidador {
     function esValido() : bool;
-    
->>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
 }
 
 abstract class UseCase implements InputPortInterface {
-    // TODO: mover a un builder?
+    // TODO: mover todo esto a un builder?
     abstract function setOutputPort( OutputPortInterface  $output );
-<<<<<<< HEAD
-=======
     abstract function setValidador( UseCaseValidador $validador ) ;
     
     abstract function esSituacionValida() : bool ;
->>>>>>> fae8a869c1b92eecea90b62fb5cd8e28ecc9c726
 }
 
     
