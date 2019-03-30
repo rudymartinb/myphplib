@@ -3,6 +3,7 @@ namespace contexto;
 
 use session_variable_adaptador\session_variable_adaptador_interface;
 use session_variable_adaptador\session_variable_adaptador;
+
 /*
  * creo que Contexto deberia ser un Facade 
  * que implemente varias de las clases que tiene esta liberia
@@ -13,6 +14,7 @@ use session_variable_adaptador\session_variable_adaptador;
 class Contexto implements session_variable_adaptador_interface {
     
     function __construct(){
+        // estamos hablando de un atributo que funcione como $_SESSIONS
         $this->variables = new session_variable_adaptador();
     }
      

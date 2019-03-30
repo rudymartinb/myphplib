@@ -8,11 +8,16 @@ class DemoUsuarioSQL implements mysql_wrapper\credenciales {
 	private static $pwd = "";
 
 	function __construct(){
-	    $todo = file_get_contents( $_SERVER["HOME"]."/.creds/local.mysql.cred" );
+	    $todo = file_get_contents( "/.creds/local.mysql.cred" );
 	    $user = explode( PHP_EOL, $todo );
 	    $list = [];
+	    $list["user"] = "";
+	    $list["pwd"] = "";
+	    
 	    foreach( $user as  $dato ){
 	        $parte = explode( "=", $dato );
+	        if( count( $parte ) != 2 )
+	            break;
 	        $list[ $parte[0] ]  = $parte[1] ;
 	    }
 	    
