@@ -189,8 +189,10 @@ class Menu {
                 $abierto = true;
             }
             $html .= '<div>'.$value['opcion'].'</div>';
-            // $html .= '<div>'.$value['subopcion'].'</div>';
+            
             $html .= '<a class="opcionmenu" href="?o='.$key.'" style="">';
+            $html .= '<div>'.$value['subopcion'].'</div>';
+            $html .= '</a>';
             
 //             if( count( $value ) == 1 ){
 //                 if( $abierto ){
