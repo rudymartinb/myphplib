@@ -41,12 +41,12 @@ class Menu {
                 $this->tags[ $tag ] = [];
                 $this->tag_actual = $tag;
                 
-                // $this->primarios[ $this->actual_opcion  ][ $this->actual_subopcion  ]["tag"] = $tag;
                 $valores = [];
                 
-                $valores ["funcion"] = function() {};
-                $valores ["opcion"] = $this->actual_opcion;
-                $valores ["subopcion"] = $this->actual_subopcion;
+                $valores["funcion"] = function() {};
+                $valores["opcion"] = $this->actual_opcion;
+                $valores["subopcion"] = $this->actual_subopcion;
+                $valores["fuente"] = [];
                 
                 $this->tags[ $this->tag_actual ] = $valores;
                 
@@ -60,7 +60,7 @@ class Menu {
             }
             
             function setfuente( string $fuente ){
-                $this->tags[ $this->tag_actual ]["fuente"] = $fuente;
+                $this->tags[ $this->tag_actual ]["fuente"][] = $fuente;
                 return $this;
             }
             
@@ -85,13 +85,27 @@ class Menu {
 
     }
     
+    // efectos colaterales: fuente especificado que no existe.
+    // tirar excepcion?
+    /*
+     * cargar_fuente: demasiadas responsabilidades?
+     * determina si el tag existe
+     * determina si el tag tiene el tag fuente
+     * para cada elemento del tag fuente, determina si existe el fuente
+     * carga el fuente en cuestion si existe
+     * sino da error.
+     * 
+     */
     private function cargar_fuente( string $tag ){
         if( ! array_key_exists( $tag, $this->tags ) or  ! array_key_exists("fuente", $this->tags[ $tag ] ) )
             return null;
-        if( ! file_exists( $this->tags[ $tag ]["fuente"]) )
-            return null;
         
-        require_once( $this->tags[ $tag ]["fuente"] );
+        foreach( $this->tags[ $tag ]["fuente"] as $value ) {
+            if( file_exists( $value ) )
+                require_once( $value );
+            else
+                throw new \Error( "fuente no encontrado: [".$value."]" );
+        }
     }
 
     

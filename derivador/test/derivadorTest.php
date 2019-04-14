@@ -3,7 +3,7 @@ use derivador\Derivador;
 
 class derivadorTest extends PHPUnit\Framework\TestCase {
 
-    function testCasoFeliz(){
+    function testCasoFeliz_1funcion(){
         $url = "/sarasa"; 
         $funcion = function() {
             $this->assertTrue( true );  

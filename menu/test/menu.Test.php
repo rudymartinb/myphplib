@@ -3,8 +3,9 @@ use menu\Menu;
 
 
 class menuTest extends PHPUnit\Framework\TestCase {
-    private $archivo = "menu/dummy.php";
-    private $archivo_inexistente = "seguridad_usuarios/dummy2.php";
+    private $archivo = "menu/test/dummy.php";
+    private $archivo2 = "menu/test/dummy2.php";
+    private $archivo_inexistente = "nadaquever/dummy2.php";
     private $tag_alta = "altaclientes";
     private $tag_modi = "modiclientes";
     private $tag_alta_prov = "altaprov";
@@ -18,6 +19,22 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->tag( $this->tag_alta )
         // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo )
+        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
+        
+        ->buildMenu();
+        
+        return $menu;
+    }
+    
+    function BuildMenu_real_2fuentes() : Menu  {
+        $menu = Menu::Builder() // devuelve un nuevo Menu()
+        ->AgregarPrimario( "Clientes" ) // Devuelve un Pri
+        
+        ->AgregarSecundario( "Agregar Clientes" )
+        ->tag( $this->tag_alta )
+        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
+        ->setfuente( $this->archivo )
+        ->setfuente( $this->archivo2 )
         ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
         
         ->buildMenu();
@@ -108,15 +125,20 @@ class menuTest extends PHPUnit\Framework\TestCase {
     }
     
     
-    
+    // assert embebido en la funcion constructor
     function test_CargarFuente(){
         $menu = $this->BuildMenu_real();
+        $menu->ejecutar(  $this->tag_alta );
+    }
+
+    // assert embebido en la funcion constructor
+    function test_Cargar_dos_fuentes(){
+        $menu = $this->BuildMenu_real_2fuentes();
         $menu->ejecutar(  $this->tag_alta );
     }
     
     
     /* tag existente pero el fuente no existe
-     * pero tiene funcion anonima asociada
      */
     function test_CargarFuente_fail(){
         $menu = Menu::Builder() 
@@ -124,13 +146,18 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         ->AgregarSecundario( "Agregar Clientes" )
         ->tag( $this->tag_alta )
-        // ->grupos( [ "Autorizados","Administradores","Operadores" ] )
         ->setfuente( $this->archivo_inexistente )
-        ->setfuncion( function() { $this->assertTrue( muy_dummy() ); } )
-        
         ->buildMenu();
-        
-        $menu->ejecutar(  $this->tag_alta );
+
+        // me resulta mas cómodo usar Try que los tags de phpunit
+        try {
+            $menu->ejecutar(  $this->tag_alta );
+        } catch( Error $error ){
+            // podria evaluar si el mensaje de error es que el archivo X no existe
+            // pero el drama es que dependemos de la version de PHP para que el mensaje sea igual
+            $this->assertTrue ( true );
+            
+        }
     }
     
 
