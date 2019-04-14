@@ -48,6 +48,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         
         $menu = Menu::Builder()
         ->setFuncionDefault( $funcionDefault )
+        
         ->AgregarPrimario( "Clientes" )
         
         ->AgregarSecundario( "Agregar Clientes" )
@@ -62,6 +63,7 @@ class menuTest extends PHPUnit\Framework\TestCase {
         ->setfuente( $this->archivo_inexistente )
         ->setfuncion( $funcion )
 
+        
         ->AgregarPrimario( "Proveedores" )
         
         ->AgregarSecundario( "Agregar Proveedor" )
@@ -220,7 +222,6 @@ class menuTest extends PHPUnit\Framework\TestCase {
     }
     
     function test_filtrar1_fail() {
-        
         $funcion = function() { };
         $menu = $this->BuildMenu2( $funcion, $funcion  );
         $menu = $menu->filtrar( [ "grupo", "grupo11" ] );
@@ -228,6 +229,18 @@ class menuTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals( 0, count( $actual ) );
     }
     
+    /*
+     * la pregunta del millon:
+     * porque este objeto debe saber que es HTML?
+     */
+    function test_generar_html( ) {
+        $funcion = function() { };
+        $menu = $this->BuildMenu2( $funcion, $funcion  );
+        $html = $menu->generar_html(); 
+        $this->assertEquals( "esto", $html );
+        
+    }
+ 
     
 }
 ?>

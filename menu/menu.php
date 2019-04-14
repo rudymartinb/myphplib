@@ -167,6 +167,55 @@ class Menu {
             $this->grupos[ $grupo ][] = $tag ;
         }
     }
+    
+    function generar_html( ){
+        // var_dump($this->tags );
+        // $opciones = $this->opciones_usuario( $grupos_user );
+        
+        $html = '';
+//        $html .= '<script src="/js/menu.js"></script>';
+//        $html .= '<link rel="stylesheet" href="css/menu.css">';
+
+        // $html .= '<ul id="menu" >';
+        $html .= '<ul >';
+        $abierto = false;
+        
+
+        $ultimo_menu = "";
+        foreach( $this->tags as $key => $value ){
+            if( $ultimo_menu != $value ["opcion"] ){
+                $html .= '<li class=""><ul>';
+                $ultimo_menu  = $value ["opcion"];
+                $abierto = true;
+            }
+            $html .= '<div>'.$value['opcion'].'</div>';
+            // $html .= '<div>'.$value['subopcion'].'</div>';
+            $html .= '<a class="opcionmenu" href="?o='.$key.'" style="">';
+            
+//             if( count( $value ) == 1 ){
+//                 if( $abierto ){
+//                     $abierto = false;
+//                     $html .= "</ul></li>";
+//                 }
+//                 $html .= '<li class=""><div>'.$value['nombre'].'</div><ul>';
+//                 $abierto = true;
+//             } 
+//             else {
+//                 $html .= '<a class="opcionmenu" href="?o='.$value['url'].'" style="">';
+//                 if( $value['nombre'] == '-' )
+//                     $html .= '<li><div class=".ui-menu-divider"> </div></li></a>';
+//                     else
+//                         $html .= '<li><div>'.$value['nombre'].'</div></li></a>';
+//             }
+        }
+        $html .= '</ul>';
+        if( $abierto ){
+            $html .= "</li>";
+        }
+        
+        
+        return $html;
+    }
 }
 
 ?>
