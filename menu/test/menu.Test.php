@@ -234,10 +234,11 @@ class menuTest extends PHPUnit\Framework\TestCase {
      * porque este objeto debe saber que es HTML?
      */
     function test_generar_html( ) {
+        $esperado = '<ul ><li class=""><ul><div>Clientes</div><a class="opcionmenu" href="?o=altaclientes" style=""><div>Agregar Clientes</div></a><div>Clientes</div><a class="opcionmenu" href="?o=modiclientes" style=""><div>Modificar Clientes</div></a><li class=""><ul><div>Proveedores</div><a class="opcionmenu" href="?o=altaprov" style=""><div>Agregar Proveedor</div></a><div>Proveedores</div><a class="opcionmenu" href="?o=modiprov" style=""><div>Modificar Proveedor</div></a></ul></li>';
         $funcion = function() { };
         $menu = $this->BuildMenu2( $funcion, $funcion  );
         $html = $menu->generar_html(); 
-        $this->assertEquals( "esto", $html );
+        $this->assertEquals( $esperado, $html );
         
     }
  

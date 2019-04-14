@@ -193,22 +193,7 @@ class Menu {
             $html .= '<a class="opcionmenu" href="?o='.$key.'" style="">';
             $html .= '<div>'.$value['subopcion'].'</div>';
             $html .= '</a>';
-            
-//             if( count( $value ) == 1 ){
-//                 if( $abierto ){
-//                     $abierto = false;
-//                     $html .= "</ul></li>";
-//                 }
-//                 $html .= '<li class=""><div>'.$value['nombre'].'</div><ul>';
-//                 $abierto = true;
-//             } 
-//             else {
-//                 $html .= '<a class="opcionmenu" href="?o='.$value['url'].'" style="">';
-//                 if( $value['nombre'] == '-' )
-//                     $html .= '<li><div class=".ui-menu-divider"> </div></li></a>';
-//                     else
-//                         $html .= '<li><div>'.$value['nombre'].'</div></li></a>';
-//             }
+        
         }
         $html .= '</ul>';
         if( $abierto ){
