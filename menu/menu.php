@@ -116,15 +116,17 @@ class Menu {
         
         if( ! array_key_exists( "funcion", $this->tags[ $tag ] ) )
             return $this->defaultFun;
-        
+            
         return $this->tags[ $tag ]["funcion"];
     }
     
     function ejecutar( string $tag ){
+        
         $this->cargar_fuente( $tag );
         $funcion = $this->devolver_funcion( $tag );
 
-        $funcion();
+        // tiene sentido esto?
+        return $funcion();
     }
 
     function get_tags() : Array {
@@ -138,7 +140,7 @@ class Menu {
      */
     function filtrar( Array $gruposUsuario ) : Menu {
         $menu = new Menu();
-
+        
         // $gruposUsuario es Array de strings
         foreach( $gruposUsuario as $grupo ){
             if( array_key_exists( $grupo, $this->grupos ) ){
