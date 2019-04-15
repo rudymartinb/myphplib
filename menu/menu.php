@@ -170,38 +170,31 @@ class Menu {
         }
     }
     
+    // TODO: extraer html o exportar la funcion a otra cosa!!!
     function generar_html( ){
-        // var_dump($this->tags );
-        // $opciones = $this->opciones_usuario( $grupos_user );
-        
         $html = '';
-//        $html .= '<script src="/js/menu.js"></script>';
-//        $html .= '<link rel="stylesheet" href="css/menu.css">';
-
-        // $html .= '<ul id="menu" >';
         $html .= '<ul >';
         $abierto = false;
-        
 
         $ultimo_menu = "";
         foreach( $this->tags as $key => $value ){
-            if( $ultimo_menu != $value ["opcion"] ){
+            if( $ultimo_menu != $value["opcion"] ){
+                if( $abierto )
+                    $html .= '</ul></li>';
                 $html .= '<li class=""><ul>';
-                $ultimo_menu  = $value ["opcion"];
+                $ultimo_menu  = $value["opcion"];
                 $abierto = true;
+                $html .= '<div>'.$value['opcion'].'</div>';
             }
-            $html .= '<div>'.$value['opcion'].'</div>';
             
             $html .= '<a class="opcionmenu" href="?o='.$key.'" style="">';
             $html .= '<div>'.$value['subopcion'].'</div>';
             $html .= '</a>';
-        
         }
         $html .= '</ul>';
         if( $abierto ){
             $html .= "</li>";
         }
-        
         
         return $html;
     }
